@@ -1,334 +1,1071 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AI in Cancer Care</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI in Cancer Care</title>
 
-<style>
-:root{
-  --bg:#ffffff;
-  --text:#0b0c0f;
-  --muted:#6b7280;
-  --accent:#1f3cff;
-  --max:1200px;
-}
+  <style>
+    :root{
+      /* UniBE-ish palette */
+      --bg: #f6f2ef;          /* warm off-white like Ai4 */
+      --surface: #ffffff;
+      --text: #0b0c0f;
+      --muted: #5f6672;
 
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family: ui-sans-serif, -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial;
-  background:var(--bg);
-  color:var(--text);
-}
+      --navy: #0b1b3a;        /* dark blue */
+      --navy2: #0e2a5a;
+      --red: #e30613;         /* UniBE red */
+      --red2: #ff3b30;
 
-.container{
-  width:min(var(--max), calc(100% - 48px));
-  margin:0 auto;
-}
+      --stroke: rgba(12,18,28,.10);
+      --shadow: 0 18px 55px rgba(10, 10, 20, .10);
+      --radius: 26px;
+      --max: 1180px;
 
-/* =========================
-   HERO / ABOUT SECTION
-========================= */
+      --focus: rgba(227,6,19,.25);
+    }
 
-.about{
-  padding:120px 0 80px;
-}
+    *{ box-sizing: border-box; }
+    html,body{ height: 100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: var(--bg);
+      color: var(--text);
+    }
 
-.about h1{
-  font-size: clamp(48px,6vw,84px);
-  line-height:1.05;
-  letter-spacing:-0.03em;
-  margin:0 0 30px;
-}
+    a{ color: inherit; text-decoration: none; }
+    .container{
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
 
-.about p{
-  font-size:22px;
-  line-height:1.6;
-  color:var(--muted);
-  max-width:900px;
-}
+    /* ====== Top Nav ====== */
+    .nav{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: color-mix(in srgb, var(--bg) 78%, transparent);
+      border-bottom: 1px solid rgba(12,18,28,.08);
+    }
+    .nav-inner{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 0;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+    .brand-badge{
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy), var(--red));
+      box-shadow: 0 12px 30px rgba(11,27,58,.18);
+    }
+    .nav-links{
+      display:flex;
+      gap: 18px;
+      align-items:center;
+      color: rgba(11,12,15,.82);
+      font-weight: 650;
+      font-size: 14px;
+    }
+    .nav-links a{
+      padding: 10px 10px;
+      border-radius: 12px;
+    }
+    .nav-links a:hover{
+      background: rgba(11,27,58,.06);
+    }
 
-/* =========================
-   SPEAKERS
-========================= */
+    .nav-cta{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .btn{
+      border: 1px solid rgba(12,18,28,.12);
+      background: var(--surface);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 750;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(10,10,20,.06);
+    }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn-primary{
+      border: none;
+      color: white;
+      background: linear-gradient(135deg, var(--navy), var(--red));
+      padding: 11px 16px;
+      box-shadow: 0 14px 35px rgba(11,27,58,.22);
+    }
+    .btn:active{ transform: translateY(0); }
 
-.speakers{
-  padding:100px 0;
-}
+    /* Mobile nav: keep simple (stack hidden links) */
+    @media (max-width: 880px){
+      .nav-links{ display:none; }
+    }
 
-.section-header{
-  margin-bottom:50px;
-}
+    /* ====== Hero ====== */
+    .hero{
+      padding: 28px 0 0;
+    }
+    .hero-card{
+      position: relative;
+      border-radius: calc(var(--radius) + 8px);
+      overflow: hidden;
+      border: 1px solid rgba(12,18,28,.10);
+      box-shadow: 0 18px 60px rgba(10, 10, 20, .12);
+      min-height: 520px;
+      background: #0b1b3a;
+    }
 
-.section-header h2{
-  font-size:48px;
-  margin:0 0 14px;
-  letter-spacing:-0.02em;
-}
+    /* Background image + overlay */
+    .hero-media{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(90deg, rgba(11,27,58,.82) 0%, rgba(11,27,58,.50) 46%, rgba(11,27,58,.25) 100%),
+        url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=2400&q=80');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.02);
+    }
 
-.section-header p{
-  font-size:20px;
-  color:var(--muted);
-  max-width:700px;
-}
+    .hero-inner{
+      position: relative;
+      z-index: 1;
+      padding: 56px 56px 118px;
+      color: white;
+    }
+    @media (max-width: 900px){
+      .hero-inner{ padding: 42px 26px 140px; }
+      .hero-card{ min-height: 600px; }
+    }
 
-.speakers-wrapper{
-  position:relative;
-  overflow:hidden;
-}
+    .hero-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.16);
+      font-weight: 750;
+      color: rgba(255,255,255,.92);
+    }
+    .dot{
+      width: 10px; height: 10px;
+      border-radius: 999px;
+      background: var(--red);
+      box-shadow: 0 0 0 6px rgba(227,6,19,.18);
+    }
 
-.speakers-track{
-  display:flex;
-  gap:32px;
-  overflow-x:auto;
-  scroll-behavior:smooth;
-  padding-bottom:10px;
-}
+    .hero-title{
+      margin: 18px 0 10px;
+      font-size: clamp(44px, 5vw, 78px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      font-weight: 950;
+      max-width: 860px;
+    }
+    .hero-sub{
+      margin: 0 0 22px;
+      font-size: clamp(16px, 1.5vw, 20px);
+      color: rgba(255,255,255,.86);
+      line-height: 1.6;
+      max-width: 740px;
+    }
 
-.speakers-track::-webkit-scrollbar{
-  display:none;
-}
+    .hero-actions{
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+    .hero-actions .btn{
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      color: white;
+      box-shadow: none;
+    }
+    .hero-actions .btn:hover{ background: rgba(255,255,255,.14); }
+    .hero-actions .btn-primary{
+      border: none;
+      background: linear-gradient(135deg, var(--red), var(--navy));
+      box-shadow: 0 18px 40px rgba(227,6,19,.20);
+    }
 
-.speaker-card{
-  min-width:340px;
-  flex-shrink:0;
-}
+    /* Stats bar (floating card like Ai4) */
+    .stats{
+      position: absolute;
+      left: 50%;
+      bottom: -42px;
+      transform: translateX(-50%);
+      width: min(1020px, calc(100% - 36px));
+      background: rgba(11,27,58,.92);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 22px;
+      padding: 20px 22px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      box-shadow: 0 30px 80px rgba(10,10,20,.18);
+      backdrop-filter: blur(10px);
+    }
+    .stat{
+      text-align:center;
+      padding: 8px 6px;
+      border-right: 1px solid rgba(255,255,255,.10);
+    }
+    .stat:last-child{ border-right:none; }
+    .stat-num{
+      font-weight: 950;
+      font-size: 40px;
+      letter-spacing: -0.02em;
+      color: white;
+    }
+    .stat-lab{
+      margin-top: 6px;
+      font-weight: 700;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: rgba(255,255,255,.72);
+    }
+    @media (max-width: 900px){
+      .stats{ grid-template-columns: 1fr 1fr; bottom: -70px; }
+      .stat:nth-child(2){ border-right:none; }
+      .stat:nth-child(1), .stat:nth-child(2){ border-bottom: 1px solid rgba(255,255,255,.10); padding-bottom: 16px; }
+    }
 
-.speaker-card img{
-  width:100%;
-  height:420px;
-  object-fit:cover;
-  border-radius:20px;
-  transition: transform .4s ease;
-}
+    /* ====== Sections ====== */
+    main{
+      padding: 80px 0 96px;
+    }
+    .section{
+      padding: 86px 0;
+    }
+    .section-title{
+      margin: 0;
+      font-size: clamp(36px, 3.8vw, 58px);
+      letter-spacing: -0.03em;
+      font-weight: 950;
+      color: var(--navy);
+      text-align:center;
+    }
+    .section-sub{
+      margin: 14px auto 0;
+      max-width: 880px;
+      text-align:center;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
 
-.speaker-card:hover img{
-  transform:scale(1.03);
-}
+    /* Reveal on scroll */
+    .reveal{
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .reveal.is-visible{
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-.speaker-info{
-  margin-top:18px;
-}
+    /* ====== About block (Ai4-ish) ====== */
+    .about-grid{
+      margin-top: 46px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+    @media (max-width: 920px){
+      .about-grid{ grid-template-columns: 1fr; }
+    }
 
-.speaker-info h3{
-  margin:0;
-  font-size:22px;
-}
+    .about-card{
+      background: var(--surface);
+      border: 1px solid rgba(12,18,28,.10);
+      border-radius: var(--radius);
+      box-shadow: 0 16px 50px rgba(10,10,20,.07);
+      padding: 30px 30px;
+    }
+    .about-card h3{
+      margin: 0 0 12px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+    }
+    .about-card p{
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 17px;
+    }
 
-.speaker-info p{
-  margin:6px 0 0;
-  font-size:16px;
-  color:var(--muted);
-}
+    /* photo mosaic card (placeholder) */
+    .mosaic{
+      background: linear-gradient(180deg, rgba(11,27,58,.10), rgba(227,6,19,.06));
+      border: 1px solid rgba(12,18,28,.10);
+      border-radius: var(--radius);
+      overflow:hidden;
+      position: relative;
+      min-height: 360px;
+      box-shadow: 0 18px 55px rgba(10,10,20,.07);
+    }
+    .mosaic-grid{
+      position:absolute; inset: 18px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 14px;
+    }
+    .mosaic-tile{
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.35);
+      box-shadow: 0 18px 55px rgba(10,10,20,.12);
+      background-size: cover;
+      background-position: center;
+    }
+    .mosaic-tile.big{
+      grid-row: 1 / span 2;
+      background-image: url('https://images.unsplash.com/photo-1581091215367-59ab6b4f89e9?auto=format&fit=crop&w=1400&q=80');
+    }
+    .mosaic-tile.one{
+      background-image: url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=1400&q=80');
+    }
+    .mosaic-tile.two{
+      background-image: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1400&q=80');
+    }
 
-/* Arrows */
+    /* ====== Carousel base ====== */
+    .carousel{
+      margin-top: 44px;
+      position: relative;
+    }
+    .viewport{
+      overflow: hidden;
+      border-radius: 0; /* keep flat */
+    }
+    .track{
+      display:flex;
+      gap: 18px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 6px 8px 16px;
+      scrollbar-width: none;          /* Firefox */
+    }
+    .track::-webkit-scrollbar{ display:none; } /* Chrome */
+    .peek{
+      padding-left: 6px;
+      padding-right: 40px; /* show a bit of next card */
+    }
 
-.speaker-arrows{
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  margin-top:40px;
-}
+    .car-arrows{
+      display:flex;
+      justify-content:center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .arrow{
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(12,18,28,.14);
+      background: var(--surface);
+      box-shadow: 0 12px 30px rgba(10,10,20,.06);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      font-size: 18px;
+      color: var(--navy);
+    }
+    .arrow:hover{ transform: translateY(-1px); }
+    .arrow:active{ transform: translateY(0); }
 
-.arrow{
-  width:46px;
-  height:46px;
-  border-radius:999px;
-  border:1px solid #e5e7eb;
-  background:#fff;
-  cursor:pointer;
-  display:grid;
-  place-items:center;
-  font-size:18px;
-  transition:.2s;
-}
+    .dots{
+      display:flex;
+      justify-content:center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .dotbtn{
+      width: 10px; height: 10px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(12,18,28,.20);
+      cursor:pointer;
+    }
+    .dotbtn.active{
+      background: linear-gradient(135deg, var(--navy), var(--red));
+      transform: scale(1.12);
+    }
 
-.arrow:hover{
-  background:var(--accent);
-  color:#fff;
-  border-color:var(--accent);
-}
+    /* ====== Speaker cards (Ai4-ish) ====== */
+    .speaker-card{
+      flex: 0 0 auto;
+      width: 340px;
+      background: var(--surface);
+      border: 1px solid rgba(12,18,28,.10);
+      border-radius: 20px;
+      overflow:hidden;
+      box-shadow: 0 18px 55px rgba(10,10,20,.07);
+      transition: transform .18s ease;
+    }
+    @media (max-width: 520px){
+      .speaker-card{ width: 82vw; }
+    }
+    .speaker-photo{
+      height: 230px;
+      background: #e7e2de;
+      position: relative;
+      overflow:hidden;
+    }
+    .speaker-photo img{
+      width:100%; height:100%;
+      object-fit: cover;
+      display:block;
+      filter: saturate(0.95) contrast(1.03);
+    }
 
-/* =========================
-   SPONSORS / PARTNERS
-========================= */
+    .speaker-body{
+      padding: 18px 18px 16px;
+    }
+    .speaker-name{
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      font-weight: 900;
+    }
+    .speaker-role{
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.35;
+      font-weight: 650;
+      font-size: 14px;
+    }
+    .speaker-org{
+      margin: 10px 0 0;
+      font-weight: 900;
+      color: var(--navy);
+      font-size: 14px;
+    }
 
-.sponsors{
-  padding:120px 0;
-}
+    .speaker-card:focus-within,
+    .speaker-card:hover{
+      transform: translateY(-2px);
+      outline: none;
+      box-shadow: 0 26px 70px rgba(10,10,20,.10);
+    }
 
-.sponsor-tabs{
-  display:flex;
-  justify-content:center;
-  gap:40px;
-  border-bottom:1px solid #e5e7eb;
-  margin-bottom:50px;
-}
+    /* ====== Highlights cards ====== */
+    .highlight-card{
+      flex: 0 0 auto;
+      width: 380px;
+      background: var(--surface);
+      border: 1px solid rgba(12,18,28,.10);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: 0 18px 55px rgba(10,10,20,.07);
+    }
+    @media (max-width: 520px){
+      .highlight-card{ width: 86vw; }
+    }
+    .highlight-media{
+      height: 210px;
+      background-size: cover;
+      background-position: center;
+    }
+    .highlight-body{
+      padding: 18px 20px 22px;
+    }
+    .tag{
+      display:inline-block;
+      font-size: 12px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: rgba(11,27,58,.75);
+      margin-bottom: 10px;
+    }
+    .highlight-title{
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      font-weight: 950;
+    }
+    .highlight-text{
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 16px;
+    }
 
-.sponsor-tabs button{
-  background:none;
-  border:none;
-  padding:14px 0;
-  font-size:18px;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  cursor:pointer;
-  position:relative;
-}
+    /* ====== Sponsors / Partners tabs ====== */
+    .tabs-wrap{
+      margin-top: 42px;
+      background: transparent;
+      text-align:center;
+    }
+    .tabs{
+      display:inline-flex;
+      gap: 26px;
+      align-items:center;
+      justify-content:center;
+      border-bottom: 2px solid rgba(12,18,28,.10);
+      padding-bottom: 12px;
+    }
+    .tab{
+      border: none;
+      background: transparent;
+      cursor:pointer;
+      font-weight: 950;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      font-size: 14px;
+      color: rgba(11,12,15,.72);
+      padding: 12px 10px;
+      position: relative;
+    }
+    .tab[aria-selected="true"]{
+      color: var(--navy);
+    }
+    .tab[aria-selected="true"]::after{
+      content:"";
+      position:absolute;
+      left: 0; right: 0;
+      bottom: -14px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--navy), var(--red));
+    }
 
-.sponsor-tabs button.active::after{
-  content:"";
-  position:absolute;
-  bottom:-1px;
-  left:0;
-  width:100%;
-  height:2px;
-  background:var(--text);
-}
+    .tabpanels{
+      margin-top: 34px;
+    }
+    .tab-panel{ display:none; }
+    .tab-panel.active{ display:block; }
 
-.sponsor-grid{
-  display:grid;
-  grid-template-columns: repeat(4,1fr);
-  gap:40px;
-  text-align:center;
-}
+    .logo-grid{
+      width: min(980px, 100%);
+      margin: 0 auto;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    @media (max-width: 900px){
+      .logo-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px){
+      .logo-grid{ grid-template-columns: 1fr; }
+    }
 
-.sponsor-grid div{
-  padding:20px 0;
-  font-weight:600;
-  color:#111;
-}
+    .logo-card{
+      background: var(--surface);
+      border: 1px solid rgba(12,18,28,.10);
+      border-radius: 18px;
+      padding: 22px 18px;
+      min-height: 120px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      box-shadow: 0 16px 45px rgba(10,10,20,.06);
+    }
+    /* remove logo shadows if you ever dislike it: comment the next line */
+    /* .logo-card{ box-shadow:none; } */
 
-@media(max-width:900px){
-  .sponsor-grid{
-    grid-template-columns: repeat(2,1fr);
-  }
-}
-</style>
+    .logo-text{
+      font-weight: 950;
+      font-size: 26px;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+    }
+    .small-note{
+      margin-top: 16px;
+      color: var(--muted);
+      text-align:center;
+      font-size: 15px;
+    }
+
+    /* ====== Footer spacing ====== */
+    .spacer{ height: 26px; }
+  </style>
 </head>
 
 <body>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top">
+        <span class="brand-badge" aria-hidden="true"></span>
+        <span>AI in Cancer Care</span>
+      </a>
 
-<!-- =========================
-     ABOUT
-========================= -->
-<section class="about">
-  <div class="container">
-    <h1>The epicenter of AI innovation in cancer care.</h1>
-    <p>
-      AI in Cancer Care brings together clinicians, researchers and AI pioneers 
-      to accelerate the responsible deployment of artificial intelligence in oncology.
-      From clinical validation to real-world implementation, we focus on impact.
-    </p>
-  </div>
-</section>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#highlights">Program</a>
+        <a href="#speakers">Speakers</a>
+        <a href="#support">Sponsors</a>
+      </nav>
 
-<!-- =========================
-     SPEAKERS
-========================= -->
-<section class="speakers">
-  <div class="container">
-
-    <div class="section-header">
-      <h2>Speakers</h2>
-      <p>Renowned experts shaping the future of AI in oncology.</p>
-    </div>
-
-    <div class="speakers-wrapper">
-      <div class="speakers-track" id="speakersTrack">
-
-        <div class="speaker-card">
-          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80">
-          <div class="speaker-info">
-            <h3>Prof. Daniel Truhn</h3>
-            <p>Senior Physician, RWTH Aachen</p>
-          </div>
-        </div>
-
-        <div class="speaker-card">
-          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80">
-          <div class="speaker-info">
-            <h3>Jane Smith</h3>
-            <p>AI Clinical Research Lead</p>
-          </div>
-        </div>
-
-        <div class="speaker-card">
-          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1200&q=80">
-          <div class="speaker-info">
-            <h3>Michael Chen</h3>
-            <p>Founder, Oncology AI Labs</p>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="speaker-arrows">
-        <button class="arrow" id="prev">←</button>
-        <button class="arrow" id="next">→</button>
+      <div class="nav-cta">
+        <a class="btn" href="#contact">Contact</a>
+        <a class="btn btn-primary" href="https://example.com" target="_blank" rel="noreferrer">Register</a>
       </div>
     </div>
+  </header>
 
-  </div>
-</section>
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="hero-card reveal">
+        <div class="hero-media" aria-hidden="true"></div>
 
-<!-- =========================
-     SPONSORS
-========================= -->
-<section class="sponsors">
-  <div class="container">
+        <div class="hero-inner">
+          <div class="hero-kicker">
+            <span class="dot" aria-hidden="true"></span>
+            Half-day symposium • University of Bern • AI + Oncology
+          </div>
 
-    <div class="sponsor-tabs">
-      <button class="active" data-tab="sponsors">Sponsors</button>
-      <button data-tab="partners">Partners</button>
+          <h1 class="hero-title">AI in Cancer Care</h1>
+          <p class="hero-sub">
+            A focused event bringing together clinicians, researchers, and AI experts to explore real-world
+            applications in oncology — from imaging to clinical workflows.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://example.com" target="_blank" rel="noreferrer">Register</a>
+            <a class="btn" href="#about">Learn more</a>
+          </div>
+        </div>
+
+        <div class="stats" aria-label="Event quick stats">
+          <div class="stat">
+            <div class="stat-num">250+</div>
+            <div class="stat-lab">Attendees</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">10+</div>
+            <div class="stat-lab">Speakers</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">6</div>
+            <div class="stat-lab">Sessions</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">1</div>
+            <div class="stat-lab">Half-day</div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="sponsor-grid" id="sponsorGrid">
-      <div>Company A</div>
-      <div>Company B</div>
-      <div>Company C</div>
-      <div>Company D</div>
-    </div>
+  <main>
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="container">
+        <h2 class="section-title reveal">The epicenter of AI in cancer care</h2>
+        <p class="section-sub reveal">
+          Join an interdisciplinary community at the University of Bern to discuss responsible, deployable AI in oncology —
+          with a practical focus on implementation, validation, and clinical impact.
+        </p>
 
-  </div>
-</section>
+        <div class="about-grid">
+          <div class="about-card reveal">
+            <h3>About the event</h3>
+            <p>
+              AI in Cancer Care connects medical imaging, clinical decision support, and real-world deployment —
+              with speakers spanning clinical practice and machine learning research.
+            </p>
+            <p>
+              Expect concise talks, a moderated discussion, and time to connect with peers.
+              This is designed as a half-day format — sharp, focused, and actionable.
+            </p>
+            <p style="margin:0;">
+              <strong style="color:var(--navy);">Interested in supporting?</strong>
+              Sponsors and partners help us keep the event accessible and impactful.
+            </p>
+          </div>
 
-<script>
-// Speaker arrows
-const track = document.getElementById('speakersTrack');
-document.getElementById('prev').onclick = () =>
-  track.scrollBy({left:-360, behavior:'smooth'});
-document.getElementById('next').onclick = () =>
-  track.scrollBy({left:360, behavior:'smooth'});
+          <div class="mosaic reveal" aria-label="Event photos placeholder mosaic">
+            <div class="mosaic-grid">
+              <div class="mosaic-tile big" aria-hidden="true"></div>
+              <div class="mosaic-tile one" aria-hidden="true"></div>
+              <div class="mosaic-tile two" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-// Sponsor tabs
-const tabButtons = document.querySelectorAll('.sponsor-tabs button');
-const grid = document.getElementById('sponsorGrid');
+    <!-- HIGHLIGHTS / WHAT'S HAPPENING -->
+    <section class="section" id="highlights">
+      <div class="container">
+        <h2 class="section-title reveal">What’s happening during the event</h2>
+        <p class="section-sub reveal">
+          A short, high-impact program — designed to bring clarity, practical insights, and the right conversations.
+        </p>
 
-tabButtons.forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    tabButtons.forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
+        <div class="carousel reveal">
+          <div class="viewport">
+            <div class="track peek" id="highlightsTrack" aria-label="Highlights carousel">
+              <article class="highlight-card">
+                <div class="highlight-media" style="background-image:url('https://images.unsplash.com/photo-1580983694998-22f1b5a9b4d7?auto=format&fit=crop&w=1600&q=80');"></div>
+                <div class="highlight-body">
+                  <div class="tag">Spotlight</div>
+                  <h3 class="highlight-title">Keynote & clinical perspective</h3>
+                  <p class="highlight-text">
+                    What’s real today in AI for oncology — and what still needs validation before clinical routine.
+                  </p>
+                </div>
+              </article>
 
-    if(btn.dataset.tab === "partners"){
-      grid.innerHTML = `
-        <div>Partner 1</div>
-        <div>Partner 2</div>
-        <div>Partner 3</div>
-        <div>Partner 4</div>
-      `;
-    } else {
-      grid.innerHTML = `
-        <div>Company A</div>
-        <div>Company B</div>
-        <div>Company C</div>
-        <div>Company D</div>
-      `;
+              <article class="highlight-card">
+                <div class="highlight-media" style="background-image:url('https://images.unsplash.com/photo-1581591524425-c7e0978865d0?auto=format&fit=crop&w=1600&q=80');"></div>
+                <div class="highlight-body">
+                  <div class="tag">Session</div>
+                  <h3 class="highlight-title">Imaging & decision support</h3>
+                  <p class="highlight-text">
+                    From detection to triage and reporting — where AI supports clinicians, and where it must be cautious.
+                  </p>
+                </div>
+              </article>
+
+              <article class="highlight-card">
+                <div class="highlight-media" style="background-image:url('https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1600&q=80');"></div>
+                <div class="highlight-body">
+                  <div class="tag">Discussion</div>
+                  <h3 class="highlight-title">Panel: deployment & governance</h3>
+                  <p class="highlight-text">
+                    How to implement safely: monitoring, bias, security, and workflow integration in hospital settings.
+                  </p>
+                </div>
+              </article>
+
+              <article class="highlight-card">
+                <div class="highlight-media" style="background-image:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80');"></div>
+                <div class="highlight-body">
+                  <div class="tag">Networking</div>
+                  <h3 class="highlight-title">Community & collaboration</h3>
+                  <p class="highlight-text">
+                    Connect with researchers, clinicians, startups, and partners — and spark new projects.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="car-arrows">
+            <button class="arrow" type="button" id="highPrev" aria-label="Previous">‹</button>
+            <button class="arrow" type="button" id="highNext" aria-label="Next">›</button>
+          </div>
+
+          <div class="dots" id="highDots" aria-label="Highlights dots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPEAKERS -->
+    <section class="section" id="speakers">
+      <div class="container">
+        <h2 class="section-title reveal">Speakers</h2>
+        <p class="section-sub reveal">
+          Check back regularly — we’ll add confirmed speakers as we go.
+        </p>
+
+        <div class="carousel reveal">
+          <div class="viewport">
+            <div class="track peek" id="speakersTrack" aria-label="Speakers carousel">
+              <!-- Speaker 1 (example with your real text) -->
+              <article class="speaker-card">
+                <div class="speaker-photo">
+                  <img src="Daniel Truhn headshot.png" alt="Prof. Daniel Truhn">
+                </div>
+                <div class="speaker-body">
+                  <h3 class="speaker-name">Prof. Daniel Truhn</h3>
+                  <p class="speaker-role">
+                    Senior Physician, Laboratory for Artificial Intelligence, Diagnostic &amp; Interventional Radiology
+                  </p>
+                  <p class="speaker-org">RWTH Aachen, Germany</p>
+                </div>
+              </article>
+
+              <!-- Speaker 2 -->
+              <article class="speaker-card">
+                <div class="speaker-photo">
+                  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80" alt="Speaker name">
+                </div>
+                <div class="speaker-body">
+                  <h3 class="speaker-name">[Speaker name]</h3>
+                  <p class="speaker-role">[Title / Position]</p>
+                  <p class="speaker-org">[Organisation]</p>
+                </div>
+              </article>
+
+              <!-- Speaker 3 -->
+              <article class="speaker-card">
+                <div class="speaker-photo">
+                  <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80" alt="Speaker name">
+                </div>
+                <div class="speaker-body">
+                  <h3 class="speaker-name">[Speaker name]</h3>
+                  <p class="speaker-role">[Title / Position]</p>
+                  <p class="speaker-org">[Organisation]</p>
+                </div>
+              </article>
+
+              <!-- Speaker 4 -->
+              <article class="speaker-card">
+                <div class="speaker-photo">
+                  <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=1200&q=80" alt="Speaker name">
+                </div>
+                <div class="speaker-body">
+                  <h3 class="speaker-name">[Speaker name]</h3>
+                  <p class="speaker-role">[Title / Position]</p>
+                  <p class="speaker-org">[Organisation]</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="car-arrows">
+            <button class="arrow" type="button" id="spPrev" aria-label="Previous speakers">‹</button>
+            <button class="arrow" type="button" id="spNext" aria-label="Next speakers">›</button>
+          </div>
+
+          <div class="dots" id="spDots" aria-label="Speakers dots"></div>
+
+          <p class="small-note">
+            Tip: put speaker headshots in the same folder as <code>index.html</code> and update the <code>src</code>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPONSORS / PARTNERS -->
+    <section class="section" id="support">
+      <div class="container">
+        <h2 class="section-title reveal">Powering the event</h2>
+        <p class="section-sub reveal">
+          We’re proud to work with organisations supporting responsible AI in medicine.
+        </p>
+
+        <div class="tabs-wrap reveal">
+          <div class="tabs" role="tablist" aria-label="Support tabs">
+            <button class="tab" role="tab" id="tab-sponsors" aria-controls="panel-sponsors" aria-selected="true">Sponsors</button>
+            <button class="tab" role="tab" id="tab-partners" aria-controls="panel-partners" aria-selected="false">Partners</button>
+          </div>
+
+          <div class="tabpanels">
+            <div class="tab-panel active" id="panel-sponsors" role="tabpanel" aria-labelledby="tab-sponsors">
+              <div class="logo-grid">
+                <div class="logo-card"><div class="logo-text">[Sponsor]</div></div>
+                <div class="logo-card"><div class="logo-text">[Sponsor]</div></div>
+                <div class="logo-card"><div class="logo-text">[Sponsor]</div></div>
+                <div class="logo-card"><div class="logo-text">[Sponsor]</div></div>
+                <div class="logo-card"><div class="logo-text">[Sponsor]</div></div>
+                <div class="logo-card"><div class="logo-text">[Sponsor]</div></div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="panel-partners" role="tabpanel" aria-labelledby="tab-partners">
+              <div class="logo-grid">
+                <div class="logo-card"><div class="logo-text">[Partner]</div></div>
+                <div class="logo-card"><div class="logo-text">[Partner]</div></div>
+                <div class="logo-card"><div class="logo-text">[Partner]</div></div>
+                <div class="logo-card"><div class="logo-text">[Partner]</div></div>
+                <div class="logo-card"><div class="logo-text">[Partner]</div></div>
+                <div class="logo-card"><div class="logo-text">[Partner]</div></div>
+              </div>
+            </div>
+
+            <p class="small-note" id="contact">
+              Want to sponsor? Replace this with your email link (e.g., <strong>ai-cancer-care@unibe.ch</strong>).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /* ===========================
+       Tabs (Sponsors / Partners)
+    ============================ */
+    const tabs = Array.from(document.querySelectorAll('.tab[role="tab"]'));
+    const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
+
+    function activateTab(tab){
+      tabs.forEach((t, i) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        panels[i].classList.toggle('active', on);
+      });
     }
-  });
-});
-</script>
+    tabs.forEach(t => t.addEventListener('click', () => activateTab(t)));
 
+    /* ===========================
+       Carousel helpers
+    ============================ */
+    function setupCarousel({ trackId, prevId, nextId, dotsId, autoMs = 4200 }) {
+      const track = document.getElementById(trackId);
+      const prev = document.getElementById(prevId);
+      const next = document.getElementById(nextId);
+      const dotsWrap = document.getElementById(dotsId);
+      if (!track) return;
+
+      const cards = Array.from(track.children);
+      let index = 0;
+      let timer = null;
+      let userPausedUntil = 0;
+
+      function cardWidthWithGap() {
+        const card = cards[0];
+        if (!card) return 0;
+        const gap = parseFloat(getComputedStyle(track).gap || "0");
+        return card.getBoundingClientRect().width + gap;
+      }
+
+      function maxIndex() {
+        // how many "positions" make sense: cards count - visible approx
+        const w = cardWidthWithGap();
+        if (!w) return 0;
+        const visible = Math.max(1, Math.floor(track.clientWidth / w));
+        return Math.max(0, cards.length - visible);
+      }
+
+      function clampIndex(i) {
+        return Math.min(Math.max(i, 0), maxIndex());
+      }
+
+      function scrollToIndex(i, smooth = true) {
+        index = clampIndex(i);
+        const w = cardWidthWithGap();
+        track.scrollTo({ left: index * w, behavior: smooth ? 'smooth' : 'auto' });
+        paintDots();
+      }
+
+      function paintDots() {
+        if (!dotsWrap) return;
+        const count = Math.max(1, maxIndex() + 1);
+        dotsWrap.innerHTML = '';
+        for (let i = 0; i < count; i++) {
+          const b = document.createElement('button');
+          b.className = 'dotbtn' + (i === index ? ' active' : '');
+          b.type = 'button';
+          b.setAttribute('aria-label', `Go to slide ${i+1}`);
+          b.addEventListener('click', () => {
+            pauseAuto();
+            scrollToIndex(i);
+          });
+          dotsWrap.appendChild(b);
+        }
+      }
+
+      function pauseAuto(ms = 7000) {
+        userPausedUntil = Date.now() + ms;
+      }
+
+      function nextSlide() {
+        const max = maxIndex();
+        if (max <= 0) return;
+        const newIndex = (index >= max) ? 0 : index + 1;
+        scrollToIndex(newIndex);
+      }
+
+      function prevSlide() {
+        const max = maxIndex();
+        if (max <= 0) return;
+        const newIndex = (index <= 0) ? max : index - 1;
+        scrollToIndex(newIndex);
+      }
+
+      prev?.addEventListener('click', () => { pauseAuto(); prevSlide(); });
+      next?.addEventListener('click', () => { pauseAuto(); nextSlide(); });
+
+      // Keep index synced if user scrolls manually (touch/trackpad)
+      let raf = null;
+      track.addEventListener('scroll', () => {
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          const w = cardWidthWithGap();
+          if (!w) return;
+          index = clampIndex(Math.round(track.scrollLeft / w));
+          paintDots();
+        });
+      }, { passive: true });
+
+      // Auto-advance
+      function startAuto() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(() => {
+          if (Date.now() < userPausedUntil) return;
+          nextSlide();
+        }, autoMs);
+      }
+
+      // Recalc on resize
+      window.addEventListener('resize', () => {
+        paintDots();
+        scrollToIndex(index, false);
+      });
+
+      paintDots();
+      startAuto();
+    }
+
+    // Setup carousels
+    setupCarousel({
+      trackId: 'speakersTrack',
+      prevId: 'spPrev',
+      nextId: 'spNext',
+      dotsId: 'spDots',
+      autoMs: 4200
+    });
+
+    setupCarousel({
+      trackId: 'highlightsTrack',
+      prevId: 'highPrev',
+      nextId: 'highNext',
+      dotsId: 'highDots',
+      autoMs: 5200
+    });
+
+    /* ===========================
+       Reveal on scroll (light motion)
+    ============================ */
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
+
+    revealEls.forEach((el, i) => {
+      el.style.transitionDelay = `${Math.min(i * 60, 240)}ms`;
+      io.observe(el);
+    });
+  </script>
 </body>
 </html>
