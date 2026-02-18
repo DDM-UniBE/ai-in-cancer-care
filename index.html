@@ -3,890 +3,191 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="AI in Cancer Care — Conference website" />
-  <title>AI in Cancer Care</title>
+  <title>AI in Cancer Care — Sponsors</title>
 
   <style>
     :root{
-      --bg0:#05060b;
-      --bg1:#070a12;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.09);
-      --stroke: rgba(255,255,255,.12);
-
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.72);
-      --soft: rgba(255,255,255,.56);
-
-      --a1:#7dd3fc; /* sky */
-      --a2:#a78bfa; /* violet */
-      --a3:#fb7185; /* rose */
-      --good:#34d399;
-
-      --r: 18px;
-      --max: 1160px;
-      --shadow: 0 16px 46px rgba(0,0,0,.38);
+      --bg: #ffffff;
+      --text: #0b0c0f;
+      --muted: #6b7280;
+      --pill: #e8e8ea;
+      --pillActive: #1f4dff;
+      --card: #ffffff;
+      --cardStroke: #ececef;
+      --shadow: 0 18px 55px rgba(10, 10, 20, .12);
+      --radius: 28px;
+      --max: 1120px;
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{ box-sizing: border-box; }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: var(--bg);
       color: var(--text);
-      background:
-        radial-gradient(1100px 520px at 16% 12%, rgba(125,211,252,.16), transparent 58%),
-        radial-gradient(950px 540px at 86% 14%, rgba(167,139,250,.14), transparent 60%),
-        radial-gradient(980px 560px at 68% 88%, rgba(251,113,133,.10), transparent 62%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      overflow-x:hidden;
     }
 
-    a{ color:inherit; text-decoration:none; }
-    a:hover{ text-decoration:underline; text-underline-offset: 3px; }
-    .container{ width:min(var(--max), calc(100% - 40px)); margin: 0 auto; }
-
-    /* NAV */
-    .nav{
-      position: sticky; top:0; z-index: 60;
-      backdrop-filter: blur(12px);
-      background: rgba(7,10,18,.64);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-    .nav-inner{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 0;
-      gap: 16px;
-    }
-    .brand{ display:flex; align-items:center; gap: 12px; font-weight: 900; letter-spacing: .2px; }
-    .mark{
-      width: 34px; height: 34px; border-radius: 14px;
-      background:
-        radial-gradient(10px 10px at 30% 30%, rgba(255,255,255,.95), transparent 60%),
-        linear-gradient(135deg, rgba(125,211,252,.95), rgba(167,139,250,.86), rgba(251,113,133,.78));
-      box-shadow: 0 10px 30px rgba(0,0,0,.38);
-    }
-    .links{ display:flex; align-items:center; gap: 12px; flex-wrap:wrap; justify-content:flex-end; }
-    .links a{
-      font-size: 14px;
-      padding: 8px 10px;
-      border-radius: 12px;
-      color: var(--muted);
-      border: 1px solid transparent;
-    }
-    .links a:hover{
-      color: var(--text);
-      border-color: rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      text-decoration:none;
+    .container{
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
     }
 
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap: 10px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      font-weight: 700;
-      font-size: 14px;
-      cursor:pointer;
-      transition: transform .08s ease, background .2s ease;
+    /* Page spacing like BCMS */
+    main{
+      padding: 72px 0 90px;
     }
-    .btn:hover{ background: rgba(255,255,255,.10); text-decoration:none; }
-    .btn:active{ transform: translateY(1px); }
-    .btn.primary{
-      border-color: rgba(125,211,252,.35);
-      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.12));
-    }
-
-    /* HERO */
-    header{ padding: 46px 0 10px; position:relative; }
-    .hero{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 26px;
-      align-items:start;
-    }
-    @media (max-width: 920px){ .hero{ grid-template-columns: 1fr; } }
-
-    .pill{
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      color: var(--muted);
-      font-size: 13px;
-      width: fit-content;
-    }
-    .dot{ width:8px; height:8px; border-radius:50%; background: var(--good); box-shadow: 0 0 0 4px rgba(52,211,153,.12); }
 
     h1{
-      margin: 14px 0 10px;
-      font-size: clamp(36px, 5.2vw, 58px);
-      line-height: 1.02;
-      letter-spacing: -0.8px;
-    }
-    .sub{
-      margin: 0 0 18px;
-      font-size: 16px;
-      line-height: 1.65;
-      color: var(--muted);
-      max-width: 66ch;
-    }
-    .actions{ display:flex; gap: 10px; flex-wrap:wrap; margin: 18px 0 24px; }
-
-    .stats{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 14px;
-    }
-    @media (max-width: 560px){ .stats{ grid-template-columns: 1fr; } }
-    .stat{
-      padding: 12px;
-      border-radius: var(--r);
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-    }
-    .stat .k{ font-weight: 900; font-size: 16px; }
-    .stat .l{ color: var(--soft); font-size: 13px; margin-top: 6px; line-height: 1.35; }
-
-    /* Right panel */
-    .panel{
-      border-radius: var(--r);
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .grid-art{
-      display:grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      padding: 14px;
-    }
-    .thumb{
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(420px 240px at 30% 25%, rgba(125,211,252,.20), transparent 60%),
-        radial-gradient(420px 240px at 80% 80%, rgba(167,139,250,.16), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      aspect-ratio: 4 / 3;
-      position:relative;
-      overflow:hidden;
-    }
-    /* “node” overlay */
-    .thumb:before{
-      content:"";
-      position:absolute; inset:-20px;
-      background-image:
-        radial-gradient(circle at 18px 18px, rgba(255,255,255,.18) 2px, transparent 2px),
-        radial-gradient(circle at 56px 44px, rgba(255,255,255,.14) 1.6px, transparent 1.6px),
-        radial-gradient(circle at 92px 68px, rgba(255,255,255,.12) 1.6px, transparent 1.6px),
-        radial-gradient(circle at 132px 40px, rgba(255,255,255,.10) 1.2px, transparent 1.2px);
-      background-size: 160px 120px;
-      opacity: .9;
-      mix-blend-mode: screen;
-    }
-
-    .countdown{
-      border-top: 1px solid rgba(255,255,255,.08);
-      padding: 14px;
-    }
-    .countdown h3{
-      margin:0 0 10px;
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 900;
-      letter-spacing: .2px;
-      text-transform: uppercase;
-    }
-    .timer{
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-    .tbox{
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      padding: 10px;
+      margin: 0 0 26px;
       text-align:center;
+      font-size: clamp(42px, 5vw, 64px);
+      letter-spacing: -0.02em;
     }
-    .tbox .n{ font-size: 22px; font-weight: 950; letter-spacing: .3px; }
-    .tbox .u{ margin-top: 4px; font-size: 12px; color: var(--soft); }
 
-    .row{ display:flex; gap: 10px; flex-wrap:wrap; align-items:center; }
-    .badge{
-      font-size: 12px;
-      color: var(--muted);
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      padding: 6px 10px;
+    /* Pills */
+    .pillbar{
+      display:flex;
+      justify-content:center;
+      margin-bottom: 58px;
+    }
+    .pill{
+      display:flex;
+      gap: 10px;
+      padding: 8px;
+      background: var(--pill);
       border-radius: 999px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+    }
+    .pill button{
+      border: 0;
+      background: transparent;
+      padding: 14px 24px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 18px;
+      color: #1f2937;
+      transition: transform .06s ease, background .2s ease, color .2s ease;
+    }
+    .pill button:active{ transform: translateY(1px); }
+    .pill button[aria-selected="true"]{
+      background: var(--pillActive);
+      color: white;
+      box-shadow: 0 10px 24px rgba(31, 77, 255, .22);
     }
 
-    /* SECTIONS */
-    section{ padding: 52px 0; }
-    .section-title{
-      display:flex; align-items:flex-end; justify-content:space-between; gap: 18px;
-      margin-bottom: 16px;
-    }
-    .section-title h2{
-      margin:0;
-      font-size: 26px;
-      letter-spacing: -.25px;
-    }
-    .section-title p{
-      margin:0;
-      color: var(--muted);
-      max-width: 68ch;
-      line-height: 1.5;
-      font-size: 14px;
-    }
-
-    .grid-2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 900px){ .grid-2{ grid-template-columns: 1fr; } }
-
-    .card{
-      border-radius: var(--r);
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      padding: 16px;
-    }
-    .card strong{ color: var(--text); }
-    .muted{ color: var(--muted); }
-
-    ul.clean{
-      margin: 10px 0 0;
-      padding-left: 18px;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    /* SPEAKERS */
-    .speaker-grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 980px){ .speaker-grid{ grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 560px){ .speaker-grid{ grid-template-columns: 1fr; } }
-
-    .speaker{
-      border-radius: var(--r);
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      padding: 14px;
-    }
-    .avatar{
-      width: 46px; height: 46px; border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.14);
-      background:
-        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.95), transparent 60%),
-        linear-gradient(135deg, rgba(125,211,252,.75), rgba(167,139,250,.62), rgba(251,113,133,.55));
-      margin-bottom: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.28);
-    }
-    .speaker h4{ margin: 0 0 4px; font-size: 16px; }
-    .speaker .role{ margin: 0 0 10px; color: var(--soft); font-size: 13px; }
-
-    details{
-      border-top: 1px solid rgba(255,255,255,.10);
+    /* Panel area */
+    .panel{
+      display:flex;
+      justify-content:center;
       padding-top: 10px;
-      margin-top: 10px;
     }
-    summary{
-      cursor:pointer;
-      color: var(--muted);
-      font-weight: 900;
-      font-size: 13px;
-      list-style:none;
-      text-transform: uppercase;
-      letter-spacing: .25px;
-    }
-    summary::-webkit-details-marker{ display:none; }
-    details p{ margin: 10px 0 0; color: var(--muted); line-height: 1.6; font-size: 14px; }
 
-    /* TABS (agenda/sponsors) */
-    .tabs{ display:flex; gap: 8px; flex-wrap:wrap; margin-bottom: 12px; }
-    .tab{
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
+    /* Sponsor card */
+    .sponsor-card{
+      width: min(640px, 100%);
+      background: var(--card);
+      border: 1px solid var(--cardStroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 46px 42px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 320px;
+    }
+
+    /* Logo styling (swap to image later) */
+    .logo-text{
+      font-weight: 900;
+      font-size: clamp(44px, 5vw, 64px);
+      letter-spacing: -0.03em;
+      color: #0b0c0f;
+    }
+    .logo-text .star{
+      font-weight: 900;
+      margin-left: 2px;
+    }
+
+    /* Optional helper text (you can delete this) */
+    .hint{
+      margin-top: 34px;
+      text-align:center;
       color: var(--muted);
-      font-size: 13px;
-      cursor:pointer;
-      user-select:none;
+      font-size: 16px;
+      line-height: 1.6;
     }
-    .tab[aria-selected="true"]{
-      color: var(--text);
-      border-color: rgba(125,211,252,.35);
-      background: linear-gradient(135deg, rgba(125,211,252,.16), rgba(167,139,250,.10));
-    }
+
+    /* Tabs content */
     .tab-panel{ display:none; }
     .tab-panel.active{ display:block; }
-
-    /* Sponsors */
-    .sponsor-grid{
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-    @media (max-width: 900px){ .sponsor-grid{ grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 520px){ .sponsor-grid{ grid-template-columns: 1fr; } }
-
-    .logo-card{
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      padding: 14px;
-      display:flex;
-      gap: 12px;
-      align-items:center;
-    }
-    .logo{
-      width: 44px; height: 44px; border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.07);
-      display:flex; align-items:center; justify-content:center;
-      font-weight: 950;
-      color: rgba(255,255,255,.86);
-    }
-    .logo-card .name{ font-weight: 900; font-size: 14px; margin:0; }
-    .logo-card .desc{ font-size: 12px; margin: 2px 0 0; color: var(--soft); }
-
-    /* Agenda list */
-    .agenda{ display:grid; gap: 10px; }
-    .slot{
-      display:grid;
-      grid-template-columns: 90px 1fr;
-      gap: 12px;
-      padding: 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-    }
-    .time{ font-weight: 950; color: rgba(255,255,255,.88); }
-    .slot h4{ margin:0 0 6px; font-size: 15px; }
-    .slot p{ margin:0; color: var(--muted); line-height: 1.5; font-size: 14px; }
-    .meta{ margin-top: 8px; color: var(--soft); font-size: 12px; }
-
-    /* Footer */
-    footer{
-      padding: 28px 0 44px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      color: var(--soft);
-      font-size: 13px;
-    }
-    .footer-row{ display:flex; justify-content:space-between; gap: 14px; flex-wrap:wrap; align-items:center; }
-
-    /* Small helper */
-    .spacer{ height: 10px; }
-
-    /* Mobile nav button (optional) */
-    .hamburger{ display:none; }
-    @media (max-width: 760px){
-      .links{ display:none; }
-      .hamburger{ display:inline-flex; }
-      .mobile-menu{ display:none; padding: 0 0 14px; }
-      .mobile-menu.open{ display:block; }
-      .mobile-menu a{ display:block; padding: 10px 0; color: var(--muted); }
-      .mobile-menu a:hover{ color: var(--text); text-decoration:none; }
-    }
   </style>
 </head>
 
 <body>
-  <!-- NAV -->
-  <div class="nav">
+  <main>
     <div class="container">
-      <div class="nav-inner">
-        <a class="brand" href="#top" aria-label="AI in Cancer Care">
-          <span class="mark" aria-hidden="true"></span>
-          <span>AI in Cancer Care</span>
-        </a>
+      <h1>Sponsors</h1>
 
-        <button class="btn hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">Menu</button>
-
-        <nav class="links" aria-label="Primary">
-          <a href="#about">About</a>
-          <a href="#speakers">Speakers</a>
-          <a href="#agenda">Agenda</a>
-          <a href="#sponsors">Sponsors</a>
-          <a href="#tickets">Tickets</a>
-          <a class="btn primary" href="https://example.com/register" target="_blank" rel="noopener">Register</a>
-        </nav>
+      <div class="pillbar" role="tablist" aria-label="Sponsor tiers">
+        <div class="pill">
+          <button role="tab" id="tab-general" aria-controls="panel-general" aria-selected="true">General</button>
+          <button role="tab" id="tab-platinum" aria-controls="panel-platinum" aria-selected="false">Platinum</button>
+          <button role="tab" id="tab-gold" aria-controls="panel-gold" aria-selected="false">Gold</button>
+          <button role="tab" id="tab-pr" aria-controls="panel-pr" aria-selected="false">PR Partners</button>
+        </div>
       </div>
 
-      <div class="mobile-menu" id="mobileMenu" aria-label="Mobile">
-        <a href="#about">About</a>
-        <a href="#speakers">Speakers</a>
-        <a href="#agenda">Agenda</a>
-        <a href="#sponsors">Sponsors</a>
-        <a href="#tickets">Tickets</a>
-        <a class="btn primary" style="width:100%; margin-top:10px;" href="https://example.com/register" target="_blank" rel="noopener">Register</a>
-      </div>
+      <section class="panel">
+        <!-- General -->
+        <div class="tab-panel active" id="panel-general" role="tabpanel" aria-labelledby="tab-general">
+          <div class="sponsor-card">
+            <div class="logo-text">Linktree<span class="star">*</span></div>
+          </div>
+        </div>
+
+        <!-- Platinum -->
+        <div class="tab-panel" id="panel-platinum" role="tabpanel" aria-labelledby="tab-platinum">
+          <div class="sponsor-card">
+            <div class="logo-text">[Platinum Sponsor]</div>
+          </div>
+        </div>
+
+        <!-- Gold -->
+        <div class="tab-panel" id="panel-gold" role="tabpanel" aria-labelledby="tab-gold">
+          <div class="sponsor-card">
+            <div class="logo-text">[Gold Sponsor]</div>
+          </div>
+        </div>
+
+        <!-- PR -->
+        <div class="tab-panel" id="panel-pr" role="tabpanel" aria-labelledby="tab-pr">
+          <div class="sponsor-card">
+            <div class="logo-text">[PR Partner]</div>
+          </div>
+        </div>
+      </section>
+
+      <p class="hint">
+        Next we’ll swap “Linktree*” for a real logo image + add multiple logos per tier (same centred layout).
+      </p>
     </div>
-  </div>
-
-  <!-- HERO -->
-  <header id="top">
-    <div class="container">
-      <div class="hero">
-        <div>
-          <span class="pill"><span class="dot" aria-hidden="true"></span> Updates coming soon · Save the date</span>
-          <h1>Where AI meets oncology — responsibly, clinically, and at scale.</h1>
-          <p class="sub">
-            AI in Cancer Care is a focused event on how machine learning and data-driven methods can improve cancer research and clinical practice:
-            from imaging and pathology to decision support, trials, and real-world implementation.
-          </p>
-
-          <div class="actions">
-            <a class="btn primary" href="https://example.com/register" target="_blank" rel="noopener">Get your ticket</a>
-            <a class="btn" href="#agenda">View agenda</a>
-            <a class="btn" href="#sponsors">Become a sponsor</a>
-          </div>
-
-          <div class="stats" aria-label="Highlights">
-            <div class="stat">
-              <div class="k">Keynotes + panels</div>
-              <div class="l">Clinicians, researchers, and industry leaders</div>
-            </div>
-            <div class="stat">
-              <div class="k">Translational focus</div>
-              <div class="l">From models → validation → deployment</div>
-            </div>
-            <div class="stat">
-              <div class="k">Responsible AI</div>
-              <div class="l">Privacy, bias, safety, governance</div>
-            </div>
-          </div>
-        </div>
-
-        <aside class="panel" aria-label="Event preview">
-          <div class="grid-art" aria-hidden="true">
-            <div class="thumb"></div>
-            <div class="thumb"></div>
-            <div class="thumb"></div>
-            <div class="thumb"></div>
-          </div>
-
-          <div class="countdown">
-            <h3>Until event</h3>
-            <div class="timer" role="group" aria-label="Countdown timer">
-              <div class="tbox"><div class="n" id="dd">--</div><div class="u">Days</div></div>
-              <div class="tbox"><div class="n" id="hh">--</div><div class="u">Hours</div></div>
-              <div class="tbox"><div class="n" id="mm">--</div><div class="u">Minutes</div></div>
-              <div class="tbox"><div class="n" id="ss">--</div><div class="u">Seconds</div></div>
-            </div>
-
-            <div class="spacer"></div>
-
-            <div class="row">
-              <span class="badge" id="eventLine">📍 Bern, Switzerland · 📅 TBD</span>
-              <span class="badge">In-person + streaming</span>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </header>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="container">
-      <div class="section-title">
-        <div>
-          <h2>About</h2>
-          <p>
-            Bringing together experts across clinical oncology, radiology, pathology, informatics, and digital medicine to share what works — and what’s still hard.
-          </p>
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <strong>When & where</strong>
-          <p class="muted" style="margin:10px 0 0; line-height:1.6;">
-            <b>Date:</b> <span class="muted">[Insert date]</span><br/>
-            <b>Venue:</b> <span class="muted">[Insert venue], Bern, Switzerland</span><br/>
-            <b>Format:</b> <span class="muted">In-person + streaming</span>
-          </p>
-          <p class="muted" style="margin:10px 0 0; line-height:1.6;">
-            <b>Hosted by:</b> <span class="muted">[Your unit / partners]</span>
-          </p>
-        </div>
-
-        <div class="card">
-          <strong>Topics</strong>
-          <ul class="clean">
-            <li>AI in cancer imaging (radiology) and digital pathology</li>
-            <li>Clinical decision support & workflow integration</li>
-            <li>Privacy-preserving learning (federated, confidential compute)</li>
-            <li>Validation, safety, monitoring, and governance</li>
-            <li>Bias, fairness, and equitable cancer care</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SPEAKERS -->
-  <section id="speakers">
-    <div class="container">
-      <div class="section-title">
-        <div>
-          <h2>Speakers</h2>
-          <p>Replace placeholders with confirmed names and affiliations. The collapsible blocks are handy for longer bios and talk abstracts.</p>
-        </div>
-      </div>
-
-      <div class="speaker-grid">
-        <div class="speaker">
-          <div class="avatar" aria-hidden="true"></div>
-          <h4>Dr. [Speaker Name]</h4>
-          <p class="role">[Title] · [Institution]</p>
-          <details>
-            <summary>Biography</summary>
-            <p>[2–4 lines bio.]</p>
-          </details>
-          <details>
-            <summary>Talk topic</summary>
-            <p>[Short abstract.]</p>
-          </details>
-        </div>
-
-        <div class="speaker">
-          <div class="avatar" aria-hidden="true"></div>
-          <h4>Prof. [Speaker Name]</h4>
-          <p class="role">[Title] · [Institution]</p>
-          <details>
-            <summary>Biography</summary>
-            <p>[2–4 lines bio.]</p>
-          </details>
-          <details>
-            <summary>Talk topic</summary>
-            <p>[Short abstract.]</p>
-          </details>
-        </div>
-
-        <div class="speaker">
-          <div class="avatar" aria-hidden="true"></div>
-          <h4>Dr. [Speaker Name]</h4>
-          <p class="role">[Title] · [Institution]</p>
-          <details>
-            <summary>Biography</summary>
-            <p>[2–4 lines bio.]</p>
-          </details>
-          <details>
-            <summary>Talk topic</summary>
-            <p>[Short abstract.]</p>
-          </details>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- AGENDA -->
-  <section id="agenda">
-    <div class="container">
-      <div class="section-title">
-        <div>
-          <h2>Agenda</h2>
-          <p>Simple tabbed agenda. Add Day 3 or tracks if you need them later.</p>
-        </div>
-      </div>
-
-      <div class="tabs" role="tablist" aria-label="Agenda days">
-        <button class="tab" role="tab" aria-selected="true" aria-controls="day1" id="tab-day1">Day 1</button>
-        <button class="tab" role="tab" aria-selected="false" aria-controls="day2" id="tab-day2">Day 2</button>
-      </div>
-
-      <div id="day1" class="tab-panel active" role="tabpanel" aria-labelledby="tab-day1">
-        <div class="agenda">
-          <div class="slot">
-            <div class="time">09:00</div>
-            <div>
-              <h4>Welcome & opening remarks</h4>
-              <p>Why AI in cancer care now: clinical value, safety, and responsible deployment.</p>
-              <div class="meta">Location: Main Hall</div>
-            </div>
-          </div>
-
-          <div class="slot">
-            <div class="time">10:00</div>
-            <div>
-              <h4>Keynote: AI in oncology imaging</h4>
-              <p>From detection to response assessment — validation pathways and workflow integration.</p>
-              <div class="meta">Speaker: [Name]</div>
-            </div>
-          </div>
-
-          <div class="slot">
-            <div class="time">11:30</div>
-            <div>
-              <h4>Panel: Privacy, regulation, and governance</h4>
-              <p>Building systems institutions can trust — auditability, monitoring, and human oversight.</p>
-              <div class="meta">Location: Main Hall</div>
-            </div>
-          </div>
-
-          <div class="slot">
-            <div class="time">14:00</div>
-            <div>
-              <h4>Session: Multimodal models</h4>
-              <p>Combining pathology, genomics, and clinical records — what’s possible and what still blocks adoption.</p>
-              <div class="meta">Location: Breakout Room A</div>
-            </div>
-          </div>
-
-          <div class="slot">
-            <div class="time">16:00</div>
-            <div>
-              <h4>Networking & demos</h4>
-              <p>Posters, prototypes, and partnership opportunities.</p>
-              <div class="meta">Location: Atrium</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="day2" class="tab-panel" role="tabpanel" aria-labelledby="tab-day2">
-        <div class="agenda">
-          <div class="slot">
-            <div class="time">09:30</div>
-            <div>
-              <h4>Keynote: Clinical decision support</h4>
-              <p>Designing tools that help (and don’t harm): evaluation, UX, and adoption.</p>
-              <div class="meta">Speaker: [Name]</div>
-            </div>
-          </div>
-
-          <div class="slot">
-            <div class="time">11:00</div>
-            <div>
-              <h4>Workshop: From model to deployment</h4>
-              <p>Data readiness, validation studies, monitoring, and continuous improvement.</p>
-              <div class="meta">Location: Workshop Room</div>
-            </div>
-          </div>
-
-          <div class="slot">
-            <div class="time">13:30</div>
-            <div>
-              <h4>Case studies: Real-world impact</h4>
-              <p>Successes, failures, and lessons learned from clinical environments.</p>
-              <div class="meta">Location: Main Hall</div>
-            </div>
-          </div>
-
-          <div class="slot">
-            <div class="time">15:30</div>
-            <div>
-              <h4>Closing & next steps</h4>
-              <p>Open problems, collaboration opportunities, and how to stay involved.</p>
-              <div class="meta">Location: Main Hall</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SPONSORS -->
-  <section id="sponsors">
-    <div class="container">
-      <div class="section-title">
-        <div>
-          <h2>Sponsors</h2>
-          <p>Tiered sponsors (tabs). Swap the placeholders with real logos and links when ready.</p>
-        </div>
-      </div>
-
-      <div class="tabs" role="tablist" aria-label="Sponsor tiers">
-        <button class="tab" role="tab" aria-selected="true" aria-controls="tier-general" id="tab-general">General</button>
-        <button class="tab" role="tab" aria-selected="false" aria-controls="tier-platinum" id="tab-platinum">Platinum</button>
-        <button class="tab" role="tab" aria-selected="false" aria-controls="tier-gold" id="tab-gold">Gold</button>
-        <button class="tab" role="tab" aria-selected="false" aria-controls="tier-partners" id="tab-partners">Partners</button>
-      </div>
-
-      <div id="tier-general" class="tab-panel active" role="tabpanel" aria-labelledby="tab-general">
-        <div class="sponsor-grid">
-          <div class="logo-card"><div class="logo">A</div><div><p class="name">[Sponsor]</p><p class="desc">General sponsor</p></div></div>
-          <div class="logo-card"><div class="logo">B</div><div><p class="name">[Sponsor]</p><p class="desc">General sponsor</p></div></div>
-          <div class="logo-card"><div class="logo">C</div><div><p class="name">[Sponsor]</p><p class="desc">General sponsor</p></div></div>
-          <div class="logo-card"><div class="logo">D</div><div><p class="name">[Sponsor]</p><p class="desc">General sponsor</p></div></div>
-        </div>
-      </div>
-
-      <div id="tier-platinum" class="tab-panel" role="tabpanel" aria-labelledby="tab-platinum">
-        <div class="sponsor-grid">
-          <div class="logo-card"><div class="logo">P</div><div><p class="name">[Platinum Sponsor]</p><p class="desc">Top-tier support</p></div></div>
-        </div>
-      </div>
-
-      <div id="tier-gold" class="tab-panel" role="tabpanel" aria-labelledby="tab-gold">
-        <div class="sponsor-grid">
-          <div class="logo-card"><div class="logo">G</div><div><p class="name">[Gold Sponsor]</p><p class="desc">Gold tier</p></div></div>
-          <div class="logo-card"><div class="logo">G</div><div><p class="name">[Gold Sponsor]</p><p class="desc">Gold tier</p></div></div>
-        </div>
-      </div>
-
-      <div id="tier-partners" class="tab-panel" role="tabpanel" aria-labelledby="tab-partners">
-        <div class="sponsor-grid">
-          <div class="logo-card"><div class="logo">R</div><div><p class="name">[Research Partner]</p><p class="desc">Academic / non-profit</p></div></div>
-          <div class="logo-card"><div class="logo">M</div><div><p class="name">[Media Partner]</p><p class="desc">Community outreach</p></div></div>
-        </div>
-      </div>
-
-      <div class="spacer"></div>
-      <div class="card">
-        <strong>Want to sponsor?</strong>
-        <p class="muted" style="margin:10px 0 0; line-height:1.6;">
-          Reach out for the sponsor deck, audience profile, and partnership benefits.
-        </p>
-        <div class="spacer"></div>
-        <a class="btn" href="mailto:ai-in-cancer-care@unibe.ch">Contact us</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- TICKETS -->
-  <section id="tickets">
-    <div class="container">
-      <div class="section-title">
-        <div>
-          <h2>Tickets</h2>
-          <p>Replace CHF values and link to your real registration page.</p>
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <strong>Standard</strong>
-          <p class="muted" style="margin:10px 0 0; line-height:1.6;">
-            CHF [price] · Access to talks, panels, and networking.
-          </p>
-          <div class="spacer"></div>
-          <a class="btn primary" href="https://example.com/register" target="_blank" rel="noopener">Register</a>
-        </div>
-
-        <div class="card">
-          <strong>Student</strong>
-          <p class="muted" style="margin:10px 0 0; line-height:1.6;">
-            CHF [price] · Discounted ticket with valid student ID.
-          </p>
-          <div class="spacer"></div>
-          <a class="btn" href="https://example.com/register" target="_blank" rel="noopener">Register</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <div class="footer-row">
-        <div class="row">
-          <span class="brand"><span class="mark" aria-hidden="true"></span><span>AI in Cancer Care</span></span>
-          <span class="badge">© <span id="yr"></span></span>
-        </div>
-        <div class="row">
-          <a href="#top">Back to top</a>
-          <span style="opacity:.5;">•</span>
-          <a href="mailto:ai-in-cancer-care@unibe.ch">Email</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  </main>
 
   <script>
-    // ====== EDIT THESE ======
-    // Example: "2026-10-15T09:00:00"
-    const EVENT_START_ISO = "2026-10-15T09:00:00";
-    const EVENT_CITY = "Bern, Switzerland";
+    // Simple tab switcher
+    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+    const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
 
-    const $ = (id) => document.getElementById(id);
-    const eventStart = new Date(EVENT_START_ISO);
-
-    function pad(n){ return String(n).padStart(2,'0'); }
-
-    function tick(){
-      const now = new Date();
-
-      if (isNaN(eventStart.getTime())) {
-        $("eventLine").textContent = `📍 ${EVENT_CITY} · 📅 TBD`;
-        ["dd","hh","mm","ss"].forEach(k => $(k).textContent = "--");
-        return;
-      }
-
-      const dateStr = eventStart.toLocaleString(undefined, { year:"numeric", month:"short", day:"2-digit" });
-      $("eventLine").textContent = `📍 ${EVENT_CITY} · 📅 ${dateStr}`;
-
-      let diff = eventStart - now;
-      if (diff <= 0){
-        ["dd","hh","mm","ss"].forEach(k => $(k).textContent = "00");
-        return;
-      }
-
-      const d = Math.floor(diff / (1000*60*60*24));
-      diff -= d * (1000*60*60*24);
-      const h = Math.floor(diff / (1000*60*60));
-      diff -= h * (1000*60*60);
-      const m = Math.floor(diff / (1000*60));
-      diff -= m * (1000*60);
-      const s = Math.floor(diff / 1000);
-
-      $("dd").textContent = pad(d);
-      $("hh").textContent = pad(h);
-      $("mm").textContent = pad(m);
-      $("ss").textContent = pad(s);
-    }
-
-    tick();
-    setInterval(tick, 1000);
-
-    // Tabs (agenda + sponsors)
-    function initTabs(tablist){
-      const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
-      const panels = tabs.map(t => document.getElementById(t.getAttribute("aria-controls")));
-
-      function activate(tab){
-        tabs.forEach((t,i)=>{
-          const on = t === tab;
-          t.setAttribute("aria-selected", on ? "true" : "false");
-          panels[i].classList.toggle("active", on);
-        });
-      }
-
-      tabs.forEach(t => t.addEventListener("click", () => activate(t)));
-    }
-    document.querySelectorAll('[role="tablist"]').forEach(initTabs);
-
-    // Mobile menu
-    const btn = document.getElementById("menuBtn");
-    const menu = document.getElementById("mobileMenu");
-    if (btn && menu){
-      btn.addEventListener("click", ()=>{
-        const open = menu.classList.toggle("open");
-        btn.setAttribute("aria-expanded", open ? "true" : "false");
+    function activate(tab){
+      tabs.forEach((t, i) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        panels[i].classList.toggle('active', on);
       });
-      menu.querySelectorAll("a").forEach(a => a.addEventListener("click", ()=>{
-        menu.classList.remove("open");
-        btn.setAttribute("aria-expanded", "false");
-      }));
     }
 
-    // Footer year
-    document.getElementById("yr").textContent = new Date().getFullYear();
+    tabs.forEach(t => t.addEventListener('click', () => activate(t)));
   </script>
 </body>
 </html>
