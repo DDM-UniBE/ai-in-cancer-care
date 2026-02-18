@@ -11,6 +11,11 @@
   --text:#0b0c0f;
   --muted:#6b7280;
   --max:1120px;
+
+  /* Speaker hover overlay colour (dark blue) */
+  --overlayA: rgba(8, 24, 54, .82);
+  --overlayB: rgba(8, 24, 54, .55);
+  --overlayC: rgba(8, 24, 54, .18);
 }
 
 *{box-sizing:border-box}
@@ -20,23 +25,33 @@ body{
   background:var(--bg);
   color:var(--text);
 }
-
 .container{
   width:min(var(--max), calc(100% - 40px));
   margin:0 auto;
 }
-
 main{padding:80px 0}
 
-/* ================= SPEAKERS ================= */
+/* ============ Reveal on scroll (light motion) ============ */
+.reveal{
+  opacity:0;
+  transform: translateY(14px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.is-visible{
+  opacity:1;
+  transform:none;
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
+}
 
+/* ================= SPEAKERS ================= */
 .section-title{
   text-align:center;
   font-size: clamp(42px,5vw,64px);
   margin-bottom:18px;
   letter-spacing:-0.02em;
 }
-
 .speakers-intro{
   text-align:center;
   max-width:760px;
@@ -47,24 +62,23 @@ main{padding:80px 0}
 }
 
 /* horizontal slider */
-.speakers-wrapper{
-  position:relative;
-}
-
+.speakers-wrapper{ position:relative; }
 .speakers-viewport{
   overflow:hidden;
+  /* subtle fade edges so the “peek” feels intentional */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
 }
-
 .speakers-track{
   display:flex;
   gap:28px;
   overflow-x:auto;
   scroll-behavior:smooth;
-  padding-bottom:10px;
+  padding: 6px 0 14px;
 }
-
 .speakers-track::-webkit-scrollbar{display:none}
 
+/* Card sizing with “peek” (shows part of next card) */
 .speaker-card{
   flex:0 0 320px;
   height:420px;
@@ -73,170 +87,188 @@ main{padding:80px 0}
   position:relative;
   background:#111;
   cursor:pointer;
+  border: 1px solid rgba(0,0,0,.08);
 }
-
+@media(max-width:520px){
+  .speaker-card{ flex-basis: 280px; height: 390px; }
+}
 .speaker-card img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
-  transition:transform .4s ease;
+  transition:transform .45s ease;
+}
+@media (hover:hover){
+  .speaker-card:hover img{ transform:scale(1.06); }
 }
 
-.speaker-card:hover img{ transform:scale(1.05); }
-
+/* Overlay with blur + gradient */
 .speaker-overlay{
   position:absolute;
   inset:0;
-  background:linear-gradient(to top, rgba(10,30,60,.85) 0%, rgba(10,30,60,.55) 45%, rgba(10,30,60,.15) 100%);
   opacity:0;
   transition:opacity .35s ease;
+  background: linear-gradient(to top, var(--overlayA) 0%, var(--overlayB) 48%, var(--overlayC) 100%);
+  /* blur whatever is behind (image) */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+@media (hover:hover){
+  .speaker-card:hover .speaker-overlay{ opacity:1; }
 }
 
-.speaker-card:hover .speaker-overlay{ opacity:1; }
-
+/* Always-visible bottom info */
 .speaker-info{
   position:absolute;
-  bottom:24px;
-  left:24px;
-  right:24px;
+  bottom:22px;
+  left:22px;
+  right:22px;
   color:#fff;
   z-index:2;
 }
-
 .speaker-name{
   margin:0;
   font-size:24px;
-  font-weight:700;
+  font-weight:750;
+  letter-spacing:-0.01em;
 }
-
 .speaker-role{
-  margin-top:6px;
+  margin-top:7px;
   font-size:16px;
-  opacity:.8;
+  opacity:.82;
+  line-height:1.3;
 }
 
-/* hover details text */
+/* Hover details text */
 .speaker-details{
   position:absolute;
-  top:30px;
-  left:30px;
-  right:30px;
+  top:26px;
+  left:26px;
+  right:26px;
   color:#fff;
   font-size:18px;
   line-height:1.5;
   opacity:0;
   transform:translateY(10px);
-  transition:all .35s ease;
+  transition: opacity .35s ease, transform .35s ease;
   z-index:2;
 }
-
-.speaker-card:hover .speaker-details{
-  opacity:1;
-  transform:translateY(0);
+@media (hover:hover){
+  .speaker-card:hover .speaker-details{ opacity:1; transform:none; }
 }
 
 /* arrows */
 .speaker-arrows{
   display:flex;
   justify-content:center;
-  gap:30px;
-  margin-top:30px;
+  gap:26px;
+  margin-top:28px;
 }
-
 .speaker-arrow{
   width:52px;
   height:52px;
   border-radius:999px;
-  border:1px solid rgba(0,0,0,.1);
+  border:1px solid rgba(0,0,0,.10);
   background:#fff;
   cursor:pointer;
   font-size:22px;
+  line-height:1;
+  display:grid;
+  place-items:center;
+  transition: transform .08s ease, background .2s ease;
+}
+.speaker-arrow:active{ transform: translateY(1px); }
+.speaker-arrow:hover{ background: rgba(255,255,255,.9); }
+
+/* small hint row */
+.slider-hint{
+  text-align:center;
+  margin-top:14px;
+  color:var(--muted);
+  font-size:14px;
 }
 
-/* ================= SPONSORS ================= */
-
+/* ================= SPONSORS (AI gradient, not pure black) ================= */
 .sponsors-section{
-  background:#0b0c0f;
-  color:#fff;
-  padding:120px 0;
   margin-top:120px;
-}
+  padding:120px 0;
+  color:#fff;
 
+  /* AI gradient background */
+  background:
+    radial-gradient(900px 520px at 15% 20%, rgba(51, 120, 255, .28), transparent 55%),
+    radial-gradient(820px 520px at 85% 25%, rgba(255, 55, 165, .18), transparent 55%),
+    radial-gradient(980px 560px at 55% 90%, rgba(255, 160, 30, .14), transparent 55%),
+    linear-gradient(180deg, #06070c 0%, #0b0c0f 55%, #070812 100%);
+}
 .sponsors-inner{
   width:min(var(--max), calc(100% - 40px));
   margin:0 auto;
   text-align:center;
 }
-
 .sponsors-title{
   font-size: clamp(48px,6vw,84px);
-  margin-bottom:20px;
+  margin: 0 0 18px;
   letter-spacing:-0.03em;
 }
-
 .sponsors-subtitle{
   max-width:760px;
   margin:0 auto 60px;
   font-size:22px;
-  color:rgba(255,255,255,.7);
+  color:rgba(255,255,255,.72);
   line-height:1.6;
 }
 
+/* tabs like your screenshot (underline) */
 .sponsor-tabs{
   display:flex;
   justify-content:center;
   gap:60px;
-  border-bottom:1px solid rgba(255,255,255,.15);
+  border-bottom:1px solid rgba(255,255,255,.16);
   margin-bottom:60px;
 }
-
 .sponsor-tab{
   background:none;
   border:none;
-  color:rgba(255,255,255,.7);
-  font-weight:800;
+  color:rgba(255,255,255,.72);
+  font-weight:850;
   letter-spacing:.15em;
   padding:20px 0;
   cursor:pointer;
   position:relative;
 }
-
-.sponsor-tab[aria-selected="true"]{
-  color:#fff;
-}
-
+.sponsor-tab[aria-selected="true"]{ color:#fff; }
 .sponsor-tab[aria-selected="true"]::after{
   content:"";
   position:absolute;
-  left:0;
-  right:0;
+  left:0; right:0;
   height:3px;
   background:#fff;
   bottom:-1px;
+  border-radius: 99px;
 }
-
 .sponsor-panel{display:none}
 .sponsor-panel.active{display:block}
 
+/* logo cards (no heavy shadow) */
 .sponsor-logos{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:20px;
+  gap:18px;
 }
-
 .sponsor-logo{
-  background:#fff;
+  background: rgba(255,255,255,.98);
   color:#111;
   border-radius:22px;
-  padding:30px;
-  font-weight:800;
+  padding:30px 22px;
+  font-weight:850;
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: none; /* explicitly no shadow */
 }
-
 @media(max-width:900px){
   .sponsor-logos{grid-template-columns:repeat(2,1fr)}
 }
-
 @media(max-width:600px){
   .sponsor-logos{grid-template-columns:1fr}
 }
@@ -246,35 +278,35 @@ main{padding:80px 0}
 <body>
 <main>
 
-<section class="container">
+<section class="container reveal">
   <h1 class="section-title">Speakers</h1>
   <p class="speakers-intro">
     We are delighted to announce our distinguished speakers for AI in Cancer Care — bringing together expertise across oncology, clinical research, and artificial intelligence.
   </p>
 
-  <div class="speakers-wrapper">
+  <div class="speakers-wrapper reveal">
     <div class="speakers-viewport">
-      <div class="speakers-track" id="speakersTrack">
+      <div class="speakers-track" id="speakersTrack" aria-label="Speakers slider">
 
-        <!-- Speaker 1 -->
+        <!-- Speaker 1 (your local image file in the repo) -->
         <div class="speaker-card">
-          <img src="Daniel Truhn headshot.png" alt="">
+          <img src="Daniel Truhn headshot.png" alt="Prof. Daniel Truhn">
           <div class="speaker-overlay"></div>
           <div class="speaker-details">
-            Daniel leads the Laboratory for Artificial Intelligence in Medicine at RWTH Aachen and focuses on translating AI into clinical routine.
+            Daniel leads the Laboratory for Artificial Intelligence in Medicine at RWTH Aachen. His talk explores agentic AI systems and their clinical potential.
           </div>
           <div class="speaker-info">
             <h3 class="speaker-name">Prof. Daniel Truhn</h3>
-            <div class="speaker-role">Senior Physician, RWTH Aachen</div>
+            <div class="speaker-role">Senior Physician, RWTH Aachen (Germany)</div>
           </div>
         </div>
 
         <!-- Speaker 2 -->
         <div class="speaker-card">
-          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80">
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80" alt="Speaker">
           <div class="speaker-overlay"></div>
           <div class="speaker-details">
-            Researching responsible AI in clinical workflows and oncology imaging.
+            Focused on responsible AI deployment and clinical evaluation of models in oncology workflows.
           </div>
           <div class="speaker-info">
             <h3 class="speaker-name">Dr. Jane Doe</h3>
@@ -284,10 +316,10 @@ main{padding:80px 0}
 
         <!-- Speaker 3 -->
         <div class="speaker-card">
-          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80" alt="Speaker">
           <div class="speaker-overlay"></div>
           <div class="speaker-details">
-            Bridging physics and medicine in AI-powered diagnostics.
+            Bridging methodological innovation with real-world clinical impact in imaging and diagnostics.
           </div>
           <div class="speaker-info">
             <h3 class="speaker-name">Dr. John Smith</h3>
@@ -297,10 +329,10 @@ main{padding:80px 0}
 
         <!-- Speaker 4 -->
         <div class="speaker-card">
-          <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80">
+          <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=1200&q=80" alt="Speaker">
           <div class="speaker-overlay"></div>
           <div class="speaker-details">
-            Translating machine learning into oncology clinical decision systems.
+            Translating machine learning into oncology decision support and clinical pathways.
           </div>
           <div class="speaker-info">
             <h3 class="speaker-name">Prof. Maria Lee</h3>
@@ -312,26 +344,28 @@ main{padding:80px 0}
     </div>
 
     <div class="speaker-arrows">
-      <button class="speaker-arrow" id="speakersPrev">←</button>
-      <button class="speaker-arrow" id="speakersNext">→</button>
+      <button class="speaker-arrow" id="speakersPrev" type="button" aria-label="Previous speakers">←</button>
+      <button class="speaker-arrow" id="speakersNext" type="button" aria-label="Next speakers">→</button>
     </div>
+
+    <div class="slider-hint">Tip: hover a card to see details • arrows scroll • auto-scroll pauses on hover</div>
   </div>
 </section>
 
 <!-- SPONSORS -->
 <section class="sponsors-section">
-  <div class="sponsors-inner">
+  <div class="sponsors-inner reveal">
     <h2 class="sponsors-title">Powering AI in Cancer Care</h2>
     <p class="sponsors-subtitle">
       Our event is proudly supported by organisations committed to advancing responsible AI in oncology.
     </p>
 
-    <div class="sponsor-tabs">
-      <button class="sponsor-tab" aria-selected="true" aria-controls="panel-sponsors">SPONSORS</button>
-      <button class="sponsor-tab" aria-selected="false" aria-controls="panel-partners">PARTNERS</button>
+    <div class="sponsor-tabs" role="tablist" aria-label="Sponsors and partners">
+      <button class="sponsor-tab" role="tab" aria-selected="true" aria-controls="panel-sponsors" id="tab-sponsors">SPONSORS</button>
+      <button class="sponsor-tab" role="tab" aria-selected="false" aria-controls="panel-partners" id="tab-partners">PARTNERS</button>
     </div>
 
-    <div class="sponsor-panel active" id="panel-sponsors">
+    <div class="sponsor-panel active reveal" id="panel-sponsors" role="tabpanel" aria-labelledby="tab-sponsors">
       <div class="sponsor-logos">
         <div class="sponsor-logo">Sponsor 1</div>
         <div class="sponsor-logo">Sponsor 2</div>
@@ -339,7 +373,7 @@ main{padding:80px 0}
       </div>
     </div>
 
-    <div class="sponsor-panel" id="panel-partners">
+    <div class="sponsor-panel reveal" id="panel-partners" role="tabpanel" aria-labelledby="tab-partners">
       <div class="sponsor-logos">
         <div class="sponsor-logo">Partner 1</div>
         <div class="sponsor-logo">Partner 2</div>
@@ -352,23 +386,94 @@ main{padding:80px 0}
 </main>
 
 <script>
-// speaker arrows
+/* ================= Speakers: arrows + auto-scroll ================= */
 const track = document.getElementById('speakersTrack');
-document.getElementById('speakersNext').onclick = () => track.scrollBy({left:350, behavior:'smooth'});
-document.getElementById('speakersPrev').onclick = () => track.scrollBy({left:-350, behavior:'smooth'});
+const prevBtn = document.getElementById('speakersPrev');
+const nextBtn = document.getElementById('speakersNext');
 
-// sponsor tabs
-const sponsorTabs = document.querySelectorAll('.sponsor-tab');
-const sponsorPanels = document.querySelectorAll('.sponsor-panel');
+function scrollStep(){
+  if (!track) return 0;
+  const card = track.querySelector('.speaker-card');
+  if (!card) return 320;
+  const gap = 28;
+  // scroll ~1.5 cards so the peek stays visible
+  return Math.round(card.getBoundingClientRect().width + (gap * 1.5));
+}
 
-sponsorTabs.forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    sponsorTabs.forEach(t=>t.setAttribute('aria-selected','false'));
-    sponsorPanels.forEach(p=>p.classList.remove('active'));
-    tab.setAttribute('aria-selected','true');
-    document.getElementById(tab.getAttribute('aria-controls')).classList.add('active');
-  });
+prevBtn?.addEventListener('click', () => track?.scrollBy({ left: -scrollStep(), behavior:'smooth' }));
+nextBtn?.addEventListener('click', () => track?.scrollBy({ left:  scrollStep(), behavior:'smooth' }));
+
+// Auto-scroll (loops), pauses on hover/focus, respects reduced motion
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let autoTimer = null;
+let isPaused = false;
+
+function startAuto(){
+  if (prefersReduced || !track) return;
+  stopAuto();
+  autoTimer = setInterval(() => {
+    if (isPaused) return;
+    const max = track.scrollWidth - track.clientWidth;
+    const atEnd = track.scrollLeft >= (max - 4);
+    track.scrollTo({ left: atEnd ? 0 : track.scrollLeft + scrollStep(), behavior: 'smooth' });
+  }, 3200);
+}
+function stopAuto(){
+  if (autoTimer) clearInterval(autoTimer);
+  autoTimer = null;
+}
+function pauseAuto(){ isPaused = true; }
+function resumeAuto(){ isPaused = false; }
+
+track?.addEventListener('mouseenter', pauseAuto);
+track?.addEventListener('mouseleave', resumeAuto);
+track?.addEventListener('focusin', pauseAuto);
+track?.addEventListener('focusout', resumeAuto);
+
+// small: also pause if user starts dragging/scrolling
+let userScrollTimeout = null;
+track?.addEventListener('scroll', () => {
+  if (prefersReduced) return;
+  isPaused = true;
+  clearTimeout(userScrollTimeout);
+  userScrollTimeout = setTimeout(() => { isPaused = false; }, 900);
 });
+
+startAuto();
+
+/* ================= Sponsors tabs ================= */
+const sponsorTabs = Array.from(document.querySelectorAll('.sponsor-tab'));
+const sponsorPanels = Array.from(document.querySelectorAll('.sponsor-panel'));
+
+function activateSponsorTab(tab){
+  sponsorTabs.forEach(t => t.setAttribute('aria-selected','false'));
+  sponsorPanels.forEach(p => p.classList.remove('active'));
+  tab.setAttribute('aria-selected','true');
+  const panel = document.getElementById(tab.getAttribute('aria-controls'));
+  panel?.classList.add('active');
+}
+sponsorTabs.forEach(tab => tab.addEventListener('click', () => activateSponsorTab(tab)));
+
+/* ================= Reveal on scroll (stagger + once) ================= */
+const revealEls = Array.from(document.querySelectorAll('.reveal'));
+if (!prefersReduced && 'IntersectionObserver' in window){
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting){
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
+
+  revealEls.forEach((el, i) => {
+    el.style.transitionDelay = `${Math.min(i * 70, 280)}ms`;
+    io.observe(el);
+  });
+} else {
+  // fallback
+  revealEls.forEach(el => el.classList.add('is-visible'));
+}
 </script>
 
 </body>
