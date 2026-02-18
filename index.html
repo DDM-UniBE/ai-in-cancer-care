@@ -149,11 +149,226 @@
       font-size: 16px;
       line-height: 1.6;
     }
+
+    /* ===== Speakers (2 per view + arrow navigation) ===== */
+.section-title{
+  margin: 0 0 26px;
+  text-align:center;
+  font-size: clamp(42px, 5vw, 64px);
+  letter-spacing: -0.02em;
+}
+
+.speakers{
+  margin: 0 auto 70px;
+}
+
+.speakers-shell{
+  position: relative;
+  width: min(980px, 100%);
+  margin: 0 auto;
+}
+
+.speakers-viewport{
+  overflow: hidden;              /* hides scrollbar */
+  border-radius: 24px;           /* optional, nice masking */
+}
+
+.speakers-track{
+  display: flex;
+  gap: 18px;
+  scroll-behavior: smooth;
+  padding: 2px;                  /* prevents border cut-off */
+  transform: translateZ(0);
+}
+
+.speaker-card{
+  flex: 0 0 calc(50% - 9px);     /* 2 cards per row */
+  background: var(--card);
+  border: 1px solid var(--cardStroke);
+  border-radius: var(--radius);
+  box-shadow: none;              /* keep it clean */
+  padding: 22px;
+}
+
+@media (max-width: 860px){
+  .speaker-card{ flex-basis: 100%; } /* 1 per row on small screens */
+}
+
+.speaker-head{
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.speaker-photo{
+  width: 90px;
+  height: 90px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+.speaker-name{
+  margin: 0;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+}
+
+.speaker-role{
+  margin: 6px 0 0;
+  font-size: 18px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.speaker-bio-title{
+  margin: 18px 0 10px;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+}
+
+.speaker-bio{
+  margin: 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.speaker-topic{
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+
+.speaker-topic-title{
+  margin: 0 0 10px;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+}
+
+.speaker-topic-line{
+  margin: 0;
+  font-size: 18px;
+  color: var(--muted);
+  font-weight: 650;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;       /* one line only */
+}
+
+/* Arrow buttons */
+.speakers-nav{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.95);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.speakers-nav:hover{ background: #fff; }
+.speakers-nav:active{ transform: translateY(-50%) scale(.98); }
+
+.speakers-prev{ left: -12px; }
+.speakers-next{ right: -12px; }
+
+@media (max-width: 980px){
+  .speakers-prev{ left: 6px; }
+  .speakers-next{ right: 6px; }
+}
+
   </style>
 </head>
 
 <body>
   <main>
+    <!-- ===== SPEAKERS (place above Sponsors) ===== -->
+<section class="speakers" id="speakers">
+  <h2 class="section-title">Speakers</h2>
+
+  <div class="speakers-shell">
+    <button class="speakers-nav speakers-prev" type="button" aria-label="Previous speakers">‹</button>
+    <button class="speakers-nav speakers-next" type="button" aria-label="Next speakers">›</button>
+
+    <div class="speakers-viewport">
+      <div class="speakers-track" id="speakersTrack">
+        <!-- Speaker 1 -->
+        <article class="speaker-card">
+          <div class="speaker-head">
+            <img class="speaker-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&q=80" alt="John Doe">
+            <div>
+              <h3 class="speaker-name">John Doe</h3>
+              <p class="speaker-role">Title of title</p>
+            </div>
+          </div>
+
+          <h4 class="speaker-bio-title">Biography</h4>
+          <p class="speaker-bio">
+            Short bio here. Keep it 2–5 lines. (We can shorten it later so cards stay neat.)
+          </p>
+
+          <div class="speaker-topic">
+            <h4 class="speaker-topic-title">Topic</h4>
+            <p class="speaker-topic-line">AI for early detection in oncology workflows</p>
+          </div>
+        </article>
+
+        <!-- Speaker 2 -->
+        <article class="speaker-card">
+          <div class="speaker-head">
+            <img class="speaker-photo" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=240&q=80" alt="Jane Doe">
+            <div>
+              <h3 class="speaker-name">Jane Doe</h3>
+              <p class="speaker-role">Title of title</p>
+            </div>
+          </div>
+
+          <h4 class="speaker-bio-title">Biography</h4>
+          <p class="speaker-bio">
+            Short bio here. Keep it 2–5 lines.
+          </p>
+
+          <div class="speaker-topic">
+            <h4 class="speaker-topic-title">Topic</h4>
+            <p class="speaker-topic-line">Clinical validation & monitoring of AI models</p>
+          </div>
+        </article>
+
+        <!-- Speaker 3 (add as many as you want) -->
+        <article class="speaker-card">
+          <div class="speaker-head">
+            <img class="speaker-photo" src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=240&q=80" alt="Speaker Name">
+            <div>
+              <h3 class="speaker-name">Speaker Name</h3>
+              <p class="speaker-role">Title of title</p>
+            </div>
+          </div>
+
+          <h4 class="speaker-bio-title">Biography</h4>
+          <p class="speaker-bio">
+            Short bio here.
+          </p>
+
+          <div class="speaker-topic">
+            <h4 class="speaker-topic-title">Topic</h4>
+            <p class="speaker-topic-line">Multimodal AI across pathology and radiology</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
+
     <div class="container">
       <h1>Sponsors</h1>
 
@@ -162,7 +377,7 @@
           <button role="tab" id="tab-bronze" aria-controls="panel-bronze" aria-selected="true">Bronze</button>
           <button role="tab" id="tab-platinum" aria-controls="panel-platinum" aria-selected="false">Platinum</button>
           <button role="tab" id="tab-gold" aria-controls="panel-gold" aria-selected="false">Gold</button>
-          <button role="tab" id="tab-pr" aria-controls="panel-pr" aria-selected="false">PR Partners</button>
+          <button role="tab" id="tab-pr" aria-controls="panel-pr" aria-selected="false">Partners</button>
         </div>
       </div>
 
@@ -181,8 +396,6 @@
               <div class="logo-card"><div><div class="logo-text">[Sponsor]</div><div class="logo-sub">Bronze Sponsor</div></div></div>
               <div class="logo-card"><div><div class="logo-text">[Sponsor]</div><div class="logo-sub">Bronze Sponsor</div></div></div>
               <div class="logo-card"><div><div class="logo-text">[Sponsor]</div><div class="logo-sub">Bronze Sponsor</div></div></div>
-              <div class="logo-card"><div><div class="logo-text">[Sponsor]</div><div class="logo-sub">Bronze Sponsor</div></div></div>
-              <div class="logo-card"><div><div class="logo-text">[Sponsor]</div><div class="logo-sub">Bronze Sponsor</div></div></div>
             </div>
           </div>
         </div>
@@ -191,9 +404,6 @@
         <div class="tab-panel" id="panel-platinum" role="tabpanel" aria-labelledby="tab-platinum">
           <div class="grid-wrap">
             <div class="logo-grid">
-              <div class="logo-card"><div><div class="logo-text">[Platinum]</div><div class="logo-sub">Platinum Sponsor</div></div></div>
-              <div class="logo-card"><div><div class="logo-text">[Platinum]</div><div class="logo-sub">Platinum Sponsor</div></div></div>
-              <div class="logo-card"><div><div class="logo-text">[Platinum]</div><div class="logo-sub">Platinum Sponsor</div></div></div>
               <div class="logo-card"><div><div class="logo-text">[Platinum]</div><div class="logo-sub">Platinum Sponsor</div></div></div>
               <div class="logo-card"><div><div class="logo-text">[Platinum]</div><div class="logo-sub">Platinum Sponsor</div></div></div>
               <div class="logo-card"><div><div class="logo-text">[Platinum]</div><div class="logo-sub">Platinum Sponsor</div></div></div>
@@ -208,9 +418,6 @@
               <div class="logo-card"><div><div class="logo-text">[Gold]</div><div class="logo-sub">Gold Sponsor</div></div></div>
               <div class="logo-card"><div><div class="logo-text">[Gold]</div><div class="logo-sub">Gold Sponsor</div></div></div>
               <div class="logo-card"><div><div class="logo-text">[Gold]</div><div class="logo-sub">Gold Sponsor</div></div></div>
-              <div class="logo-card"><div><div class="logo-text">[Gold]</div><div class="logo-sub">Gold Sponsor</div></div></div>
-              <div class="logo-card"><div><div class="logo-text">[Gold]</div><div class="logo-sub">Gold Sponsor</div></div></div>
-              <div class="logo-card"><div><div class="logo-text">[Gold]</div><div class="logo-sub">Gold Sponsor</div></div></div>
             </div>
           </div>
         </div>
@@ -219,9 +426,6 @@
         <div class="tab-panel" id="panel-pr" role="tabpanel" aria-labelledby="tab-pr">
           <div class="grid-wrap">
             <div class="logo-grid">
-              <div class="logo-card"><div><div class="logo-text">[PR]</div><div class="logo-sub">PR Partner</div></div></div>
-              <div class="logo-card"><div><div class="logo-text">[PR]</div><div class="logo-sub">PR Partner</div></div></div>
-              <div class="logo-card"><div><div class="logo-text">[PR]</div><div class="logo-sub">PR Partner</div></div></div>
               <div class="logo-card"><div><div class="logo-text">[PR]</div><div class="logo-sub">PR Partner</div></div></div>
               <div class="logo-card"><div><div class="logo-text">[PR]</div><div class="logo-sub">PR Partner</div></div></div>
               <div class="logo-card"><div><div class="logo-text">[PR]</div><div class="logo-sub">PR Partner</div></div></div>
@@ -250,6 +454,23 @@
     }
 
     tabs.forEach(t => t.addEventListener('click', () => activate(t)));
+    // Speakers arrows (scroll by one "page" = viewport width)
+const track = document.getElementById('speakersTrack');
+const prevBtn = document.querySelector('.speakers-prev');
+const nextBtn = document.querySelector('.speakers-next');
+
+function scrollSpeakers(dir){
+  if (!track) return;
+  const viewport = track.parentElement; // .speakers-viewport
+  const amount = viewport.clientWidth;  // scroll one full view
+  track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+}
+
+if (prevBtn && nextBtn && track){
+  prevBtn.addEventListener('click', () => scrollSpeakers(-1));
+  nextBtn.addEventListener('click', () => scrollSpeakers(1));
+}
+
   </script>
 </body>
 </html>
