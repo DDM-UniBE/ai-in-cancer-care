@@ -1,79 +1,193 @@
-<section class="panel">
-  <!-- General -->
-  <div class="tab-panel active" id="panel-general" role="tabpanel" aria-labelledby="tab-general">
-    <div class="logo-grid">
-      <div class="logo-card">
-        <div>
-          <div class="logo-text">Linktree*</div>
-          <div class="logo-sub">General Sponsor</div>
-        </div>
-      </div>
-      <div class="logo-card">
-        <div>
-          <div class="logo-text">[Sponsor]</div>
-          <div class="logo-sub">General Sponsor</div>
-        </div>
-      </div>
-      <div class="logo-card">
-        <div>
-          <div class="logo-text">[Sponsor]</div>
-          <div class="logo-sub">General Sponsor</div>
-        </div>
-      </div>
-      <div class="logo-card">
-        <div>
-          <div class="logo-text">[Sponsor]</div>
-          <div class="logo-sub">General Sponsor</div>
-        </div>
-      </div>
-      <div class="logo-card">
-        <div>
-          <div class="logo-text">[Sponsor]</div>
-          <div class="logo-sub">General Sponsor</div>
-        </div>
-      </div>
-      <div class="logo-card">
-        <div>
-          <div class="logo-text">[Sponsor]</div>
-          <div class="logo-sub">General Sponsor</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI in Cancer Care — Sponsors</title>
 
-  <!-- Platinum -->
-  <div class="tab-panel" id="panel-platinum" role="tabpanel" aria-labelledby="tab-platinum">
-    <div class="logo-grid">
-      <div class="logo-card"><div><div class="logo-text">[Platinum]</div><div class="logo-sub">Platinum Sponsor</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[Platinum]</div><div class="logo-sub">Platinum Sponsor</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[Platinum]</div><div class="logo-sub">Platinum Sponsor</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[Platinum]</div><div class="logo-sub">Platinum Sponsor</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[Platinum]</div><div class="logo-sub">Platinum Sponsor</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[Platinum]</div><div class="logo-sub">Platinum Sponsor</div></div></div>
-    </div>
-  </div>
+  <style>
+    :root{
+      --bg: #ffffff;
+      --text: #0b0c0f;
+      --muted: #6b7280;
+      --pill: #e8e8ea;
+      --pillActive: #1f4dff;
+      --card: #ffffff;
+      --cardStroke: #ececef;
+      --shadow: 0 18px 55px rgba(10, 10, 20, .12);
+      --radius: 28px;
+      --max: 1120px;
+    }
 
-  <!-- Gold -->
-  <div class="tab-panel" id="panel-gold" role="tabpanel" aria-labelledby="tab-gold">
-    <div class="logo-grid">
-      <div class="logo-card"><div><div class="logo-text">[Gold]</div><div class="logo-sub">Gold Sponsor</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[Gold]</div><div class="logo-sub">Gold Sponsor</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[Gold]</div><div class="logo-sub">Gold Sponsor</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[Gold]</div><div class="logo-sub">Gold Sponsor</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[Gold]</div><div class="logo-sub">Gold Sponsor</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[Gold]</div><div class="logo-sub">Gold Sponsor</div></div></div>
-    </div>
-  </div>
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: var(--bg);
+      color: var(--text);
+    }
 
-  <!-- PR Partners -->
-  <div class="tab-panel" id="panel-pr" role="tabpanel" aria-labelledby="tab-pr">
-    <div class="logo-grid">
-      <div class="logo-card"><div><div class="logo-text">[PR Partner]</div><div class="logo-sub">PR Partner</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[PR Partner]</div><div class="logo-sub">PR Partner</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[PR Partner]</div><div class="logo-sub">PR Partner</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[PR Partner]</div><div class="logo-sub">PR Partner</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[PR Partner]</div><div class="logo-sub">PR Partner</div></div></div>
-      <div class="logo-card"><div><div class="logo-text">[PR Partner]</div><div class="logo-sub">PR Partner</div></div></div>
+    .container{
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* Page spacing like BCMS */
+    main{
+      padding: 72px 0 90px;
+    }
+
+    h1{
+      margin: 0 0 26px;
+      text-align:center;
+      font-size: clamp(42px, 5vw, 64px);
+      letter-spacing: -0.02em;
+    }
+
+    /* Pills */
+    .pillbar{
+      display:flex;
+      justify-content:center;
+      margin-bottom: 58px;
+    }
+    .pill{
+      display:flex;
+      gap: 10px;
+      padding: 8px;
+      background: var(--pill);
+      border-radius: 999px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+    }
+    .pill button{
+      border: 0;
+      background: transparent;
+      padding: 14px 24px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 18px;
+      color: #1f2937;
+      transition: transform .06s ease, background .2s ease, color .2s ease;
+    }
+    .pill button:active{ transform: translateY(1px); }
+    .pill button[aria-selected="true"]{
+      background: var(--pillActive);
+      color: white;
+      box-shadow: 0 10px 24px rgba(31, 77, 255, .22);
+    }
+
+    /* Panel area */
+    .panel{
+      display:flex;
+      justify-content:center;
+      padding-top: 10px;
+    }
+
+    /* Sponsor card */
+    .sponsor-card{
+      width: min(640px, 100%);
+      background: var(--card);
+      border: 1px solid var(--cardStroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 46px 42px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 320px;
+    }
+
+    /* Logo styling (swap to image later) */
+    .logo-text{
+      font-weight: 900;
+      font-size: clamp(44px, 5vw, 64px);
+      letter-spacing: -0.03em;
+      color: #0b0c0f;
+    }
+    .logo-text .star{
+      font-weight: 900;
+      margin-left: 2px;
+    }
+
+    /* Optional helper text (you can delete this) */
+    .hint{
+      margin-top: 34px;
+      text-align:center;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* Tabs content */
+    .tab-panel{ display:none; }
+    .tab-panel.active{ display:block; }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="container">
+      <h1>Sponsors</h1>
+
+      <div class="pillbar" role="tablist" aria-label="Sponsor tiers">
+        <div class="pill">
+          <button role="tab" id="tab-general" aria-controls="panel-general" aria-selected="true">General</button>
+          <button role="tab" id="tab-platinum" aria-controls="panel-platinum" aria-selected="false">Platinum</button>
+          <button role="tab" id="tab-gold" aria-controls="panel-gold" aria-selected="false">Gold</button>
+          <button role="tab" id="tab-pr" aria-controls="panel-pr" aria-selected="false">PR Partners</button>
+        </div>
+      </div>
+
+      <section class="panel">
+        <!-- General -->
+        <div class="tab-panel active" id="panel-general" role="tabpanel" aria-labelledby="tab-general">
+          <div class="sponsor-card">
+            <div class="logo-text">Linktree<span class="star">*</span></div>
+          </div>
+        </div>
+
+        <!-- Platinum -->
+        <div class="tab-panel" id="panel-platinum" role="tabpanel" aria-labelledby="tab-platinum">
+          <div class="sponsor-card">
+            <div class="logo-text">[Platinum Sponsor]</div>
+          </div>
+        </div>
+
+        <!-- Gold -->
+        <div class="tab-panel" id="panel-gold" role="tabpanel" aria-labelledby="tab-gold">
+          <div class="sponsor-card">
+            <div class="logo-text">[Gold Sponsor]</div>
+          </div>
+        </div>
+
+        <!-- PR -->
+        <div class="tab-panel" id="panel-pr" role="tabpanel" aria-labelledby="tab-pr">
+          <div class="sponsor-card">
+            <div class="logo-text">[PR Partner]</div>
+          </div>
+        </div>
+      </section>
+
+      <p class="hint">
+        Next we’ll swap “Linktree*” for a real logo image + add multiple logos per tier (same centred layout).
+      </p>
     </div>
-  </div>
-</section>
+  </main>
+
+  <script>
+    // Simple tab switcher
+    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+    const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
+
+    function activate(tab){
+      tabs.forEach((t, i) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        panels[i].classList.toggle('active', on);
+      });
+    }
+
+    tabs.forEach(t => t.addEventListener('click', () => activate(t)));
+  </script>
+</body>
+</html>
