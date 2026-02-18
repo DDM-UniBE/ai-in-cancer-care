@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AI in Cancer Care — Sponsors</title>
+  <title>AI in Cancer Care</title>
 
   <style>
     :root{
-  --bg: #f3f3f5;
-  --text: #0b0c0f;
-  --muted: #6b7280;
-  --pill: #e8e8ea;
-  --pillActive: #ff1f1f;
-  --card: #ffffff;
-  --cardStroke: #ececef;
-  --shadow: 0 18px 55px rgba(10, 10, 20, .12);
-  --radius: 28px;
-  --max: 1120px;
-}
+      --bg: #f3f3f5;
+      --text: #0b0c0f;
+      --muted: #6b7280;
+      --pill: #e8e8ea;
+      --pillActive: #ff1f1f;
+      --card: #ffffff;
+      --cardStroke: #ececef;
+      --shadow: none;
+      --radius: 28px;
+      --max: 1120px;
+    }
 
     *{ box-sizing: border-box; }
     body{
@@ -43,7 +43,252 @@
       letter-spacing: -0.02em;
     }
 
-    /* Pills */
+    .section-title{
+      margin: 0 0 18px;
+      text-align:center;
+      font-size: clamp(42px, 5vw, 64px);
+      letter-spacing: -0.02em;
+    }
+
+    .speakers-intro{
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto 36px;
+      font-size: 20px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    /* ===== Reveal on scroll ===== */
+    .reveal{
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.is-visible{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce){
+      .reveal{ transition:none; opacity:1; transform:none; }
+    }
+
+    /* ===== Speakers slider (2 cards + peek) ===== */
+    .speakers-shell{
+      width: min(1000px, 100%);
+      margin: 0 auto;
+    }
+
+    .speakers-viewport{
+      overflow: hidden; /* no scrollbar */
+      padding: 6px 0;   /* keep borders from clipping */
+    }
+
+    .speakers-track{
+      display: flex;
+      gap: 28px;
+      scroll-behavior: smooth;
+      overflow-x: auto;            /* needed for scrollBy */
+      scrollbar-width: none;       /* Firefox */
+      -ms-overflow-style: none;    /* IE/Edge legacy */
+      padding-bottom: 6px;
+    }
+    .speakers-track::-webkit-scrollbar{ display:none; }
+
+    /* Card width:
+       - show 2 full cards
+       - plus a little peek of the next (because width < 50%) */
+    .speaker-card{
+      position: relative;
+      flex: 0 0 46%;
+      height: 420px;
+      border-radius: 28px;
+      overflow: hidden;
+      cursor: pointer;
+      background: #111;
+      border: 1px solid rgba(0,0,0,.10);
+    }
+
+    @media (max-width: 900px){
+      .speaker-card{ flex-basis: 86%; } /* big on mobile, still peeks next */
+    }
+
+    .speaker-card img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.02);
+      transition: transform .35s ease;
+    }
+
+    /* Dark overlay on image */
+    .speaker-card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(to top, rgba(0,0,0,.70) 0%, rgba(0,0,0,.30) 45%, rgba(0,0,0,.12) 100%);
+    }
+
+    /* Text on top of image */
+    .speaker-card-content{
+      position:absolute;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding: 26px 26px 24px;
+      color: #fff;
+      z-index: 1;
+    }
+
+    .speaker-card-name{
+      margin: 0;
+      font-size: 34px;
+      letter-spacing: -0.02em;
+    }
+
+    .speaker-card-role{
+      margin: 8px 0 0;
+      font-size: 18px;
+      opacity: .88;
+      font-weight: 650;
+    }
+
+    .speaker-card-topic{
+      margin: 14px 0 0;
+      font-size: 18px;
+      font-weight: 800;
+      opacity: .95;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @media (hover:hover){
+      .speaker-card:hover img{ transform: scale(1.07); }
+    }
+
+    /* centred arrows under cards */
+    .speakers-controls{
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .speakers-btn{
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.12);
+      background: rgba(255,255,255,.75);
+      cursor: pointer;
+      font-size: 20px;
+      display: grid;
+      place-items: center;
+    }
+    .speakers-btn:hover{ background:#fff; }
+    .speakers-btn:active{ transform: scale(.98); }
+
+    /* ===== Modal overlay ===== */
+    .modal{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.72);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      z-index: 9999;
+    }
+    .modal.open{ display:flex; }
+
+    .modal-panel{
+      width: min(980px, 100%);
+      border-radius: 28px;
+      overflow: hidden;
+      background: #111;
+      position: relative;
+    }
+
+    .modal-hero{
+      position: relative;
+      height: 520px;
+    }
+
+    .modal-hero img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display:block;
+    }
+
+    .modal-hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.36) 45%, rgba(0,0,0,.20) 100%);
+    }
+
+    .modal-content{
+      position:absolute;
+      inset:0;
+      padding: 34px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      gap: 14px;
+      color:#fff;
+      z-index:1;
+    }
+
+    .modal-name{
+      font-size: 44px;
+      margin: 0;
+      letter-spacing:-0.02em;
+    }
+
+    .modal-role{
+      margin: 0;
+      font-size: 20px;
+      opacity:.88;
+      font-weight:650;
+    }
+
+    .modal-topic{
+      margin: 8px 0 0;
+      font-size: 20px;
+      font-weight:850;
+    }
+
+    .modal-bio{
+      margin: 10px 0 0;
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: .92;
+      max-width: 860px;
+    }
+
+    .modal-close{
+      position:absolute;
+      top: 16px;
+      right: 16px;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(0,0,0,.35);
+      color: #fff;
+      cursor: pointer;
+      font-size: 22px;
+      display:grid;
+      place-items:center;
+      z-index: 2;
+    }
+    .modal-close:hover{ background: rgba(0,0,0,.5); }
+
+    /* ===== Sponsors (your existing) ===== */
     .pillbar{
       display:flex;
       justify-content:center;
@@ -73,27 +318,22 @@
     .pill button[aria-selected="true"]{
       background: var(--pillActive);
       color: white;
-      box-shadow: 0 10px 24px rgba(31, 77, 255, .22);
+      box-shadow: 0 10px 24px rgba(255, 31, 31, .22);
     }
 
-    /* Panel area */
     .panel{
       display:flex;
       justify-content:center;
       padding-top: 10px;
     }
-
-    /* Tabs content */
     .tab-panel{ display:none; width: 100%; }
     .tab-panel.active{ display:block; }
 
-    /* Grid wrapper (centred, max width like BCMS) */
     .grid-wrap{
       width: min(980px, 100%);
       margin: 0 auto;
     }
 
-    /* 2 rows of 3 (desktop) */
     .logo-grid{
       display:grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -106,12 +346,11 @@
       .logo-grid{ grid-template-columns: 1fr; }
     }
 
-    /* Each logo card */
     .logo-card{
       background: var(--card);
       border: 1px solid var(--cardStroke);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      box-shadow: none; /* no shadow */
       padding: 28px 22px;
       min-height: 150px;
       display:flex;
@@ -120,7 +359,6 @@
       text-align:center;
     }
 
-    /* Placeholder logo styling */
     .logo-text{
       font-weight: 900;
       font-size: 34px;
@@ -133,282 +371,124 @@
       margin-left: 2px;
     }
 
-    /* Optional label under logo name */
     .logo-sub{
       margin-top: 10px;
       font-size: 14px;
       color: var(--muted);
       line-height: 1.3;
     }
-
-    /* Optional helper text (you can delete this) */
-    .hint{
-      margin-top: 34px;
-      text-align:center;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.6;
-    }
-/* ===== Speakers: 2 columns + arrows + clean (no cards) ===== */
-
-.speakers-wrap{
-  width: min(1000px, 100%);
-  margin: 0 auto 40px;
-}
-
-.speakers-viewport{
-  overflow: hidden; /* hides scroll bar */
-}
-
-.speakers-track{
-  display: flex;
-  gap: 60px;
-  scroll-behavior: smooth;
-  will-change: transform;
-}
-
-/* Each "page" shows 2 speakers */
-.speakers-page{
-  flex: 0 0 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-}
-
-@media (max-width: 900px){
-  .speakers-page{
-    grid-template-columns: 1fr;
-    gap: 42px;
-  }
-}
-
-/* Speaker block (no background card) */
-.speaker-item{
-  padding: 10px 0;
-}
-
-.speaker-header{
-  display: flex;
-  align-items: center;
-  gap: 26px;
-  margin-bottom: 28px;
-}
-
-/* Bigger photo */
-.speaker-photo-large{
-  width: 190px;
-  height: 190px;
-  border-radius: 999px;
-  object-fit: cover;
-}
-
-@media (max-width: 900px){
-  .speaker-photo-large{
-    width: 150px;
-    height: 150px;
-  }
-}
-
-.speaker-name-large{
-  margin: 0;
-  font-size: 44px;
-  letter-spacing: -0.02em;
-}
-
-.speaker-role-large{
-  margin-top: 8px;
-  font-size: 22px;
-  color: var(--muted);
-  font-weight: 600;
-}
-
-/* Subtitles like screenshot */
-.speaker-section-title{
-  margin: 34px 0 14px;
-  font-size: 34px;
-  letter-spacing: -0.02em;
-}
-
-.speaker-text{
-  font-size: 20px;
-  line-height: 1.75;
-  color: var(--muted);
-  max-width: 520px;
-}
-
-.speaker-topic-line{
-  margin: 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; /* 1 line only */
-  max-width: 520px;
-}
-
-/* Arrows UNDER the two columns */
-.speakers-controls{
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-  margin-top: 26px;
-}
-
-.speakers-btn{
-  width: 52px;
-  height: 52px;
-  border-radius: 999px;
-  border: 1px solid rgba(0,0,0,.10);
-  background: rgba(255,255,255,.85);
-  cursor: pointer;
-  font-size: 20px;
-  display: grid;
-  place-items: center;
-}
-
-.speakers-btn:hover{ background:#fff; }
-.speakers-btn:active{ transform: scale(.98); }
-
-/* ===== Light motion on scroll ===== */
-.reveal{
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .6s ease, transform .6s ease;
-}
-.reveal.is-visible{
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce){
-  .reveal{ transition: none; transform:none; opacity:1; }
-}
-
-
   </style>
 </head>
 
 <body>
   <main>
- <!-- ===== SPEAKERS SECTION ===== -->
-<section id="speakers" style="margin-bottom:100px;">
-  <div class="container">
-    <h2 class="section-title reveal">Speakers</h2>
 
-    <div class="speakers-wrap">
-      <div class="speakers-viewport">
-        <div class="speakers-track" id="speakersTrack">
+    <!-- ===== SPEAKERS ===== -->
+    <section id="speakers" style="margin-bottom:110px;">
+      <div class="container">
+        <h2 class="section-title reveal">Speakers</h2>
 
-          <!-- PAGE 1 (2 speakers) -->
-          <div class="speakers-page">
-            <div class="speaker-item reveal">
-              <div class="speaker-header">
-                <img
-                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80"
-                  alt="John Doe"
-                  class="speaker-photo-large"
-                />
-                <div>
-                  <h3 class="speaker-name-large">John Doe</h3>
-                  <p class="speaker-role-large">Title of title</p>
+        <p class="speakers-intro reveal">
+          We are delighted to announce our distinguished speakers for AI in Cancer Care — bringing together expertise across oncology, clinical research, and artificial intelligence.
+        </p>
+
+        <div class="speakers-shell">
+          <div class="speakers-viewport">
+            <div class="speakers-track" id="speakersTrack">
+
+              <!-- Speaker 1 -->
+              <div class="speaker-card reveal"
+                data-name="John Doe"
+                data-role="Title of title"
+                data-topic="AI for early detection in oncology workflows"
+                data-bio="Short bio here. Keep it concise (2–5 lines). You can expand later."
+                data-img="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1600&q=80">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80" alt="John Doe">
+                <div class="speaker-card-content">
+                  <h3 class="speaker-card-name">John Doe</h3>
+                  <p class="speaker-card-role">Title of title</p>
+                  <p class="speaker-card-topic">AI for early detection in oncology workflows</p>
                 </div>
               </div>
 
-              <h4 class="speaker-section-title">Biography</h4>
-              <p class="speaker-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-
-              <h4 class="speaker-section-title">Topic</h4>
-              <p class="speaker-topic-line">AI for early detection in oncology workflows</p>
-            </div>
-
-            <div class="speaker-item reveal">
-              <div class="speaker-header">
-                <img
-                  src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80"
-                  alt="Jane Doe"
-                  class="speaker-photo-large"
-                />
-                <div>
-                  <h3 class="speaker-name-large">Jane Doe</h3>
-                  <p class="speaker-role-large">Title of title</p>
+              <!-- Speaker 2 -->
+              <div class="speaker-card reveal"
+                data-name="Jane Doe"
+                data-role="Title of title"
+                data-topic="Clinical validation & monitoring of AI models"
+                data-bio="Short bio here. Keep it concise (2–5 lines)."
+                data-img="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=80">
+                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80" alt="Jane Doe">
+                <div class="speaker-card-content">
+                  <h3 class="speaker-card-name">Jane Doe</h3>
+                  <p class="speaker-card-role">Title of title</p>
+                  <p class="speaker-card-topic">Clinical validation & monitoring of AI models</p>
                 </div>
               </div>
 
-              <h4 class="speaker-section-title">Biography</h4>
-              <p class="speaker-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-
-              <h4 class="speaker-section-title">Topic</h4>
-              <p class="speaker-topic-line">Clinical validation & monitoring of AI models</p>
-            </div>
-          </div>
-
-          <!-- PAGE 2 (2 speakers) -->
-          <div class="speakers-page">
-            <div class="speaker-item reveal">
-              <div class="speaker-header">
-                <img
-                  src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=600&q=80"
-                  alt="Speaker Three"
-                  class="speaker-photo-large"
-                />
-                <div>
-                  <h3 class="speaker-name-large">Speaker Three</h3>
-                  <p class="speaker-role-large">Title of title</p>
+              <!-- Speaker 3 -->
+              <div class="speaker-card reveal"
+                data-name="Speaker Three"
+                data-role="Title of title"
+                data-topic="Multimodal AI across pathology and radiology"
+                data-bio="Short bio here."
+                data-img="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=1600&q=80">
+                <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=1200&q=80" alt="Speaker Three">
+                <div class="speaker-card-content">
+                  <h3 class="speaker-card-name">Speaker Three</h3>
+                  <p class="speaker-card-role">Title of title</p>
+                  <p class="speaker-card-topic">Multimodal AI across pathology and radiology</p>
                 </div>
               </div>
 
-              <h4 class="speaker-section-title">Biography</h4>
-              <p class="speaker-text">
-                Short bio here.
-              </p>
-
-              <h4 class="speaker-section-title">Topic</h4>
-              <p class="speaker-topic-line">Multimodal AI across pathology and radiology</p>
-            </div>
-
-            <div class="speaker-item reveal">
-              <div class="speaker-header">
-                <img
-                  src="https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=600&q=80"
-                  alt="Speaker Four"
-                  class="speaker-photo-large"
-                />
-                <div>
-                  <h3 class="speaker-name-large">Speaker Four</h3>
-                  <p class="speaker-role-large">Title of title</p>
+              <!-- Speaker 4 -->
+              <div class="speaker-card reveal"
+                data-name="Speaker Four"
+                data-role="Title of title"
+                data-topic="Trustworthy AI in cancer care decision support"
+                data-bio="Short bio here."
+                data-img="https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=1600&q=80">
+                <img src="https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=1200&q=80" alt="Speaker Four">
+                <div class="speaker-card-content">
+                  <h3 class="speaker-card-name">Speaker Four</h3>
+                  <p class="speaker-card-role">Title of title</p>
+                  <p class="speaker-card-topic">Trustworthy AI in cancer care decision support</p>
                 </div>
               </div>
 
-              <h4 class="speaker-section-title">Biography</h4>
-              <p class="speaker-text">
-                Short bio here.
-              </p>
-
-              <h4 class="speaker-section-title">Topic</h4>
-              <p class="speaker-topic-line">Trustworthy AI in cancer care decision support</p>
             </div>
           </div>
 
+          <div class="speakers-controls">
+            <button class="speakers-btn" type="button" id="speakersPrev" aria-label="Previous speakers">‹</button>
+            <button class="speakers-btn" type="button" id="speakersNext" aria-label="Next speakers">›</button>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="speakers-controls">
-        <button class="speakers-btn" type="button" id="speakersPrev" aria-label="Previous">‹</button>
-        <button class="speakers-btn" type="button" id="speakersNext" aria-label="Next">›</button>
+    <!-- Modal -->
+    <div class="modal" id="speakerModal" aria-hidden="true">
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Speaker details">
+        <button class="modal-close" id="modalClose" type="button" aria-label="Close">×</button>
+
+        <div class="modal-hero">
+          <img id="modalImg" src="" alt="">
+          <div class="modal-content">
+            <h3 class="modal-name" id="modalName"></h3>
+            <p class="modal-role" id="modalRole"></p>
+            <p class="modal-topic" id="modalTopic"></p>
+            <p class="modal-bio" id="modalBio"></p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
 
+    <!-- ===== SPONSORS ===== -->
     <div class="container">
-      <h1>Sponsors</h1>
+      <h1 class="reveal">Sponsors</h1>
 
-      <div class="pillbar" role="tablist" aria-label="Sponsor tiers">
+      <div class="pillbar reveal" role="tablist" aria-label="Sponsor tiers">
         <div class="pill">
           <button role="tab" id="tab-bronze" aria-controls="panel-bronze" aria-selected="true">Bronze</button>
           <button role="tab" id="tab-platinum" aria-controls="panel-platinum" aria-selected="false">Platinum</button>
@@ -417,7 +497,7 @@
         </div>
       </div>
 
-      <section class="panel">
+      <section class="panel reveal">
         <!-- Bronze -->
         <div class="tab-panel active" id="panel-bronze" role="tabpanel" aria-labelledby="tab-bronze">
           <div class="grid-wrap">
@@ -428,7 +508,6 @@
                   <div class="logo-sub">Bronze Sponsor</div>
                 </div>
               </div>
-
               <div class="logo-card"><div><div class="logo-text">[Sponsor]</div><div class="logo-sub">Bronze Sponsor</div></div></div>
               <div class="logo-card"><div><div class="logo-text">[Sponsor]</div><div class="logo-sub">Bronze Sponsor</div></div></div>
             </div>
@@ -468,12 +547,11 @@
           </div>
         </div>
       </section>
-
     </div>
   </main>
 
   <script>
-    // Simple tab switcher
+    // ===== Sponsors tabs =====
     const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
     const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
 
@@ -484,37 +562,81 @@
         panels[i].classList.toggle('active', on);
       });
     }
-
     tabs.forEach(t => t.addEventListener('click', () => activate(t)));
- // ===== Speakers arrows (scroll by 1 "page") =====
-const speakersTrack = document.getElementById('speakersTrack');
-const prev = document.getElementById('speakersPrev');
-const next = document.getElementById('speakersNext');
 
-function pageWidth() {
-  // Each page is 100% of the viewport width
-  const viewport = speakersTrack?.closest('.speakers-viewport');
-  return viewport ? viewport.clientWidth : 0;
-}
+    // ===== Speakers arrows (scroll slider) =====
+    const speakersTrack = document.getElementById('speakersTrack');
+    const speakersPrev = document.getElementById('speakersPrev');
+    const speakersNext = document.getElementById('speakersNext');
 
-prev?.addEventListener('click', () => {
-  speakersTrack?.scrollBy({ left: -pageWidth(), behavior: 'smooth' });
-});
-next?.addEventListener('click', () => {
-  speakersTrack?.scrollBy({ left: pageWidth(), behavior: 'smooth' });
-});
+    function scrollAmount(){
+      // Scroll by ~2 cards (plus gap), keeping the peek effect
+      if (!speakersTrack) return 0;
+      const card = speakersTrack.querySelector('.speaker-card');
+      if (!card) return 0;
+      const gap = 28;
+      return Math.round(card.getBoundingClientRect().width * 2 + gap * 2);
+    }
 
-// ===== Light reveal on scroll =====
-const revealEls = document.querySelectorAll('.reveal');
+    speakersPrev?.addEventListener('click', () => {
+      speakersTrack?.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+    });
+    speakersNext?.addEventListener('click', () => {
+      speakersTrack?.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+    });
 
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add('is-visible');
-  });
-}, { threshold: 0.12 });
+    // ===== Speaker modal =====
+    const modal = document.getElementById('speakerModal');
+    const modalClose = document.getElementById('modalClose');
+    const modalImg = document.getElementById('modalImg');
+    const modalName = document.getElementById('modalName');
+    const modalRole = document.getElementById('modalRole');
+    const modalTopic = document.getElementById('modalTopic');
+    const modalBio = document.getElementById('modalBio');
 
-revealEls.forEach(el => io.observe(el));
+    function openModal(card){
+      modalImg.src = card.dataset.img || '';
+      modalImg.alt = card.dataset.name || '';
+      modalName.textContent = card.dataset.name || '';
+      modalRole.textContent = card.dataset.role || '';
+      modalTopic.textContent = card.dataset.topic || '';
+      modalBio.textContent = card.dataset.bio || '';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
 
+    function closeModal(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.speaker-card').forEach(card => {
+      card.addEventListener('click', () => openModal(card));
+    });
+
+    modalClose?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+
+    // ===== Reveal on scroll (stagger + once) =====
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
+
+    revealEls.forEach((el, i) => {
+      el.style.transitionDelay = `${Math.min(i * 60, 240)}ms`;
+      io.observe(el);
+    });
   </script>
 </body>
 </html>
