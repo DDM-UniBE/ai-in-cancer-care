@@ -7,15 +7,16 @@
 
 <style>
 :root{
-  --bg:#f3f3f5;
-  --text:#0b0c0f;
-  --muted:#6b7280;
+  --bg:#07070a;
+  --panel:#0c0d12;
+  --text:#ffffff;
+  --muted: rgba(255,255,255,.64);
+  --muted2: rgba(255,255,255,.46);
+  --stroke: rgba(255,255,255,.10);
   --max:1120px;
 
-  /* Speaker hover overlay colour (dark blue) */
-  --overlayA: rgba(8, 24, 54, .82);
-  --overlayB: rgba(8, 24, 54, .55);
-  --overlayC: rgba(8, 24, 54, .18);
+  /* Accent for hover/underline */
+  --accent:#7aa7ff;
 }
 
 *{box-sizing:border-box}
@@ -29,7 +30,7 @@ body{
   width:min(var(--max), calc(100% - 40px));
   margin:0 auto;
 }
-main{padding:80px 0}
+main{ padding: 88px 0 110px; }
 
 /* ============ Reveal on scroll (light motion) ============ */
 .reveal{
@@ -37,425 +38,233 @@ main{padding:80px 0}
   transform: translateY(14px);
   transition: opacity .7s ease, transform .7s ease;
 }
-.reveal.is-visible{
-  opacity:1;
-  transform:none;
-}
+.reveal.is-visible{ opacity:1; transform:none; }
 @media (prefers-reduced-motion: reduce){
   .reveal{ opacity:1; transform:none; transition:none; }
 }
 
-/* ================= SPEAKERS ================= */
+/* ================= HEADERS ================= */
 .section-title{
-  text-align:center;
-  font-size: clamp(42px,5vw,64px);
-  margin-bottom:18px;
-  letter-spacing:-0.02em;
-}
-.speakers-intro{
-  text-align:center;
-  max-width:760px;
-  margin:0 auto 60px;
-  font-size:20px;
-  color:var(--muted);
-  line-height:1.6;
-}
-
-/* horizontal slider */
-.speakers-wrapper{ position:relative; }
-.speakers-viewport{
-  overflow:hidden;
-  /* subtle fade edges so the “peek” feels intentional */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
-}
-.speakers-track{
-  display:flex;
-  gap:28px;
-  overflow-x:auto;
-  scroll-behavior:smooth;
-  padding: 6px 0 14px;
-}
-.speakers-track::-webkit-scrollbar{display:none}
-
-/* Card sizing with “peek” (shows part of next card) */
-.speaker-card{
-  flex:0 0 320px;
-  height:420px;
-  border-radius:28px;
-  overflow:hidden;
-  position:relative;
-  background:#111;
-  cursor:pointer;
-  border: 1px solid rgba(0,0,0,.08);
-}
-@media(max-width:520px){
-  .speaker-card{ flex-basis: 280px; height: 390px; }
-}
-.speaker-card img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  transition:transform .45s ease;
-}
-@media (hover:hover){
-  .speaker-card:hover img{ transform:scale(1.06); }
-}
-
-/* Overlay with blur + gradient */
-.speaker-overlay{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  transition:opacity .35s ease;
-  background: linear-gradient(to top, var(--overlayA) 0%, var(--overlayB) 48%, var(--overlayC) 100%);
-  /* blur whatever is behind (image) */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-@media (hover:hover){
-  .speaker-card:hover .speaker-overlay{ opacity:1; }
-}
-
-/* Always-visible bottom info */
-.speaker-info{
-  position:absolute;
-  bottom:22px;
-  left:22px;
-  right:22px;
-  color:#fff;
-  z-index:2;
-}
-.speaker-name{
-  margin:0;
-  font-size:24px;
-  font-weight:750;
-  letter-spacing:-0.01em;
-}
-.speaker-role{
-  margin-top:7px;
-  font-size:16px;
-  opacity:.82;
-  line-height:1.3;
-}
-
-/* Hover details text */
-.speaker-details{
-  position:absolute;
-  top:26px;
-  left:26px;
-  right:26px;
-  color:#fff;
-  font-size:18px;
-  line-height:1.5;
-  opacity:0;
-  transform:translateY(10px);
-  transition: opacity .35s ease, transform .35s ease;
-  z-index:2;
-}
-@media (hover:hover){
-  .speaker-card:hover .speaker-details{ opacity:1; transform:none; }
-}
-
-/* arrows */
-.speaker-arrows{
-  display:flex;
-  justify-content:center;
-  gap:26px;
-  margin-top:28px;
-}
-.speaker-arrow{
-  width:52px;
-  height:52px;
-  border-radius:999px;
-  border:1px solid rgba(0,0,0,.10);
-  background:#fff;
-  cursor:pointer;
-  font-size:22px;
-  line-height:1;
-  display:grid;
-  place-items:center;
-  transition: transform .08s ease, background .2s ease;
-}
-.speaker-arrow:active{ transform: translateY(1px); }
-.speaker-arrow:hover{ background: rgba(255,255,255,.9); }
-
-/* small hint row */
-.slider-hint{
-  text-align:center;
-  margin-top:14px;
-  color:var(--muted);
-  font-size:14px;
-}
-
-/* ================= SPONSORS (AI gradient, not pure black) ================= */
-.sponsors-section{
-  margin-top:120px;
-  padding:120px 0;
-  color:#fff;
-
-  /* AI gradient background */
-  background:
-    radial-gradient(900px 520px at 15% 20%, rgba(51, 120, 255, .28), transparent 55%),
-    radial-gradient(820px 520px at 85% 25%, rgba(255, 55, 165, .18), transparent 55%),
-    radial-gradient(980px 560px at 55% 90%, rgba(255, 160, 30, .14), transparent 55%),
-    linear-gradient(180deg, #06070c 0%, #0b0c0f 55%, #070812 100%);
-}
-.sponsors-inner{
-  width:min(var(--max), calc(100% - 40px));
-  margin:0 auto;
-  text-align:center;
-}
-.sponsors-title{
-  font-size: clamp(48px,6vw,84px);
-  margin: 0 0 18px;
+  font-size: clamp(44px, 6vw, 76px);
+  margin: 0 0 14px;
   letter-spacing:-0.03em;
 }
-.sponsors-subtitle{
-  max-width:760px;
-  margin:0 auto 60px;
-  font-size:22px;
-  color:rgba(255,255,255,.72);
-  line-height:1.6;
+.section-subtitle{
+  margin:0 0 52px;
+  max-width: 720px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 18px;
 }
 
-/* tabs like your screenshot (underline) */
-.sponsor-tabs{
-  display:flex;
-  justify-content:center;
-  gap:60px;
-  border-bottom:1px solid rgba(255,255,255,.16);
-  margin-bottom:60px;
+/* ================= SPEAKERS (classic grid) ================= */
+.speakers-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
 }
-.sponsor-tab{
+@media (max-width: 980px){
+  .speakers-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px){
+  .speakers-grid{ grid-template-columns: 1fr; }
+}
+
+.speaker{
+  display:flex;
+  flex-direction:column;
+  gap: 14px;
+}
+
+.speaker-photo{
+  border-radius: 18px;
+  overflow:hidden;
+  border: 1px solid var(--stroke);
+  background: var(--panel);
+  aspect-ratio: 4 / 3; /* like your screenshot */
+}
+.speaker-photo img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  display:block;
+  filter: grayscale(1);
+  transform: scale(1.01);
+  transition: transform .45s ease, filter .45s ease;
+}
+@media (hover:hover){
+  .speaker:hover .speaker-photo img{
+    transform: scale(1.05);
+    filter: grayscale(0.9);
+  }
+}
+
+.speaker-name{
+  margin:0;
+  font-size: 20px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+.speaker-role{
+  margin:0;
+  font-size: 14px;
+  color: var(--muted2);
+  line-height: 1.35;
+}
+
+/* ================= SPONSORS (tabs + logos) ================= */
+.sponsors-block{
+  margin-top: 110px;
+  padding-top: 70px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.tabs{
+  display:flex;
+  gap: 44px;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+  margin: 10px 0 38px;
+}
+.tab{
   background:none;
   border:none;
-  color:rgba(255,255,255,.72);
-  font-weight:850;
-  letter-spacing:.15em;
-  padding:20px 0;
+  color: rgba(255,255,255,.70);
+  font-weight: 850;
+  letter-spacing: .16em;
+  padding: 18px 0;
   cursor:pointer;
   position:relative;
 }
-.sponsor-tab[aria-selected="true"]{ color:#fff; }
-.sponsor-tab[aria-selected="true"]::after{
+.tab[aria-selected="true"]{ color:#fff; }
+.tab[aria-selected="true"]::after{
   content:"";
   position:absolute;
   left:0; right:0;
   height:3px;
-  background:#fff;
+  background: #fff;
   bottom:-1px;
   border-radius: 99px;
 }
-.sponsor-panel{display:none}
-.sponsor-panel.active{display:block}
 
-/* logo cards (no heavy shadow) */
-.sponsor-logos{
+.tab-panel{ display:none; }
+.tab-panel.active{ display:block; }
+
+.logo-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
 }
-.sponsor-logo{
-  background: rgba(255,255,255,.98);
-  color:#111;
-  border-radius:22px;
-  padding:30px 22px;
-  font-weight:850;
-  border: 1px solid rgba(0,0,0,.06);
-  box-shadow: none; /* explicitly no shadow */
+@media (max-width: 900px){
+  .logo-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media(max-width:900px){
-  .sponsor-logos{grid-template-columns:repeat(2,1fr)}
+@media (max-width: 600px){
+  .logo-grid{ grid-template-columns: 1fr; }
 }
-@media(max-width:600px){
-  .sponsor-logos{grid-template-columns:1fr}
+.logo-card{
+  background: rgba(255,255,255,.94);
+  color:#0b0c0f;
+  border-radius: 18px;
+  padding: 26px 20px;
+  font-weight: 850;
+  border: 1px solid rgba(0,0,0,.10);
+  box-shadow:none; /* no shadows */
+}
+
+/* optional small hover on logo cards */
+@media (hover:hover){
+  .logo-card:hover{ transform: translateY(-1px); transition: transform .15s ease; }
 }
 </style>
 </head>
 
 <body>
-<main>
+<main class="container">
 
-<section class="container reveal">
-  <h1 class="section-title">Speakers</h1>
-  <p class="speakers-intro">
-    We are delighted to announce our distinguished speakers for AI in Cancer Care — bringing together expertise across oncology, clinical research, and artificial intelligence.
-  </p>
+  <!-- SPEAKERS -->
+  <section class="reveal" id="speakers">
+    <h1 class="section-title">Speakers</h1>
+    <p class="section-subtitle">
+      We are delighted to announce our distinguished speakers for AI in Cancer Care — bringing together expertise across oncology, clinical research, and artificial intelligence.
+    </p>
 
-  <div class="speakers-wrapper reveal">
-    <div class="speakers-viewport">
-      <div class="speakers-track" id="speakersTrack" aria-label="Speakers slider">
+    <div class="speakers-grid">
 
-        <!-- Speaker 1 (your local image file in the repo) -->
-        <div class="speaker-card">
+      <article class="speaker reveal">
+        <div class="speaker-photo">
           <img src="Daniel Truhn headshot.png" alt="Prof. Daniel Truhn">
-          <div class="speaker-overlay"></div>
-          <div class="speaker-details">
-            Daniel leads the Laboratory for Artificial Intelligence in Medicine at RWTH Aachen. His talk explores agentic AI systems and their clinical potential.
-          </div>
-          <div class="speaker-info">
-            <h3 class="speaker-name">Prof. Daniel Truhn</h3>
-            <div class="speaker-role">Senior Physician, RWTH Aachen (Germany)</div>
-          </div>
         </div>
+        <h3 class="speaker-name">Prof. Daniel Truhn</h3>
+        <p class="speaker-role">Senior Physician, Laboratory for Artificial Intelligence, RWTH Aachen, Germany</p>
+      </article>
 
-        <!-- Speaker 2 -->
-        <div class="speaker-card">
-          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80" alt="Speaker">
-          <div class="speaker-overlay"></div>
-          <div class="speaker-details">
-            Focused on responsible AI deployment and clinical evaluation of models in oncology workflows.
-          </div>
-          <div class="speaker-info">
-            <h3 class="speaker-name">Dr. Jane Doe</h3>
-            <div class="speaker-role">AI Researcher</div>
-          </div>
+      <article class="speaker reveal">
+        <div class="speaker-photo">
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1400&q=80" alt="Speaker">
         </div>
+        <h3 class="speaker-name">Speaker name</h3>
+        <p class="speaker-role">Role / affiliation goes here</p>
+      </article>
 
-        <!-- Speaker 3 -->
-        <div class="speaker-card">
-          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80" alt="Speaker">
-          <div class="speaker-overlay"></div>
-          <div class="speaker-details">
-            Bridging methodological innovation with real-world clinical impact in imaging and diagnostics.
-          </div>
-          <div class="speaker-info">
-            <h3 class="speaker-name">Dr. John Smith</h3>
-            <div class="speaker-role">Radiology AI Lead</div>
-          </div>
+      <article class="speaker reveal">
+        <div class="speaker-photo">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1400&q=80" alt="Speaker">
         </div>
+        <h3 class="speaker-name">Speaker name</h3>
+        <p class="speaker-role">Role / affiliation goes here</p>
+      </article>
 
-        <!-- Speaker 4 -->
-        <div class="speaker-card">
-          <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=1200&q=80" alt="Speaker">
-          <div class="speaker-overlay"></div>
-          <div class="speaker-details">
-            Translating machine learning into oncology decision support and clinical pathways.
-          </div>
-          <div class="speaker-info">
-            <h3 class="speaker-name">Prof. Maria Lee</h3>
-            <div class="speaker-role">Clinical AI Specialist</div>
-          </div>
-        </div>
-
-      </div>
     </div>
+  </section>
 
-    <div class="speaker-arrows">
-      <button class="speaker-arrow" id="speakersPrev" type="button" aria-label="Previous speakers">←</button>
-      <button class="speaker-arrow" id="speakersNext" type="button" aria-label="Next speakers">→</button>
-    </div>
-
-    <div class="slider-hint">Tip: hover a card to see details • arrows scroll • auto-scroll pauses on hover</div>
-  </div>
-</section>
-
-<!-- SPONSORS -->
-<section class="sponsors-section">
-  <div class="sponsors-inner reveal">
-    <h2 class="sponsors-title">Powering AI in Cancer Care</h2>
-    <p class="sponsors-subtitle">
+  <!-- SPONSORS -->
+  <section class="sponsors-block reveal" id="sponsors">
+    <h2 class="section-title" style="font-size:clamp(44px,6vw,72px);">Powering AI in Cancer Care</h2>
+    <p class="section-subtitle" style="margin-bottom:34px;">
       Our event is proudly supported by organisations committed to advancing responsible AI in oncology.
     </p>
 
-    <div class="sponsor-tabs" role="tablist" aria-label="Sponsors and partners">
-      <button class="sponsor-tab" role="tab" aria-selected="true" aria-controls="panel-sponsors" id="tab-sponsors">SPONSORS</button>
-      <button class="sponsor-tab" role="tab" aria-selected="false" aria-controls="panel-partners" id="tab-partners">PARTNERS</button>
+    <div class="tabs" role="tablist" aria-label="Sponsors and partners">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="panel-sponsors" id="tab-sponsors">SPONSORS</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panel-partners" id="tab-partners">PARTNERS</button>
     </div>
 
-    <div class="sponsor-panel active reveal" id="panel-sponsors" role="tabpanel" aria-labelledby="tab-sponsors">
-      <div class="sponsor-logos">
-        <div class="sponsor-logo">Sponsor 1</div>
-        <div class="sponsor-logo">Sponsor 2</div>
-        <div class="sponsor-logo">Sponsor 3</div>
+    <div class="tab-panel active reveal" id="panel-sponsors" role="tabpanel" aria-labelledby="tab-sponsors">
+      <div class="logo-grid">
+        <div class="logo-card">Sponsor 1</div>
+        <div class="logo-card">Sponsor 2</div>
+        <div class="logo-card">Sponsor 3</div>
       </div>
     </div>
 
-    <div class="sponsor-panel reveal" id="panel-partners" role="tabpanel" aria-labelledby="tab-partners">
-      <div class="sponsor-logos">
-        <div class="sponsor-logo">Partner 1</div>
-        <div class="sponsor-logo">Partner 2</div>
-        <div class="sponsor-logo">Partner 3</div>
+    <div class="tab-panel reveal" id="panel-partners" role="tabpanel" aria-labelledby="tab-partners">
+      <div class="logo-grid">
+        <div class="logo-card">Partner 1</div>
+        <div class="logo-card">Partner 2</div>
+        <div class="logo-card">Partner 3</div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 </main>
 
 <script>
-/* ================= Speakers: arrows + auto-scroll ================= */
-const track = document.getElementById('speakersTrack');
-const prevBtn = document.getElementById('speakersPrev');
-const nextBtn = document.getElementById('speakersNext');
+/* Sponsors tabs */
+const tabs = Array.from(document.querySelectorAll('.tab'));
+const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
 
-function scrollStep(){
-  if (!track) return 0;
-  const card = track.querySelector('.speaker-card');
-  if (!card) return 320;
-  const gap = 28;
-  // scroll ~1.5 cards so the peek stays visible
-  return Math.round(card.getBoundingClientRect().width + (gap * 1.5));
+function activateTab(tab){
+  tabs.forEach((t, i) => {
+    const on = (t === tab);
+    t.setAttribute('aria-selected', on ? 'true' : 'false');
+    panels[i].classList.toggle('active', on);
+  });
 }
+tabs.forEach(t => t.addEventListener('click', () => activateTab(t)));
 
-prevBtn?.addEventListener('click', () => track?.scrollBy({ left: -scrollStep(), behavior:'smooth' }));
-nextBtn?.addEventListener('click', () => track?.scrollBy({ left:  scrollStep(), behavior:'smooth' }));
-
-// Auto-scroll (loops), pauses on hover/focus, respects reduced motion
+/* Reveal on scroll */
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let autoTimer = null;
-let isPaused = false;
-
-function startAuto(){
-  if (prefersReduced || !track) return;
-  stopAuto();
-  autoTimer = setInterval(() => {
-    if (isPaused) return;
-    const max = track.scrollWidth - track.clientWidth;
-    const atEnd = track.scrollLeft >= (max - 4);
-    track.scrollTo({ left: atEnd ? 0 : track.scrollLeft + scrollStep(), behavior: 'smooth' });
-  }, 3200);
-}
-function stopAuto(){
-  if (autoTimer) clearInterval(autoTimer);
-  autoTimer = null;
-}
-function pauseAuto(){ isPaused = true; }
-function resumeAuto(){ isPaused = false; }
-
-track?.addEventListener('mouseenter', pauseAuto);
-track?.addEventListener('mouseleave', resumeAuto);
-track?.addEventListener('focusin', pauseAuto);
-track?.addEventListener('focusout', resumeAuto);
-
-// small: also pause if user starts dragging/scrolling
-let userScrollTimeout = null;
-track?.addEventListener('scroll', () => {
-  if (prefersReduced) return;
-  isPaused = true;
-  clearTimeout(userScrollTimeout);
-  userScrollTimeout = setTimeout(() => { isPaused = false; }, 900);
-});
-
-startAuto();
-
-/* ================= Sponsors tabs ================= */
-const sponsorTabs = Array.from(document.querySelectorAll('.sponsor-tab'));
-const sponsorPanels = Array.from(document.querySelectorAll('.sponsor-panel'));
-
-function activateSponsorTab(tab){
-  sponsorTabs.forEach(t => t.setAttribute('aria-selected','false'));
-  sponsorPanels.forEach(p => p.classList.remove('active'));
-  tab.setAttribute('aria-selected','true');
-  const panel = document.getElementById(tab.getAttribute('aria-controls'));
-  panel?.classList.add('active');
-}
-sponsorTabs.forEach(tab => tab.addEventListener('click', () => activateSponsorTab(tab)));
-
-/* ================= Reveal on scroll (stagger + once) ================= */
 const revealEls = Array.from(document.querySelectorAll('.reveal'));
+
 if (!prefersReduced && 'IntersectionObserver' in window){
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
@@ -471,7 +280,6 @@ if (!prefersReduced && 'IntersectionObserver' in window){
     io.observe(el);
   });
 } else {
-  // fallback
   revealEls.forEach(el => el.classList.add('is-visible'));
 }
 </script>
