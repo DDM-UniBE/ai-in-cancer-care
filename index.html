@@ -149,34 +149,69 @@
       font-size: 16px;
       line-height: 1.6;
     }
-/* ===== Clean Full Width Speaker ===== */
+/* ===== Speakers: 2 columns + arrows + clean (no cards) ===== */
 
-.speaker-layout{
+.speakers-wrap{
   width: min(1000px, 100%);
-  margin: 0 auto;
+  margin: 0 auto 40px;
 }
 
+.speakers-viewport{
+  overflow: hidden; /* hides scroll bar */
+}
+
+.speakers-track{
+  display: flex;
+  gap: 60px;
+  scroll-behavior: smooth;
+  will-change: transform;
+}
+
+/* Each "page" shows 2 speakers */
+.speakers-page{
+  flex: 0 0 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+@media (max-width: 900px){
+  .speakers-page{
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+}
+
+/* Speaker block (no background card) */
 .speaker-item{
-  padding: 40px 0;
+  padding: 10px 0;
 }
 
 .speaker-header{
   display: flex;
   align-items: center;
-  gap: 28px;
-  margin-bottom: 36px;
+  gap: 26px;
+  margin-bottom: 28px;
 }
 
+/* Bigger photo */
 .speaker-photo-large{
-  width: 160px;          /* MUCH bigger */
-  height: 160px;
+  width: 190px;
+  height: 190px;
   border-radius: 999px;
   object-fit: cover;
 }
 
+@media (max-width: 900px){
+  .speaker-photo-large{
+    width: 150px;
+    height: 150px;
+  }
+}
+
 .speaker-name-large{
   margin: 0;
-  font-size: 42px;
+  font-size: 44px;
   letter-spacing: -0.02em;
 }
 
@@ -187,24 +222,69 @@
   font-weight: 600;
 }
 
+/* Subtitles like screenshot */
 .speaker-section-title{
-  margin: 40px 0 16px;
-  font-size: 36px;
+  margin: 34px 0 14px;
+  font-size: 34px;
   letter-spacing: -0.02em;
 }
 
 .speaker-text{
   font-size: 20px;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--muted);
-  max-width: 900px;
+  max-width: 520px;
 }
 
-.speaker-text-bold{
+.speaker-topic-line{
+  margin: 0;
   font-size: 20px;
   font-weight: 700;
-  max-width: 900px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 1 line only */
+  max-width: 520px;
 }
+
+/* Arrows UNDER the two columns */
+.speakers-controls{
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.speakers-btn{
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.85);
+  cursor: pointer;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
+}
+
+.speakers-btn:hover{ background:#fff; }
+.speakers-btn:active{ transform: scale(.98); }
+
+/* ===== Light motion on scroll ===== */
+.reveal{
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .reveal{ transition: none; transform:none; opacity:1; }
+}
+
 
   </style>
 </head>
@@ -213,36 +293,115 @@
   <main>
  <!-- ===== SPEAKERS SECTION ===== -->
 <section id="speakers" style="margin-bottom:100px;">
-  <h2 class="section-title">Speakers</h2>
+  <div class="container">
+    <h2 class="section-title reveal">Speakers</h2>
 
-  <div class="speaker-layout">
+    <div class="speakers-wrap">
+      <div class="speakers-viewport">
+        <div class="speakers-track" id="speakersTrack">
 
-    <!-- Speaker -->
-    <div class="speaker-item">
-      <div class="speaker-header">
-        <img 
-          src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" 
-          alt="John Doe"
-          class="speaker-photo-large"
-        />
+          <!-- PAGE 1 (2 speakers) -->
+          <div class="speakers-page">
+            <div class="speaker-item reveal">
+              <div class="speaker-header">
+                <img
+                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80"
+                  alt="John Doe"
+                  class="speaker-photo-large"
+                />
+                <div>
+                  <h3 class="speaker-name-large">John Doe</h3>
+                  <p class="speaker-role-large">Title of title</p>
+                </div>
+              </div>
 
-        <div>
-          <h3 class="speaker-name-large">John Doe</h3>
-          <p class="speaker-role-large">Title of title</p>
+              <h4 class="speaker-section-title">Biography</h4>
+              <p class="speaker-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </p>
+
+              <h4 class="speaker-section-title">Topic</h4>
+              <p class="speaker-topic-line">AI for early detection in oncology workflows</p>
+            </div>
+
+            <div class="speaker-item reveal">
+              <div class="speaker-header">
+                <img
+                  src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80"
+                  alt="Jane Doe"
+                  class="speaker-photo-large"
+                />
+                <div>
+                  <h3 class="speaker-name-large">Jane Doe</h3>
+                  <p class="speaker-role-large">Title of title</p>
+                </div>
+              </div>
+
+              <h4 class="speaker-section-title">Biography</h4>
+              <p class="speaker-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </p>
+
+              <h4 class="speaker-section-title">Topic</h4>
+              <p class="speaker-topic-line">Clinical validation & monitoring of AI models</p>
+            </div>
+          </div>
+
+          <!-- PAGE 2 (2 speakers) -->
+          <div class="speakers-page">
+            <div class="speaker-item reveal">
+              <div class="speaker-header">
+                <img
+                  src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=600&q=80"
+                  alt="Speaker Three"
+                  class="speaker-photo-large"
+                />
+                <div>
+                  <h3 class="speaker-name-large">Speaker Three</h3>
+                  <p class="speaker-role-large">Title of title</p>
+                </div>
+              </div>
+
+              <h4 class="speaker-section-title">Biography</h4>
+              <p class="speaker-text">
+                Short bio here.
+              </p>
+
+              <h4 class="speaker-section-title">Topic</h4>
+              <p class="speaker-topic-line">Multimodal AI across pathology and radiology</p>
+            </div>
+
+            <div class="speaker-item reveal">
+              <div class="speaker-header">
+                <img
+                  src="https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=600&q=80"
+                  alt="Speaker Four"
+                  class="speaker-photo-large"
+                />
+                <div>
+                  <h3 class="speaker-name-large">Speaker Four</h3>
+                  <p class="speaker-role-large">Title of title</p>
+                </div>
+              </div>
+
+              <h4 class="speaker-section-title">Biography</h4>
+              <p class="speaker-text">
+                Short bio here.
+              </p>
+
+              <h4 class="speaker-section-title">Topic</h4>
+              <p class="speaker-topic-line">Trustworthy AI in cancer care decision support</p>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <h4 class="speaker-section-title">Biography</h4>
-      <p class="speaker-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-
-      <h4 class="speaker-section-title">Topic</h4>
-      <p class="speaker-text-bold">
-        AI for early detection in oncology workflows
-      </p>
+      <div class="speakers-controls">
+        <button class="speakers-btn" type="button" id="speakersPrev" aria-label="Previous">‹</button>
+        <button class="speakers-btn" type="button" id="speakersNext" aria-label="Next">›</button>
+      </div>
     </div>
-
   </div>
 </section>
 
@@ -327,7 +486,35 @@
     }
 
     tabs.forEach(t => t.addEventListener('click', () => activate(t)));
- 
+ // ===== Speakers arrows (scroll by 1 "page") =====
+const speakersTrack = document.getElementById('speakersTrack');
+const prev = document.getElementById('speakersPrev');
+const next = document.getElementById('speakersNext');
+
+function pageWidth() {
+  // Each page is 100% of the viewport width
+  const viewport = speakersTrack?.closest('.speakers-viewport');
+  return viewport ? viewport.clientWidth : 0;
+}
+
+prev?.addEventListener('click', () => {
+  speakersTrack?.scrollBy({ left: -pageWidth(), behavior: 'smooth' });
+});
+next?.addEventListener('click', () => {
+  speakersTrack?.scrollBy({ left: pageWidth(), behavior: 'smooth' });
+});
+
+// ===== Light reveal on scroll =====
+const revealEls = document.querySelectorAll('.reveal');
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('is-visible');
+  });
+}, { threshold: 0.12 });
+
+revealEls.forEach(el => io.observe(el));
+
   </script>
 </body>
 </html>
