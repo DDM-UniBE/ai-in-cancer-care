@@ -36,70 +36,60 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  width: 100%;
   z-index: 1000;
 
-  padding: 18px 0;
-  transition: background-color .25s ease, box-shadow .25s ease, backdrop-filter .25s ease;
-  background: rgba(10, 12, 28, 0);     /* transparent at top */
-  box-shadow: none;
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
+  padding: 20px 0;
+  background: transparent;
+
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* When you scroll down */
 .nav.is-solid{
-  background: rgba(12, 12, 38, .96);   /* solid dark purple */
-  box-shadow: 0 10px 30px rgba(0,0,0,.35);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: #14124b; /* dark purple */
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
 }
 
-/* Layout inside nav */
-.nav__inner{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:18px;
+.nav__container{
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 40px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__logo{
+  font-weight: 800;
+  font-size: 22px;
+  color: white;
 }
 
 .nav__right{
-  display:flex;
-  align-items:center;
-  gap:22px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
 }
 
-/* links */
-.menu{
-  display:flex;
-  align-items:center;
-  gap:28px;
-  font-weight:600;
-  font-size:15px;
+.nav__right a{
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
 }
 
-.menu a{
-  color: rgba(255,255,255,.92);
-  text-decoration:none;
-  transition: opacity .2s ease, color .2s ease;
-}
-.menu a:hover{
-  color: var(--orange);
-}
-
-/* CTA button (keep your styles if you want) */
-.btn.nav-btn{
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 700;
+.nav__btn{
+  background: #eb001e; /* your red */
+  padding: 12px 24px;
   border-radius: 999px;
+  font-weight: 600;
 }
-
 
     /* ===== HERO (AI4-style) ===== */
     .hero{
       position: relative;
-      min-height: 68vh;
+      min-height: clamp(620px, 80vh, 860px);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -146,13 +136,15 @@
   padding-bottom: 120px;
     }
 
-    h1{
-  margin: 0 0 clamp(40px, 5vw, 64px);      font-weight: 700;
-      letter-spacing: 0.02em; /* less tight */
-      line-height: 1.04;
-      font-size: clamp(60px, 6vw, 120px);
-      text-align: left;
-    }
+  .hero h1{
+  font-weight:700;
+  font-size: clamp(48px, 4.5vw, 80px); /* slightly reduced vw */
+  letter-spacing:-0.02em;
+  line-height:1.08;
+  margin:0 0 40px;
+  max-width: 18ch;   /* controls wrapping nicely */
+}
+
 
     /* ===== AI4-style pill ===== */
 .hero__pill{
@@ -328,7 +320,7 @@
 
   function updateNav(){
     // tweak 40 if you want it to become solid earlier/later
-    if (window.scrollY > 40) nav.classList.add('is-solid');
+    if (window.scrollY > 60) nav.classList.add('is-solid');
     else nav.classList.remove('is-solid');
   }
 
