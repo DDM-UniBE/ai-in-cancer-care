@@ -1372,15 +1372,24 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
   const prev = document.querySelector('.highlights-btn.prev');
   const next = document.querySelector('.highlights-btn.next');
   const dotsContainer = document.querySelector('.highlights-dots');
+  const carousel = document.querySelector('.highlights-carousel');
 
-  if(!track || !cards.length) return;
+  if(!track || !cards.length || !dotsContainer || !prev || !next || !carousel) return;
 
   let index = 0;
   const total = cards.length;
 
+  function gapPx(){
+    const styles = getComputedStyle(track);
+    return parseFloat(styles.gap || '0') || 0;
+  }
+
+  function step(){
+    return cards[0].getBoundingClientRect().width + gapPx();
+  }
+
   function update(){
-    const cardWidth = cards[0].getBoundingClientRect().width + 28;
-    track.style.transform = `translateX(${-index * cardWidth}px)`;
+    track.style.transform = `translateX(${-index * step()}px)`;
 
     dotsContainer.querySelectorAll('button').forEach((dot,i)=>{
       dot.classList.toggle('active', i === index);
@@ -1388,25 +1397,60 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
   }
 
   function createDots(){
+    dotsContainer.innerHTML = '';
     for(let i=0;i<total;i++){
       const dot = document.createElement('button');
-      dot.addEventListener('click', ()=>{ index = i; update(); });
+      dot.type = "button";
+      dot.addEventListener('click', ()=>{
+        index = i;
+        update();
+        restartAuto();
+      });
       dotsContainer.appendChild(dot);
     }
   }
 
-  prev.addEventListener('click', ()=>{
-    index = Math.max(0, index-1);
+  function goNext(){
+    index = (index + 1) % total;
     update();
-  });
+  }
 
-  next.addEventListener('click', ()=>{
-    index = Math.min(total-1, index+1);
+  function goPrev(){
+    index = (index - 1 + total) % total;
     update();
-  });
+  }
 
+  prev.addEventListener('click', ()=>{ goPrev(); restartAuto(); });
+  next.addEventListener('click', ()=>{ goNext(); restartAuto(); });
+
+  window.addEventListener('resize', update, { passive: true });
+
+  // --- AUTOPLAY ---
+  const AUTO_MS = 4000; // change speed here
+  let timer = null;
+
+  function startAuto(){
+    stopAuto();
+    timer = setInterval(goNext, AUTO_MS);
+  }
+
+  function stopAuto(){
+    if(timer) clearInterval(timer);
+    timer = null;
+  }
+
+  function restartAuto(){
+    startAuto();
+  }
+
+  // Pause on hover
+  carousel.addEventListener('mouseenter', stopAuto);
+  carousel.addEventListener('mouseleave', startAuto);
+
+  // Init
   createDots();
   update();
+  startAuto();
 })();
 </script>
 </body>
