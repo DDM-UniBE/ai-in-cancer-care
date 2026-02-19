@@ -683,6 +683,128 @@ body{
   .sponsors-tab{ letter-spacing: .18em; }
 }
 
+/* ==========================
+   HIGHLIGHTS SECTION
+========================== */
+
+.highlights-section{
+  padding: 110px 0;
+  color: #fff;
+  background:
+    radial-gradient(900px 500px at 80% 0%, rgba(255, 155, 61, .25), transparent 60%),
+    radial-gradient(800px 500px at 0% 100%, rgba(124, 58, 237, .25), transparent 60%),
+    linear-gradient(180deg, #06122b 0%, #0b1c45 60%, #06122b 100%);
+}
+
+.highlights-title{
+  margin: 0;
+  text-align: center;
+  font-size: clamp(36px, 3vw, 54px);
+  font-weight: 800;
+}
+
+.highlights-subtitle{
+  margin: 18px auto 0;
+  text-align: center;
+  max-width: 70ch;
+  color: rgba(255,255,255,.75);
+  font-size: 18px;
+}
+
+/* Carousel Layout */
+.highlights-carousel{
+  margin-top: 60px;
+  position: relative;
+}
+
+.highlights-viewport{
+  overflow: hidden;
+}
+
+.highlights-track{
+  display: flex;
+  gap: 28px;
+  transition: transform .4s ease;
+}
+
+/* Card */
+.highlight-card{
+  flex: 0 0 calc((100% - 56px) / 3);
+  background: rgba(255,255,255,.06);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.highlight-image img{
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+}
+
+.highlight-content{
+  padding: 26px;
+}
+
+.highlight-tag{
+  font-size: 12px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: #f59d0f;
+  font-weight: 700;
+}
+
+.highlight-card h3{
+  margin: 10px 0 10px;
+  font-size: 22px;
+}
+
+.highlight-card p{
+  margin: 0;
+  color: rgba(255,255,255,.78);
+  line-height: 1.6;
+}
+
+/* Arrows */
+.highlights-btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 34px;
+  cursor: pointer;
+  opacity: .7;
+}
+
+.highlights-btn.prev{ left: -40px; }
+.highlights-btn.next{ right: -40px; }
+
+.highlights-btn:hover{ opacity: 1; }
+
+/* Dots */
+.highlights-dots{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.highlights-dots button{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.3);
+  cursor: pointer;
+}
+
+.highlights-dots button.active{
+  background: linear-gradient(90deg, #eb001e, #f59d0f);
+}
+
 /* =========================================
    TABLET (3 CARDS)
 ========================================= */
@@ -1048,6 +1170,83 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
   </div>
 </section>
 
+<section class="highlights-section" id="highlights">
+  <div class="container">
+
+    <h2 class="highlights-title">Highlights & Special Moments</h2>
+    <p class="highlights-subtitle">
+      Discover key sessions, discussions and experiences from the AI in Cancer Care Symposium.
+    </p>
+
+    <div class="highlights-carousel">
+      
+      <button class="highlights-btn prev" aria-label="Previous">
+        &#10094;
+      </button>
+
+      <div class="highlights-viewport">
+        <div class="highlights-track">
+
+          <!-- CARD 1 -->
+          <article class="highlight-card">
+            <div class="highlight-image">
+              <img src="assets/highlights/highlight-1.jpg" alt="Research Summit">
+            </div>
+            <div class="highlight-content">
+              <span class="highlight-tag">SPOTLIGHT</span>
+              <h3>AI Research Summit</h3>
+              <p>
+                Bringing together leading AI and oncology researchers to discuss 
+                cutting-edge applications and translational impact.
+              </p>
+            </div>
+          </article>
+
+          <!-- CARD 2 -->
+          <article class="highlight-card">
+            <div class="highlight-image">
+              <img src="assets/highlights/highlight-2.jpg" alt="Panel Discussion">
+            </div>
+            <div class="highlight-content">
+              <span class="highlight-tag">PANEL</span>
+              <h3>Expert Panel Discussion</h3>
+              <p>
+                Clinicians, data scientists and innovators debate 
+                the real-world implementation of AI in cancer care.
+              </p>
+            </div>
+          </article>
+
+          <!-- CARD 3 -->
+          <article class="highlight-card">
+            <div class="highlight-image">
+              <img src="assets/highlights/highlight-3.jpg" alt="Networking">
+            </div>
+            <div class="highlight-content">
+              <span class="highlight-tag">NETWORKING</span>
+              <h3>Networking Reception</h3>
+              <p>
+                An opportunity to connect across disciplines and 
+                build new collaborations in digital medicine.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <button class="highlights-btn next" aria-label="Next">
+        &#10095;
+      </button>
+
+    </div>
+
+    <!-- Dots -->
+    <div class="highlights-dots"></div>
+
+  </div>
+</section>
+
 
   <script>
   const nav = document.querySelector('.nav');
@@ -1161,6 +1360,51 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
 
   tabs.forEach(tab => tab.addEventListener('click', () => setActive(tab.dataset.target)));
   setActive('sponsors');
+})();
+</script>
+
+<script>
+(function(){
+  const track = document.querySelector('.highlights-track');
+  const cards = document.querySelectorAll('.highlight-card');
+  const prev = document.querySelector('.highlights-btn.prev');
+  const next = document.querySelector('.highlights-btn.next');
+  const dotsContainer = document.querySelector('.highlights-dots');
+
+  if(!track || !cards.length) return;
+
+  let index = 0;
+  const total = cards.length;
+
+  function update(){
+    const cardWidth = cards[0].getBoundingClientRect().width + 28;
+    track.style.transform = `translateX(${-index * cardWidth}px)`;
+
+    dotsContainer.querySelectorAll('button').forEach((dot,i)=>{
+      dot.classList.toggle('active', i === index);
+    });
+  }
+
+  function createDots(){
+    for(let i=0;i<total;i++){
+      const dot = document.createElement('button');
+      dot.addEventListener('click', ()=>{ index = i; update(); });
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  prev.addEventListener('click', ()=>{
+    index = Math.max(0, index-1);
+    update();
+  });
+
+  next.addEventListener('click', ()=>{
+    index = Math.min(total-1, index+1);
+    update();
+  });
+
+  createDots();
+  update();
 })();
 </script>
 </body>
