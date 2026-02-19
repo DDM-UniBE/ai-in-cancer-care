@@ -1049,6 +1049,18 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
 </section>
 
 
+  <script>
+  const nav = document.querySelector('.nav');
+
+  function updateNav(){
+    // tweak 40 if you want it to become solid earlier/later
+    if (window.scrollY > 60) nav.classList.add('is-solid');
+    else nav.classList.remove('is-solid');
+  }
+
+  updateNav();
+  window.addEventListener('scroll', updateNav, { passive: true });
+</script>
 <script>
 (() => {
   const cards = document.querySelectorAll('.speaker-card');
