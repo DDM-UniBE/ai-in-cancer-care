@@ -565,7 +565,7 @@ body{
 }
 
 /* ==========================
-   SPONSORS / PARTNERS SECTION
+   SPONSORS / PARTNERS (clean)
 ========================== */
 
 .sponsors-section{
@@ -592,103 +592,86 @@ body{
   color: rgba(11,16,32,.72);
 }
 
-/* Pill tabs (glass vibe) */
+/* TEXT ONLY tabs (no pill, no outline) */
 .sponsors-tabs{
-  margin: 34px auto 0;
-  width: fit-content;
-  max-width: 100%;
-
-  display: inline-flex;
-  gap: 10px;
-  padding: 10px;
-
-  border-radius: 999px;
-  background: rgba(20, 18, 45, 0.06);
-  border: 1px solid rgba(20, 18, 45, 0.12);
+  margin-top: 26px;
+  display: flex;
+  justify-content: center;
+  gap: 34px;
 }
 
 .sponsors-tab{
-  appearance: none;
   border: 0;
+  background: transparent;
   cursor: pointer;
 
-  padding: 12px 22px;
-  border-radius: 999px;
-
-  font-weight: 650;
+  padding: 10px 0;
+  font-weight: 800;
   font-size: 14px;
-  letter-spacing: .08em;
+  letter-spacing: .22em;
   text-transform: uppercase;
 
-  background: transparent;
-  color: rgba(20,18,45,.70);
-
-  transition: background .2s ease, color .2s ease, opacity .2s ease;
+  color: rgba(11,16,32,.62);
+  position: relative;
+  transition: color .2s ease, opacity .2s ease;
 }
 
 .sponsors-tab:hover{
-  opacity: .9;
+  color: rgba(11,16,32,.85);
 }
 
-/* Active tab = gradient pill */
 .sponsors-tab.is-active{
-  background: linear-gradient(90deg, #eb001e, #f59d0f);
-  color: #ffffff;
+  color: #14124b;
 }
 
-/* Panels spacing */
+.sponsors-tab.is-active::after{
+  content:"";
+  position:absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #eb001e, #f59d0f);
+}
+
+/* Panels */
 .sponsors-panels{
   margin-top: 34px;
 }
 
-/* Logo grid */
+/* LOGOS grid (no beige cards) */
 .logos-grid{
   display: grid;
-  gap: 18px;
   grid-template-columns: repeat(5, 1fr);
+  gap: 26px;
   align-items: center;
+  justify-items: center;
 }
 
-/* Logo cards */
-.logo-card{
+.logo-link{
   display: grid;
   place-items: center;
-
-  min-height: 92px;
-  padding: 18px 16px;
-  border-radius: 16px;
-
-  background: #fbf7f6;
-  border: 2px solid transparent;
-
-  transition: transform .18s ease, background .25s ease;
+  min-height: 70px;
   text-decoration: none;
-}
-
-.logo-card:hover{
-  transform: translateY(-2px);
-  background:
-    linear-gradient(#fbf7f6, #fbf7f6) padding-box,
-    linear-gradient(180deg, #eb001e, #f59d0f) border-box;
-}
-
-.logo-card img{
-  max-width: 170px;
-  width: 100%;
-  height: auto;
-  max-height: 42px;
-  object-fit: contain;
-  filter: grayscale(100%);
   opacity: .92;
-  transition: filter .2s ease, opacity .2s ease;
+  transition: opacity .2s ease, transform .2s ease;
 }
 
-.logo-card:hover img{
-  filter: grayscale(0%);
+.logo-link:hover{
   opacity: 1;
+  transform: translateY(-2px);
 }
 
-/* Responsive grid */
+.logo-link img{
+  width: 100%;
+  max-width: 180px;
+  max-height: 46px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Responsive */
 @media (max-width: 1100px){
   .logos-grid{ grid-template-columns: repeat(4, 1fr); }
 }
@@ -697,7 +680,7 @@ body{
 }
 @media (max-width: 520px){
   .logos-grid{ grid-template-columns: repeat(2, 1fr); }
-  .logo-card img{ max-width: 150px; }
+  .sponsors-tab{ letter-spacing: .18em; }
 }
 
 /* =========================================
@@ -1009,14 +992,13 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
   </div>
 </section>
 
-<section class="sponsors-section" id="sponsors">
+<<section class="sponsors-section" id="sponsors">
   <div class="container">
     <h2 class="sponsors-title">Sponsors & Partners</h2>
     <p class="sponsors-subtitle">
-      We are grateful to our sponsors and partners for supporting the AI in Cancer Care Symposium.
+      Thank you to the organisations supporting the AI in Cancer Care Symposium.
     </p>
 
-    <!-- Tabs pill -->
     <div class="sponsors-tabs" role="tablist" aria-label="Sponsors and Partners tabs">
       <button class="sponsors-tab is-active" type="button" role="tab" aria-selected="true" data-target="sponsors">
         Sponsors
@@ -1026,277 +1008,148 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
       </button>
     </div>
 
-    <!-- Panels -->
     <div class="sponsors-panels">
-      <!-- Sponsors -->
       <div class="sponsors-panel is-active" id="panel-sponsors" role="tabpanel">
         <div class="logos-grid">
-          <!-- Replace with your real logos -->
-          <a class="logo-card" href="#" target="_blank" rel="noopener">
+          <a class="logo-link" href="#" target="_blank" rel="noopener">
             <img src="assets/sponsors/aws.svg" alt="AWS">
           </a>
-          <a class="logo-card" href="#" target="_blank" rel="noopener">
+          <a class="logo-link" href="#" target="_blank" rel="noopener">
+            <img src="assets/sponsors/cisco.svg" alt="Cisco">
+          </a>
+          <a class="logo-link" href="#" target="_blank" rel="noopener">
             <img src="assets/sponsors/google-cloud.svg" alt="Google Cloud">
           </a>
-          <a class="logo-card" href="#" target="_blank" rel="noopener">
+          <a class="logo-link" href="#" target="_blank" rel="noopener">
             <img src="assets/sponsors/ibm.svg" alt="IBM">
           </a>
-          <a class="logo-card" href="#" target="_blank" rel="noopener">
+          <a class="logo-link" href="#" target="_blank" rel="noopener">
             <img src="assets/sponsors/deloitte.svg" alt="Deloitte">
           </a>
           <!-- add more... -->
         </div>
       </div>
 
-      <!-- Partners -->
       <div class="sponsors-panel" id="panel-partners" role="tabpanel" hidden>
         <div class="logos-grid">
-          <!-- Replace with your real logos -->
-          <a class="logo-card" href="#" target="_blank" rel="noopener">
-            <img src="assets/partners/inselspital.svg" alt="Inselspital">
-          </a>
-          <a class="logo-card" href="#" target="_blank" rel="noopener">
+          <a class="logo-link" href="#" target="_blank" rel="noopener">
             <img src="assets/partners/unibe.svg" alt="University of Bern">
           </a>
-          <a class="logo-card" href="#" target="_blank" rel="noopener">
-            <img src="assets/partners/artorg.svg" alt="ARTORG Center">
+          <a class="logo-link" href="#" target="_blank" rel="noopener">
+            <img src="assets/partners/inselspital.svg" alt="Inselspital">
+          </a>
+          <a class="logo-link" href="#" target="_blank" rel="noopener">
+            <img src="assets/partners/artorg.svg" alt="ARTORG">
           </a>
           <!-- add more... -->
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
 
-  <script>
-  const nav = document.querySelector('.nav');
-
-  function updateNav(){
-    // tweak 40 if you want it to become solid earlier/later
-    if (window.scrollY > 60) nav.classList.add('is-solid');
-    else nav.classList.remove('is-solid');
-  }
-
-  updateNav();
-  window.addEventListener('scroll', updateNav, { passive: true });
-</script>
 <script>
-  (function () {
-    const section = document.querySelector('.speakers-carousel');
-    if (!section) return;
+(() => {
+  const cards = document.querySelectorAll('.speaker-card');
+  const carousel = document.querySelector('.speakers-carousel');
 
-    const track = section.querySelector('.carousel-track');
-    const cards = Array.from(section.querySelectorAll('.speaker-card'));
-    const prev = section.querySelector('.carousel-btn.prev');
-    const next = section.querySelector('.carousel-btn.next');
+  const details = document.getElementById('speakerDetails');
+  const detailsName = document.getElementById('detailsName');
+  const detailsMeta = document.getElementById('detailsMeta');
+  const detailsBio = document.getElementById('detailsBio');
 
-    let index = 0;
+  // Safety checks (prevents silent failures)
+  if (!cards.length || !carousel || !details || !detailsName || !detailsMeta || !detailsBio) return;
 
-    function cardsPerView(){
-      const w = window.innerWidth;
-      if (w <= 520) return 1;
-      if (w <= 820) return 2;
-      if (w <= 1100) return 3;
-      return 6;
+  let activeCard = null;
+
+  const speakerData = {
+    daniel: {
+      name: "Prof. Daniel Truhn",
+      meta: "Senior Physician, Laboratory for Artificial Intelligence, Diagnostic and Interventional Radiology — RWTH Aachen, Germany",
+      bio: "Add Daniel’s real bio here."
+    },
+    sarah: {
+      name: "Prof. Sarah Brünningk",
+      meta: "Head of Research, Center for AI-Based Radiation Therapy — Inselspital | University of Bern",
+      bio: "Prof. Sarah Brüningk leads the Center for AI in Radiation Oncology at Inselspital and the University of Bern. Her research combines mathematical modelling and advanced machine learning to process multimodal oncology data from omics to imaging for clinical applications."
+    },
+    mauricio: {
+      name: "Prof. Mauricio Reyes",
+      meta: "Group Head, ARTORG Center for Biomedical Engineering Research — University of Bern",
+      bio: "Add Mauricio bio here."
     }
+  };
 
-    function gapPx(){
-      const styles = getComputedStyle(track);
-      const gap = parseFloat(styles.gap || '0');
-      return isNaN(gap) ? 0 : gap;
-    }
-
-    function cardWidth(){
-      // uses the real rendered width (so it matches responsive breakpoints)
-      return cards[0]?.getBoundingClientRect().width || 0;
-    }
-
-    function maxIndex(){
-      return Math.max(0, cards.length - cardsPerView());
-    }
-
-    function update(){
-      index = Math.min(Math.max(index, 0), maxIndex());
-      const x = index * (cardWidth() + gapPx());
-      track.style.transform = `translateX(${-x}px)`;
-    }
-
-    prev.addEventListener('click', () => { index -= 1; update(); });
-    next.addEventListener('click', () => { index += 1; update(); });
-
-    window.addEventListener('resize', update, { passive: true });
-    update();
-  })();
-</script>
-
-<script>
-  const track = document.querySelector('.carousel-track');
-  const prevBtn = document.querySelector('.carousel-btn.prev');
-  const nextBtn = document.querySelector('.carousel-btn.next');
-
-  function visibleCount(){
-    if (window.matchMedia('(max-width: 520px)').matches) return 1;
-    if (window.matchMedia('(max-width: 820px)').matches) return 2;
-    if (window.matchMedia('(max-width: 1100px)').matches) return 3;
-    return 4; // desktop
-  }
-
-  function gapPx(){
-    const gap = getComputedStyle(track).gap;
-    return parseFloat(gap) || 0;
-  }
-
-  function cardStep(){
-    const card = track.querySelector('.speaker-card');
-    if (!card) return 0;
-    return card.getBoundingClientRect().width + gapPx();
-  }
-
-  let index = 0;
-
-  function update(){
-    const cards = track.querySelectorAll('.speaker-card');
-    const maxIndex = Math.max(0, cards.length - visibleCount());
-
-    index = Math.min(Math.max(index, 0), maxIndex);
-
-    track.style.transform = `translateX(${-index * cardStep()}px)`;
-
-    // optional: disable when you can’t go further
-    prevBtn.disabled = index === 0;
-    nextBtn.disabled = index === maxIndex;
-  }
-
-  prevBtn?.addEventListener('click', () => { index--; update(); });
-  nextBtn?.addEventListener('click', () => { index++; update(); });
-
-  window.addEventListener('resize', update, { passive: true });
-  update();
-</script>
-
-<script>
-const cards = document.querySelectorAll('.speaker-card');
-const carousel = document.querySelector('.speakers-carousel');
-
-const details = document.getElementById('speakerDetails');
-const detailsName = document.getElementById('detailsName');
-const detailsMeta = document.getElementById('detailsMeta');
-const detailsBio = document.getElementById('detailsBio');
-
-let activeCard = null;
-
-<script>
-const cards = document.querySelectorAll('.speaker-card');
-const carousel = document.querySelector('.speakers-carousel');
-
-const details = document.getElementById('speakerDetails');
-const detailsName = document.getElementById('detailsName');
-const detailsMeta = document.getElementById('detailsMeta');
-const detailsBio = document.getElementById('detailsBio');
-
-let activeCard = null;
-
-/* --- SPEAKER DATA --- */
-const speakerData = {
-  daniel: {
-    name: "Prof. Daniel Truhn",
-    meta: "Senior Physician, Laboratory for Artificial Intelligence, Diagnostic and Interventional Radiology — RWTH Aachen, Germany",
-    bio: "Add Daniel’s real bio here."
-  },
-  sarah: {
-    name: "Prof. Sarah Brünningk",
-    meta: "Head of Research, Center for AI-Based Radiation Therapy — Inselspital | University of Bern",
-    bio: "Prof. Sarah Brüningk leads the Center for AI in Radiation Oncology at Inselspital and the University of Bern. Her research combines mathematical modelling and advanced machine learning to process multimodal oncology data from omics to imaging for clinical applications."
-  },
-  mauricio: {
-    name: "Prof. Mauricio Reyes",
-    meta: "Group Head, ARTORG Center for Biomedical Engineering Research — University of Bern",
-    bio: "Add Mauricio bio here."
-  }
-  // add others here
-};
-
-/* --- CLICK HANDLER --- */
-cards.forEach(card => {
-  card.addEventListener('click', (e) => {
-    e.stopPropagation();
-
-    const id = card.dataset.speaker;
-    const speaker = speakerData[id];
-
-    if (!speaker) return;
-
-    // Toggle
-    if (activeCard === card) {
-      closeDetails();
-      return;
-    }
-
+  function closeDetails(){
+    details.classList.remove('is-open');
+    carousel.classList.remove('has-active');
     cards.forEach(c => c.classList.remove('is-active'));
-    card.classList.add('is-active');
-
-    carousel.classList.add('has-active');
-
-    detailsName.textContent = speaker.name;
-    detailsMeta.textContent = speaker.meta;
-    detailsBio.textContent = speaker.bio;
-
-    details.classList.add('is-open');
-    activeCard = card;
-  });
-});
-
-/* --- CLOSE ON OUTSIDE CLICK --- */
-document.addEventListener('click', (e) => {
-  const insideCard = e.target.closest('.speaker-card');
-  const insideDetails = e.target.closest('#speakerDetails');
-
-  if (!insideCard && !insideDetails) {
-    closeDetails();
+    activeCard = null;
   }
-});
 
-function closeDetails(){
-  details.classList.remove('is-open');
-  carousel.classList.remove('has-active');
-  cards.forEach(c => c.classList.remove('is-active'));
-  activeCard = null;
-}
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      const id = card.dataset.speaker;
+      const speaker = speakerData[id];
+      if (!speaker) return;
+
+      // Toggle off
+      if (activeCard === card) {
+        closeDetails();
+        return;
+      }
+
+      cards.forEach(c => c.classList.remove('is-active'));
+      card.classList.add('is-active');
+
+      carousel.classList.add('has-active');
+
+      detailsName.textContent = speaker.name;
+      detailsMeta.textContent = speaker.meta;
+      detailsBio.textContent = speaker.bio;
+
+      details.classList.add('is-open');
+      activeCard = card;
+    });
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    const insideCard = e.target.closest('.speaker-card');
+    const insideDetails = e.target.closest('#speakerDetails');
+    if (!insideCard && !insideDetails) closeDetails();
+  });
+})();
 </script>
 
 <script>
-  (function(){
-    const tabs = Array.from(document.querySelectorAll('.sponsors-tab'));
-    const sponsorsPanel = document.getElementById('panel-sponsors');
-    const partnersPanel = document.getElementById('panel-partners');
+(function(){
+  const tabs = Array.from(document.querySelectorAll('.sponsors-tab'));
+  const sponsorsPanel = document.getElementById('panel-sponsors');
+  const partnersPanel = document.getElementById('panel-partners');
 
-    if (!tabs.length || !sponsorsPanel || !partnersPanel) return;
+  if (!tabs.length || !sponsorsPanel || !partnersPanel) return;
 
-    function setActive(target){
-      const isSponsors = target === 'sponsors';
+  function setActive(target){
+    const isSponsors = target === 'sponsors';
 
-      tabs.forEach(t => {
-        const active = t.dataset.target === target;
-        t.classList.toggle('is-active', active);
-        t.setAttribute('aria-selected', active ? 'true' : 'false');
-      });
-
-      sponsorsPanel.classList.toggle('is-active', isSponsors);
-      partnersPanel.classList.toggle('is-active', !isSponsors);
-
-      sponsorsPanel.hidden = !isSponsors;
-      partnersPanel.hidden = isSponsors;
-    }
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => setActive(tab.dataset.target));
+    tabs.forEach(t => {
+      const active = t.dataset.target === target;
+      t.classList.toggle('is-active', active);
+      t.setAttribute('aria-selected', active ? 'true' : 'false');
     });
 
-    // default
-    setActive('sponsors');
-  })();
+    sponsorsPanel.hidden = !isSponsors;
+    partnersPanel.hidden = isSponsors;
+  }
+
+  tabs.forEach(tab => tab.addEventListener('click', () => setActive(tab.dataset.target)));
+  setActive('sponsors');
+})();
 </script>
 </body>
 </html>
