@@ -92,15 +92,16 @@ body{
 .menu{
   display:flex;
   align-items:center;
-  gap:24px;
+  gap:28px;          /* slightly more spacing */
   font-weight:600;
-  font-size:14px;
+  font-size:16px;    /* was 14px */
 }
 
 .menu a{
   color:rgba(255,255,255,.88);
   text-decoration:none;
   transition:color .25s ease;
+letter-spacing: 0.02em;
 }
 
 .menu a:hover{ color:var(--orange); }
@@ -115,7 +116,7 @@ body{
   color:rgba(255,255,255,.88);
   text-decoration:none;
   font-weight:600;
-  font-size:14px;
+  font-size:16px;
   transition:color .25s ease;
 }
 .nav__contact:hover{ color:var(--orange); }
@@ -145,8 +146,9 @@ body{
 
 /* Make nav Register slightly larger */
 .btn.nav-btn{
-  padding:12px 22px;
-  font-size:15px;
+  padding:14px 28px;   /* bigger */
+  font-size:16px;      /* was 15px */
+  font-weight:700;     /* slightly stronger */
 }
 
 /* ===== HERO ===== */
@@ -190,6 +192,7 @@ body{
 
 .hero__left{
   max-width: 760px;
+  margin-left: clamp(60px, 8vw, 160px);
 }
 
 .hero h1{
