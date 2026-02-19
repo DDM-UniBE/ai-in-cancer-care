@@ -775,14 +775,27 @@ body{
   transform: translateY(-50%);
   background: transparent;
   border: none;
-  color: #fff;
-  font-size: 34px;
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
   cursor: pointer;
   opacity: .7;
+  transition: opacity .2s ease;
 }
 
-.highlights-btn.prev{ left: -40px; }
-.highlights-btn.next{ right: -40px; }
+.highlights-btn svg{
+  width: 34px;
+  height: 34px;
+  stroke: #ffffff;
+}
+
+.highlights-btn:hover{
+  opacity: 1;
+}
+
+.highlights-btn.prev{ left: -60px; }
+.highlights-btn.next{ right: -60px; }
 
 .highlights-btn:hover{ opacity: 1; }
 
@@ -790,21 +803,24 @@ body{
 .highlights-dots{
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 30px;
+  gap: 14px;
+  margin-top: 32px;
 }
 
-..highlights-dots button{
+.highlights-dots button{
   width: 12px;
   height: 12px;
   padding: 0;
   border: 0;
-  border-radius: 999px;       /* ✅ always round */
-  background: rgba(255,255,255,.30);
+  border-radius: 50%;       /* ✅ true circle */
+  background: rgba(255,255,255,.35);
   cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+}
 
-  display: inline-block;      /* ✅ prevents odd sizing */
-  line-height: 0;             /* ✅ avoids “oval” look */
+.highlights-dots button.active{
+  background: linear-gradient(90deg, #eb001e, #f59d0f);
+  transform: scale(1.15);   /* subtle premium effect */
 }
 
 /* =========================================
@@ -1182,9 +1198,15 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
 
     <div class="highlights-carousel">
       
-      <button class="highlights-btn prev" aria-label="Previous">
-        &#10094;
-      </button>
+     <button class="highlights-btn prev">
+  <svg viewBox="0 0 24 24" fill="none">
+    <path d="M15 18L9 12L15 6"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </svg>
+</button>
 
       <div class="highlights-viewport">
         <div class="highlights-track">
@@ -1237,9 +1259,15 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
         </div>
       </div>
 
-      <button class="highlights-btn next" aria-label="Next">
-        &#10095;
-      </button>
+    <button class="highlights-btn next">
+  <svg viewBox="0 0 24 24" fill="none">
+    <path d="M9 6L15 12L9 18"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </svg>
+</button>
 
     </div>
 
