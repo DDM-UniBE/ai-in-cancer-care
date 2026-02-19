@@ -1,309 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI in Cancer Care</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI in Cancer Care</title>
 
-  <style>
-    :root{
-      --bg:#070A18;
-      --text:#ffffff;
-      --muted:rgba(255,255,255,.78);
-      --nav:rgba(9,10,24,.45);
-      --stroke:rgba(255,255,255,.14);
-      --purple:#eb001e;
-      --purple2:#eb001e;
-      --orange:#FF9B3D;
-    }
+<style>
+:root{
+  --bg:#070A18;
+  --text:#ffffff;
+  --nav-bg:rgba(9,10,24,.45);
+  --red:#eb001e;
+  --orange:#FF9B3D;
+}
 
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
-      color:var(--text);
-      background:var(--bg);
-    }
+*{ box-sizing:border-box; }
 
-    /* ===== HERO ===== */
-    .hero{
-      position:relative;
-      min-height: 88vh;
-      display:flex;
-      align-items:stretch;
-      overflow:hidden;
-    }
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color:var(--text);
+  background:var(--bg);
+}
 
-    /* Background image (swap to your own) */
-    .hero__bg{
-      position:absolute;
-      inset:0;
-      background-image:url("assets/hero.jpg"); /* <-- replace */
-      background-size:cover;
-      background-position:center;
-      transform: scale(1.02);
-    }
+/* ================= HERO ================= */
 
-    /* Dark/blue overlay like your reference */
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(90deg, rgba(7,10,24,.92) 0%, rgba(7,10,24,.78) 38%, rgba(7,10,24,.50) 65%, rgba(7,10,24,.35) 100%),
-        radial-gradient(1200px 600px at 75% 35%, rgba(109,91,255,.22), transparent 60%),
-        radial-gradient(900px 480px at 15% 70%, rgba(255,155,61,.12), transparent 60%);
-      z-index:1;
-    }
+.hero{
+  position:relative;
+  min-height:88vh;
+  display:flex;
+  align-items:stretch;
+  overflow:hidden;
+}
 
-    .container{
-      width:min(1200px, 92vw);
-      margin:0 auto;
-    }
+.hero__bg{
+  position:absolute;
+  inset:0;
+  background-image:url("assets/hero.jpg"); /* replace if needed */
+  background-size:cover;
+  background-position:center;
+  transform:scale(1.02);
+}
 
-    /* ===== NAV ===== */
-    .nav{
-      position:absolute;
-      top:0;
-      left:0;
-      right:0;
-      z-index:3;
-      padding:18px 0;
-    }
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, rgba(7,10,24,.92) 0%, rgba(7,10,24,.78) 40%, rgba(7,10,24,.40) 100%);
+  z-index:1;
+}
 
-    .nav__inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;
-      padding:10px 14px;
-      background: var(--nav);
-      border:1px solid var(--stroke);
-      border-radius: 999px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
+.container{
+  width:min(1200px, 92vw);
+  margin:auto;
+}
 
-    .brand{
-      display:flex;
-      align-items:flex-start;
-      gap:12px;
-      padding-left:6px;
-      white-space:nowrap;
-    }
+/* ================= NAV ================= */
 
-    .brand__logo{
-      font-weight:900;
-      letter-spacing:.5px;
-      font-size:22px;
-      line-height:1;
-    }
+.nav{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:3;
+  padding:18px 0;
+}
 
-    .brand__meta{
-      border-left:1px solid rgba(255,255,255,.18);
-      padding-left:12px;
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      margin-top:1px;
-    }
+.nav__inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:10px 16px;
+  border-radius:999px;
+  border:1px solid transparent;
 
-    .brand__meta strong{
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.90);
-    }
-    .brand__meta span{
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.70);
-    }
+  background:
+    linear-gradient(var(--nav-bg), var(--nav-bg)) padding-box,
+    linear-gradient(90deg, var(--red), var(--orange)) border-box;
 
-    .menu{
-      display:flex;
-      align-items:center;
-      gap:22px;
-      font-weight:600;
-      font-size:14px;
-      color:rgba(255,255,255,.88);
-    }
-    .menu a{
-      color:inherit;
-      text-decoration:none;
-      opacity:.92;
-    }
-    .menu a:hover{ opacity:1; }
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
 
-    .nav__cta{
-      padding:10px 16px;
-      border-radius:999px;
-      background: linear-gradient(90deg, var(--purple), var(--purple2));
-      color:white;
-      text-decoration:none;
-      font-weight:800;
-      font-size:14px;
-      box-shadow: 0 10px 24px rgba(109,91,255,.22);
-      white-space:nowrap;
-    }
-    .nav__cta:hover{ filter:brightness(1.05); }
+.brand{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  white-space:nowrap;
+}
 
-    /* ===== HERO CONTENT ===== */
-    .hero__content{
-      position:relative;
-      z-index:2;
-      display:flex;
-      align-items:center;
-      width:100%;
-      padding: 120px 0 70px;
-    }
+.brand__logo{
+  font-weight:900;
+  font-size:22px;
+}
 
-    .hero__left{
-      max-width: 760px;
-    }
+.brand__meta{
+  border-left:1px solid rgba(255,255,255,.18);
+  padding-left:12px;
+  display:flex;
+  flex-direction:column;
+}
 
-    .hero h1{
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      margin:0 0 24px;
-      font-size: clamp(40px, 5vw, 76px);
-      line-height: 1.03;
-    }
+.brand__meta strong{
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
 
-    /* The pill info + button block */
-    .hero__pill{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      width: min(560px, 92vw);
-      padding: 14px 16px;
-      border-radius: 999px;
-      background: rgba(10,12,28,.55);
-      border: 1px solid rgba(255,255,255,.16);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 14px 34px rgba(0,0,0,.35);
-    }
+.brand__meta span{
+  font-size:12px;
+  letter-spacing:.12em;
+  opacity:.7;
+  text-transform:uppercase;
+}
 
-    .pill__meta{
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-      min-width: 0;
-    }
-    .pill__bar{
-      width:3px;
-      height:40px;
-      border-radius:99px;
-      background: linear-gradient(180deg, var(--orange), rgba(255,155,61,.25));
-      margin-top:2px;
-      flex:0 0 auto;
-    }
-    .pill__text{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      min-width:0;
-    }
-    .pill__text strong{
-      font-size:12px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.92);
-    }
-    .pill__text span{
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.72);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 320px;
-    }
+.menu{
+  display:flex;
+  gap:24px;
+  font-weight:600;
+  font-size:14px;
+}
 
-    .pill__btn{
-      padding:12px 18px;
-      border-radius:999px;
-      background: linear-gradient(90deg, var(--purple), var(--purple2));
-      color:white;
-      text-decoration:none;
-      font-weight:900;
-      font-size:14px;
-      box-shadow: 0 10px 24px rgba(109,91,255,.20);
-      white-space:nowrap;
-    }
-    .pill__btn:hover{ filter:brightness(1.05); }
+.menu a{
+  color:white;
+  text-decoration:none;
+  transition:0.3s ease;
+}
 
-    /* ===== Responsive ===== */
-    @media (max-width: 920px){
-      .menu{ display:none; } /* keep clean like many conference sites */
-      .hero__content{ padding-top: 110px; }
-    }
-    @media (max-width: 520px){
-      .brand__meta{ display:none; }
-      .hero__pill{
-        flex-direction:column;
-        align-items:flex-start;
-        border-radius: 22px;
-      }
-      .pill__text span{ max-width: 100%; }
-      .pill__btn{ width:100%; text-align:center; }
-    }
-  </style>
+.menu a:hover{
+  color:var(--orange);
+}
+
+/* Nav CTA */
+
+.nav__cta{
+  padding:10px 18px;
+  border-radius:999px;
+  background:linear-gradient(90deg, var(--red), var(--orange));
+  color:white;
+  text-decoration:none;
+  font-weight:800;
+  transition:0.3s ease;
+}
+
+.nav__cta:hover{
+  background:white;
+  color:#111;
+}
+
+/* ================= HERO CONTENT ================= */
+
+.hero__content{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  width:100%;
+  padding:120px 0 70px;
+}
+
+.hero__left{
+  max-width:760px;
+}
+
+.hero h1{
+  font-weight:900;
+  margin:0 0 32px;
+  font-size:clamp(42px, 6vw, 76px);
+  line-height:1.05;
+}
+
+/* Hero pill with gradient outline */
+
+.hero__pill{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  width:min(560px, 92vw);
+  padding:16px 20px;
+  border-radius:999px;
+  border:1px solid transparent;
+
+  background:
+    linear-gradient(rgba(10,12,28,.55), rgba(10,12,28,.55)) padding-box,
+    linear-gradient(90deg, var(--red), var(--orange)) border-box;
+
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+
+  box-shadow:0 14px 34px rgba(0,0,0,.35);
+}
+
+.pill__text{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.pill__text strong{
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+.pill__text span{
+  font-size:12px;
+  letter-spacing:.12em;
+  opacity:.75;
+  text-transform:uppercase;
+}
+
+/* Hero CTA button */
+
+.pill__btn{
+  padding:12px 22px;
+  border-radius:999px;
+  background:linear-gradient(90deg, var(--red), var(--orange));
+  color:white;
+  text-decoration:none;
+  font-weight:800;
+  transition:0.3s ease;
+  white-space:nowrap;
+}
+
+.pill__btn:hover{
+  background:white;
+  color:#111;
+}
+
+/* ================= Responsive ================= */
+
+@media (max-width:920px){
+  .menu{display:none;}
+}
+
+@media (max-width:520px){
+  .brand__meta{display:none;}
+  .hero__pill{
+    flex-direction:column;
+    align-items:flex-start;
+    border-radius:20px;
+  }
+  .pill__btn{
+    width:100%;
+    text-align:center;
+  }
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- NAV -->
-  <div class="nav">
-    <div class="container">
-      <div class="nav__inner">
-        <div class="brand">
-          <div class="brand__logo">DDM</div>
-          <div class="brand__meta">
-            <strong>AI in Cancer Care</strong>
-            <span>University of Bern</span>
-          </div>
+<!-- NAV -->
+<div class="nav">
+  <div class="container">
+    <div class="nav__inner">
+
+      <div class="brand">
+        <div class="brand__logo">DDM</div>
+        <div class="brand__meta">
+          <strong>AI in Cancer Care</strong>
+          <span>University of Bern</span>
+        </div>
+      </div>
+
+      <div class="menu">
+        <a href="#agenda">Agenda</a>
+        <a href="#speakers">Speakers</a>
+        <a href="#sponsors">Sponsors</a>
+        <a href="#about">About</a>
+      </div>
+
+      <a class="nav__cta" href="#register">Register</a>
+
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__bg"></div>
+
+  <div class="container hero__content">
+    <div class="hero__left">
+      <h1>AI in Cancer Care Symposium</h1>
+
+      <div class="hero__pill">
+        <div class="pill__text">
+          <strong>30 April 2026</strong>
+          <span>University of Bern • Inselspital • Bern</span>
         </div>
 
-        <div class="menu">
-          <a href="#agenda">Agenda</a>
-          <a href="#attendees">Attendees</a>
-          <a href="#speakers">Speakers</a>
-          <a href="#sponsors">Sponsors</a>
-          <a href="#about">About</a>
-        </div>
-
-        <a class="nav__cta" href="#register">Register Now</a>
+        <a href="#register" class="pill__btn">Register Now</a>
       </div>
     </div>
   </div>
-
-  <!-- HERO -->
-  <section class="hero" id="top">
-    <div class="hero__bg" aria-hidden="true"></div>
-
-    <div class="container hero__content">
-      <div class="hero__left">
-        <h1>AI in Cancer Care Symposium</h1>
-
-        <div class="hero__pill">
-          <div class="pill__meta">
-            <div class="pill__bar"></div>
-            <div class="pill__text">
-              <strong>DATE • TIME • LOCATION</strong>
-              <span>University of Bern • Inselspital • Bern</span>
-            </div>
-          </div>
-
-          <a class="pill__btn" href="#register">Register Now</a>
-        </div>
-      </div>
-    </div>
-  </section>
+</section>
 
 </body>
 </html>
