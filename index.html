@@ -643,10 +643,12 @@ body{
 /* LOGOS grid (no beige cards) */
 .logos-grid{
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 26px;
-  align-items: center;
-  justify-items: center;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 40px;
+  justify-content: center;     /* centers the grid */
+  justify-items: center;       /* centers each logo inside its cell */
+  max-width: 900px;            /* keeps it nicely centered */
+  margin: 0 auto;              /* centers the whole block */
 }
 
 .logo-link{
@@ -792,17 +794,17 @@ body{
   margin-top: 30px;
 }
 
-.highlights-dots button{
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,.3);
+..highlights-dots button{
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;       /* ✅ always round */
+  background: rgba(255,255,255,.30);
   cursor: pointer;
-}
 
-.highlights-dots button.active{
-  background: linear-gradient(90deg, #eb001e, #f59d0f);
+  display: inline-block;      /* ✅ prevents odd sizing */
+  line-height: 0;             /* ✅ avoids “oval” look */
 }
 
 /* =========================================
