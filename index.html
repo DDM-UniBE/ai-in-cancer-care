@@ -83,10 +83,12 @@
 }
 
 /* RIGHT links */
-.nav__right{
-  display:flex;
-  align-items:center;
-  gap: 28px;
+.nav__right a{
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+  transition: color .2s ease;
 }
 
 .nav__right a{
@@ -98,6 +100,7 @@
 }
 
 .nav__right a:hover{
+color: #FFB463;
   opacity: 1;
 }
 
@@ -190,13 +193,13 @@
     padding: 110px 0 70px;
     }
 
-  .hero h1{
-  font-weight:700;
-  font-size: clamp(56px, 5.5vw, 96px) /* slightly reduced vw */
-  letter-spacing:-0.02em;
-  line-height:1.08;
-  margin:0 0 40px;
-  max-width: 18ch;   /* controls wrapping nicely */
+ .hero h1{
+  font-weight: 700;
+  font-size: clamp(60px, 6.5vw, 110px);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  margin: 0 0 50px;
+  max-width: 20ch;
 }
 
 
@@ -336,7 +339,7 @@
     <div class="nav__left">
       <div class="nav-brand">
         <div class="nav-brand__title">AI in Cancer Care</div>
-        <div class="nav-brand__subtitle">Department of Digital Medicine</div>
+        <div class="nav-brand__subtitle">APRIL 30, 2026 | BERN</div>
       </div>
     </div>
 
