@@ -371,6 +371,8 @@ body{
   color: rgba(11,16,32,.72);
 }
 
+
+
 /* =========================================
    CAROUSEL WRAPPER
 ========================================= */
@@ -404,10 +406,13 @@ body{
   border-radius: 16px;
   padding: 22px;
   min-height: 460px;
+
   border: 2px solid transparent;
-  transition: background .25s ease;
+  transition: background .25s ease, opacity .2s ease, transform .2s ease;
   display: flex;
   flex-direction: column;
+
+  cursor: pointer; /* merged here */
 }
 
 /* Gradient stroke on hover */
@@ -427,9 +432,10 @@ body{
 }
 
 .speaker-photo img{
-width: 100%;
+  width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 18%; /* ✅ shows more of the head/top */
   display: block;
 }
 
@@ -452,6 +458,95 @@ width: 100%;
   font-size: 14px;
   font-weight: 700;
   color: #0b1020;
+}
+
+/* =========================================
+   Click-to-expand speaker details behaviour
+========================================= */
+
+/* Fade others when one is active */
+.speakers-carousel.has-active .speaker-card{
+  opacity: .35;
+}
+
+/* Active card stays visible (force override) */
+.speakers-carousel.has-active .speaker-card.is-active{
+  opacity: 1 !important;
+  transform: translateY(-2px);
+}
+
+/* Optional: keep the nice gradient border when active too */
+.speakers-carousel.has-active .speaker-card.is-active{
+  background:
+    linear-gradient(#fbf7f6, #fbf7f6) padding-box,
+    linear-gradient(180deg, #eb001e, #f59d0f) border-box;
+}
+
+/* =========================================
+   Details panel below
+========================================= */
+
+.speaker-details{
+  margin-top: 26px;
+  display: none;
+}
+
+.speaker-details.is-open{
+  display: block;
+}
+
+.speaker-details__box{
+  background: #fbf7f6;
+  border-radius: 18px;
+  padding: 22px 24px;
+
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#fbf7f6, #fbf7f6) padding-box,
+    linear-gradient(180deg, #eb001e, #f59d0f) border-box;
+}
+
+.speaker-details__top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 18px;
+}
+
+.speaker-details__name{
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+  color: #14124b;
+}
+
+.speaker-details__meta{
+  margin: 6px 0 0;
+  color: rgba(11,16,32,.75);
+  line-height: 1.5;
+}
+
+.speaker-details__bio{
+  margin: 14px 0 0;
+  color: rgba(11,16,32,.85);
+  line-height: 1.6;
+  max-width: 85ch;
+}
+
+.speaker-details__close{
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: .7;
+}
+.speaker-details__close:hover{ opacity: 1; }
+
+/* Mobile */
+@media (max-width: 640px){
+  .speakers-carousel.has-active .speaker-card{
+    opacity: .5;
+  }
 }
 
 /* =========================================
@@ -695,14 +790,14 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
             <p class="speaker-org">RWTH Aachen, Germany</p>
           </article>
 
-          <article class="speaker-card">
-            <div class="speaker-photo">
-              <img src="assets/speakers/sarahbrueningk2.jpg" alt="Speaker 2">
-            </div>
-            <h3 class="speaker-name">Prof. Sarah Brüningk</h3>
-            <p class="speaker-role">Head of Research, Center for AI-Based Radiation Therapy</p>
-            <p class="speaker-org">Inselspital | University of Bern</p>
-          </article>
+<article class="speaker-card" data-speaker="sarah">
+  <div class="speaker-photo">
+    <img src="assets/speakers/sarahbrueningk2.jpg" alt="Prof. Sarah Brünningk">
+  </div>
+  <h3 class="speaker-name">Prof. Sarah Brünningk</h3>
+  <p class="speaker-role">Head of Research, Center for AI-Based Radiation Therapy</p>
+  <p class="speaker-org">Inselspital | University of Bern</p>
+</article>
 
           <article class="speaker-card">
             <div class="speaker-photo">
@@ -794,6 +889,14 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
 </button>
     </div>
   </div>
+
+  <div class="speaker-details" id="speakerDetails">
+  <div class="speaker-details__box">
+    <h3 id="detailsName"></h3>
+    <p id="detailsMeta"></p>
+    <p id="detailsBio"></p>
+  </div>
+</div>
 </section>
 
 
@@ -901,6 +1004,35 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
 
   window.addEventListener('resize', update, { passive: true });
   update();
+</script>
+
+<script>
+const cards = document.querySelectorAll('.speaker-card');
+const carousel = document.querySelector('.speakers-carousel');
+
+const details = document.getElementById('speakerDetails');
+const detailsName = document.getElementById('detailsName');
+const detailsMeta = document.getElementById('detailsMeta');
+const detailsBio = document.getElementById('detailsBio');
+
+cards.forEach(card => {
+  card.addEventListener('click', () => {
+
+    const id = card.dataset.speaker;
+    if(id !== "sarah") return; // only Sarah works for now
+
+    cards.forEach(c => c.classList.remove('is-active'));
+    card.classList.add('is-active');
+
+    carousel.classList.add('has-active');
+
+    detailsName.textContent = "Prof. Sarah Brünningk";
+    detailsMeta.textContent = "Head of Research, Center for AI-Based Radiation Therapy — Inselspital | University of Bern";
+    detailsBio.textContent = "Add Sarah’s biography text here. 2–4 sentences about her expertise, research focus, and talk topic.";
+
+    details.classList.add('is-open');
+  });
+});
 </script>
 </body>
 </html>
