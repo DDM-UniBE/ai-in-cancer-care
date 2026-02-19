@@ -79,8 +79,7 @@
     }
 
     h1{
-      margin: 0 0 26px;
-      font-weight: 700;
+  margin: 0 0 clamp(40px, 5vw, 64px);      font-weight: 700;
       letter-spacing: -0.01em; /* less tight */
       line-height: 1.04;
       font-size: clamp(48px, 5vw, 84px);
@@ -149,16 +148,15 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding: 12px 20px;
+      padding: 14px 28px;
       border-radius: 999px;
-
       background: var(--accent);
       color: #fff;
+      letter-spacing: 0.02em;
       text-decoration:none;
-      font-weight: 800;
+      font-weight: 500;
       font-size: 14px;
       white-space: nowrap;
-
       transition: background .2s ease, color .2s ease, transform .2s ease;
     }
 
@@ -195,7 +193,10 @@
     border-radius: 22px;
     flex-direction: column;
     align-items: flex-start;
-  }
+    border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(10,12,28,.28), rgba(10,12,28,.28)) padding-box,
+    linear-gradient(90deg, rgba(130,70,255,.5), rgba(130,70,255,.5)) border-box;  }
 
   .pill__btn{
     width:100%;
