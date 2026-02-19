@@ -18,13 +18,14 @@
   --orange:#FFB463;
 
   /* Glass pill */
-  --pill-bg: rgba(20, 18, 45, 0.14);      /* lighter */
-  --pill-border: rgba(140, 100, 255, 0.28);
+  --pill-bg: rgba(20, 18, 45, 0.22);      /* less transparent so border reads */
+  --pill-border: rgba(140, 100, 255, 0.55); /* clearer stroke */
 }
 
 /* Base */
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
+
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -73,11 +74,13 @@ body{
   gap:4px;
   line-height:1.1;
 }
+
 .nav-brand__title{
   font-weight: 650;
   font-size: 18px;
   color: #fff;
 }
+
 .nav-brand__subtitle{
   font-weight: 500;
   font-size: 13px;
@@ -103,7 +106,7 @@ body{
   font-size:15px;
   opacity:.95;
   padding: 6px 2px;
-  transition: color .2s ease, opacity .2s ease;
+  transition: color .2s ease, opacity .2s ease, background .2s ease;
 }
 
 .nav__right a:not(.nav__btn):hover{
@@ -111,13 +114,13 @@ body{
   opacity: 1;
 }
 
-/* CTA */
+/* CTA (NAV BUTTON) */
 .nav__btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
 
-  padding: 12px 26px;
+  padding: 12px 28px;          /* ✅ padding fixed */
   border-radius: 999px;
   background: var(--cta-purple);
   color:#fff;
@@ -126,13 +129,13 @@ body{
   font-size:15px;
   white-space:nowrap;
 
-  transition: background .2s ease, color .2s ease, transform .2s ease;
+  /* ✅ no movement */
+  transition: background .2s ease, color .2s ease;
 }
 
 .nav__btn:hover{
   background:#fff;
   color: var(--cta-purple);
-  transform: translateY(-2px);
 }
 
 /* ===== HERO ===== */
@@ -166,20 +169,20 @@ body{
   filter: saturate(1.05) contrast(1.05);
 }
 
-/* Overlay (THIS is what was making your pill look “not transparent”) */
+/* Overlay (slightly lighter to help pill transparency read) */
 .hero::before{
   content:"";
   position:absolute;
   inset:0;
   background:
     linear-gradient(180deg,
-      rgba(7,10,24,.22) 0%,
-      rgba(7,10,24,.42) 55%,
-      rgba(7,10,24,.62) 100%),
+      rgba(7,10,24,.18) 0%,
+      rgba(7,10,24,.36) 55%,
+      rgba(7,10,24,.56) 100%),
     linear-gradient(90deg,
-      rgba(7,10,24,.50) 0%,
-      rgba(7,10,24,.26) 55%,
-      rgba(7,10,24,.22) 100%);
+      rgba(7,10,24,.45) 0%,
+      rgba(7,10,24,.22) 55%,
+      rgba(7,10,24,.20) 100%);
   z-index:1;
 }
 
@@ -187,7 +190,7 @@ body{
 .hero__content{
   max-width: 760px;
   padding: 110px 0 70px;
-  animation: heroIn .55s ease-out both;
+  /* ✅ removed animation */
 }
 
 .hero h1{
@@ -213,11 +216,11 @@ body{
   max-width: 100%;
 
   background: var(--pill-bg);
-  backdrop-filter: blur(6px);            /* lower blur */
+  backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 
-  border: 1px solid var(--pill-border);  /* slightly softer */
-  animation: heroIn .65s ease-out both;
+  border: 1px solid var(--pill-border);
+  /* ✅ removed animation */
 }
 
 /* Left content */
@@ -255,6 +258,7 @@ body{
   letter-spacing:.16em;
 }
 
+/* Pill button */
 .pill__btn{
   display:inline-flex;
   align-items:center;
@@ -267,19 +271,33 @@ body{
   font-weight: 550;
   font-size: 14px;
   white-space: nowrap;
-  transition: background .2s ease, color .2s ease, transform .2s ease;
+
+  /* ✅ no movement */
+  transition: background .2s ease, color .2s ease;
 }
 
 .pill__btn:hover{
   background:#fff;
   color:#101226;
-  transform: translateY(-1px);
 }
 
-/* Subtle animation */
-@keyframes heroIn{
-  from{ opacity:0; transform: translateY(10px); }
-  to{ opacity:1; transform: translateY(0); }
+/* ===== SECTION (white background so it doesn’t appear black) ===== */
+.section{
+  padding: 90px 0;
+  background:#ffffff;     /* ✅ force white background */
+  color:#0b1020;
+}
+
+.section h2{
+  margin:0 0 14px;
+  font-size: 32px;
+}
+
+.section p{
+  margin:0;
+  max-width: 70ch;
+  line-height: 1.6;
+  color: rgba(11,16,32,.78);
 }
 
 /* ===== Responsive ===== */
