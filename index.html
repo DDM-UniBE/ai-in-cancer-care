@@ -193,14 +193,13 @@ body{
 }
 
 .hero h1{
-  font-weight:900;
+  font-weight:700;
   letter-spacing:-0.02em;
   margin:0 0 34px;
   font-size: clamp(42px, 6vw, 76px);
   line-height:1.05;
 }
 
-/* ===== HERO PILL (no left bar) ===== */
 .hero__pill{
   display:flex;
   align-items:center;
@@ -208,15 +207,15 @@ body{
   gap:22px;
 
   width: min(640px, 92vw);
-  padding: 16px 18px;
+  padding: 20px 32px;
 
   border-radius:999px;
   border:1px solid transparent;
 
-  /* THIS creates gradient outline + glass interior */
+  /* Gradient outline + glass interior */
   background:
     linear-gradient(rgba(10,12,28,.55), rgba(10,12,28,.55)) padding-box,
-linear-gradient(90deg, rgba(235,0,30,.7), rgba(255,155,61,.7))
+    linear-gradient(90deg, rgba(235,0,30,.7), rgba(255,155,61,.7)) border-box;
 
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
