@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI in Cancer Care</title>
+  <title>AI in Cancer Care Symposium</title>
 
 <style>
 :root{
-  --bg:#070A18;
+  --bg:#ffffff;
   --text:#ffffff;
 
   /* AI4-ish */
@@ -29,7 +29,7 @@ html,body{ height:100%; }
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
-  background: var(--bg);
+  background:#ffffff;   /* force white */
   color: var(--text);
 }
 
@@ -220,7 +220,6 @@ body{
   -webkit-backdrop-filter: blur(6px);
 
   border: 1px solid var(--pill-border);
-  /* ✅ removed animation */
 }
 
 /* Left content */
@@ -340,9 +339,14 @@ body{
 
   line-height: 1;          /* prevents vertical squash */
 }
+.nav__right .nav__btn:hover{
+  background:#fff !important;
+  color: var(--cta-purple) !important;
+  opacity: 1 !important;
+  transform: none !important; /* no movement */
+}
 
 </style>
-
 </head>
 
 <body>
