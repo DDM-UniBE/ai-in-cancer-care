@@ -858,6 +858,49 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
   })();
 </script>
 
+<script>
+  const track = document.querySelector('.carousel-track');
+  const prevBtn = document.querySelector('.carousel-btn.prev');
+  const nextBtn = document.querySelector('.carousel-btn.next');
 
+  function visibleCount(){
+    if (window.matchMedia('(max-width: 520px)').matches) return 1;
+    if (window.matchMedia('(max-width: 820px)').matches) return 2;
+    if (window.matchMedia('(max-width: 1100px)').matches) return 3;
+    return 4; // desktop
+  }
+
+  function gapPx(){
+    const gap = getComputedStyle(track).gap;
+    return parseFloat(gap) || 0;
+  }
+
+  function cardStep(){
+    const card = track.querySelector('.speaker-card');
+    if (!card) return 0;
+    return card.getBoundingClientRect().width + gapPx();
+  }
+
+  let index = 0;
+
+  function update(){
+    const cards = track.querySelectorAll('.speaker-card');
+    const maxIndex = Math.max(0, cards.length - visibleCount());
+
+    index = Math.min(Math.max(index, 0), maxIndex);
+
+    track.style.transform = `translateX(${-index * cardStep()}px)`;
+
+    // optional: disable when you can’t go further
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === maxIndex;
+  }
+
+  prevBtn?.addEventListener('click', () => { index--; update(); });
+  nextBtn?.addEventListener('click', () => { index++; update(); });
+
+  window.addEventListener('resize', update, { passive: true });
+  update();
+</script>
 </body>
 </html>
