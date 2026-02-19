@@ -891,7 +891,7 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
       <div class="carousel-viewport">
         <div class="carousel-track">
           <!-- 11 speakers (replace content + images) -->
-          <article class="speaker-card"> data-speaker="daniel">
+          <article class="speaker-card" data-speaker="daniel">
             <div class="speaker-photo">
               <img src="assets/speakers/danieltruhn.jpg" alt="Speaker 1">
             </div>
@@ -909,8 +909,8 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
   <p class="speaker-org">Inselspital | University of Bern</p>
 </article>
 
-          <article class="speaker-card">
-            <div class="speaker-photo">
+<article class="speaker-card" data-speaker="mauricio">            
+    <div class="speaker-photo">
               <img src="assets/speakers/mreyesportraitv2.jpg" alt="Speaker 3">
             </div>
             <h3 class="speaker-name">Prof. Mauricio Reyes</h3>
@@ -1187,15 +1187,48 @@ const detailsBio = document.getElementById('detailsBio');
 
 let activeCard = null;
 
-// --- OPEN SPEAKER ---
+<script>
+const cards = document.querySelectorAll('.speaker-card');
+const carousel = document.querySelector('.speakers-carousel');
+
+const details = document.getElementById('speakerDetails');
+const detailsName = document.getElementById('detailsName');
+const detailsMeta = document.getElementById('detailsMeta');
+const detailsBio = document.getElementById('detailsBio');
+
+let activeCard = null;
+
+/* --- SPEAKER DATA --- */
+const speakerData = {
+  daniel: {
+    name: "Prof. Daniel Truhn",
+    meta: "Senior Physician, Laboratory for Artificial Intelligence, Diagnostic and Interventional Radiology — RWTH Aachen, Germany",
+    bio: "Add Daniel’s real bio here."
+  },
+  sarah: {
+    name: "Prof. Sarah Brünningk",
+    meta: "Head of Research, Center for AI-Based Radiation Therapy — Inselspital | University of Bern",
+    bio: "Prof. Sarah Brüningk leads the Center for AI in Radiation Oncology at Inselspital and the University of Bern. Her research combines mathematical modelling and advanced machine learning to process multimodal oncology data from omics to imaging for clinical applications."
+  },
+  mauricio: {
+    name: "Prof. Mauricio Reyes",
+    meta: "Group Head, ARTORG Center for Biomedical Engineering Research — University of Bern",
+    bio: "Add Mauricio bio here."
+  }
+  // add others here
+};
+
+/* --- CLICK HANDLER --- */
 cards.forEach(card => {
   card.addEventListener('click', (e) => {
-    e.stopPropagation(); // prevent document click from firing
+    e.stopPropagation();
 
     const id = card.dataset.speaker;
-    if (id !== "sarah") return; // only Sarah works for now
+    const speaker = speakerData[id];
 
-    // Toggle off if clicking same card
+    if (!speaker) return;
+
+    // Toggle
     if (activeCard === card) {
       closeDetails();
       return;
@@ -1206,49 +1239,21 @@ cards.forEach(card => {
 
     carousel.classList.add('has-active');
 
-    detailsName.textContent = "Prof. Sarah Brünningk";
-    detailsMeta.textContent = "Head of Research, Center for AI-Based Radiation Therapy — Inselspital | University of Bern";
-    detailsBio.textContent = "Prof. Sarah Brüningk is leading the Center for AI in Radiation Oncology at the University Hospital Bern and the University of Bern, Switzerland. She is a physicist by training (TU Munich, Germany) and completed a PhD at the intersection of practical wet lab and computational biology at the Institute of Cancer Research (UK) before moving to ETH Zurich as a postdoctoral researcher focusing on AI for biomedical applications. Her research harnesses combinations of mathematical modelling and advanced machine learning to process multimodal data spanning form omics to imaging information for applications in oncology and pediatric digital health. ";
+    detailsName.textContent = speaker.name;
+    detailsMeta.textContent = speaker.meta;
+    detailsBio.textContent = speaker.bio;
 
     details.classList.add('is-open');
     activeCard = card;
   });
 });
 
-// --- OPEN SPEAKER ---
-cards.forEach(card => {
-  card.addEventListener('click', (e) => {
-    e.stopPropagation(); // prevent document click from firing
-
-    const id = card.dataset.speaker;
-    if (id !== "daniel") return; 
-
-    // Toggle off if clicking same card
-    if (activeCard === card) {
-      closeDetails();
-      return;
-    }
-
-    cards.forEach(c => c.classList.remove('is-active'));
-    card.classList.add('is-active');
-
-    carousel.classList.add('has-active');
-
-    detailsName.textContent = "Prof. Daniel Truhn";
-    detailsMeta.textContent = "Head of Research, Center for AI-Based Radiation Therapy — Inselspital | University of Bern";
-    detailsBio.textContent = "Prof. Sarah Brüningk is leading the Center for AI in Radiation Oncology at the University Hospital Bern and the University of Bern, Switzerland. She is a physicist by training (TU Munich, Germany) and completed a PhD at the intersection of practical wet lab and computational biology at the Institute of Cancer Research (UK) before moving to ETH Zurich as a postdoctoral researcher focusing on AI for biomedical applications. Her research harnesses combinations of mathematical modelling and advanced machine learning to process multimodal data spanning form omics to imaging information for applications in oncology and pediatric digital health. ";
-
-    details.classList.add('is-open');
-    activeCard = card;
-  });
-});
-
-// --- CLOSE WHEN CLICKING OUTSIDE ---
+/* --- CLOSE ON OUTSIDE CLICK --- */
 document.addEventListener('click', (e) => {
-  const clickedInsideCard = e.target.closest('.speaker-card');
-  const clickedInsideDetails = e.target.closest('#speakerDetails');
+  const insideCard = e.target.closest('.speaker-card');
+  const insideDetails = e.target.closest('#speakerDetails');
 
-  if (!clickedInsideCard && !clickedInsideDetails) {
+  if (!insideCard && !insideDetails) {
     closeDetails();
   }
 });
