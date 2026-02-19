@@ -991,11 +991,21 @@ const detailsName = document.getElementById('detailsName');
 const detailsMeta = document.getElementById('detailsMeta');
 const detailsBio = document.getElementById('detailsBio');
 
+let activeCard = null;
+
+// --- OPEN SPEAKER ---
 cards.forEach(card => {
-  card.addEventListener('click', () => {
+  card.addEventListener('click', (e) => {
+    e.stopPropagation(); // prevent document click from firing
 
     const id = card.dataset.speaker;
-    if(id !== "sarah") return; // only Sarah works for now
+    if (id !== "sarah") return; // only Sarah works for now
+
+    // Toggle off if clicking same card
+    if (activeCard === card) {
+      closeDetails();
+      return;
+    }
 
     cards.forEach(c => c.classList.remove('is-active'));
     card.classList.add('is-active');
@@ -1004,11 +1014,29 @@ cards.forEach(card => {
 
     detailsName.textContent = "Prof. Sarah Brünningk";
     detailsMeta.textContent = "Head of Research, Center for AI-Based Radiation Therapy — Inselspital | University of Bern";
-    detailsBio.textContent = "Add Sarah’s biography text here. 2–4 sentences about her expertise, research focus, and talk topic.";
+    detailsBio.textContent = "Add Sarah’s biography text here.";
 
     details.classList.add('is-open');
+    activeCard = card;
   });
 });
+
+// --- CLOSE WHEN CLICKING OUTSIDE ---
+document.addEventListener('click', (e) => {
+  const clickedInsideCard = e.target.closest('.speaker-card');
+  const clickedInsideDetails = e.target.closest('#speakerDetails');
+
+  if (!clickedInsideCard && !clickedInsideDetails) {
+    closeDetails();
+  }
+});
+
+function closeDetails(){
+  details.classList.remove('is-open');
+  carousel.classList.remove('has-active');
+  cards.forEach(c => c.classList.remove('is-active'));
+  activeCard = null;
+}
 </script>
 </body>
 </html>
