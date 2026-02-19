@@ -32,14 +32,12 @@
     }
 
  /* ===== NAV (AI4-style: transparent -> solid on scroll) ===== */
-/* ===== NAV (AI4-style: transparent -> solid on scroll) ===== */
 .nav{
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
-
   padding: 18px 0;
   background: transparent;
   transition: background .25s ease, box-shadow .25s ease;
@@ -377,6 +375,19 @@
     max-width: 100%;
   }
 }
+
+/* --- FORCE CTA padding (put at VERY end of CSS) --- */
+.nav__right .nav__btn{
+  padding: 12px 26px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 999px !important;
+  background: var(--cta-purple) !important;
+  color: #fff !important;
+  line-height: 1 !important;
+}
+
   </style>
 </head>
 
@@ -399,7 +410,7 @@
       <a href="#agenda">Agenda</a>
       <a href="#speakers">Speakers</a>
       <a href="#sponsors">Sponsors</a>
-      <a href="#register" class="nav__btn">Register Now</a>
+<a href="#register" class="nav__btn">Register Now</a>
     </nav>
 
   </div>
