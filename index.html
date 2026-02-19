@@ -356,11 +356,9 @@ body{
 .speaker-card{
   flex: 0 0 calc((100% - (24px * 3)) / 4); /* 4 cards default */
   min-width: 0;
-
   background: #fbf7f6;
   border-radius: 16px;
   padding: 20px;
-
   border: 2px solid transparent;
   transition: background .25s ease;
 }
@@ -422,8 +420,8 @@ body{
   border: 0 !important;
   box-shadow: none !important;
 
-  width: 44px;
-  height: 44px;
+  width: 64px;
+  height: 64px;
   display: grid;
   place-items: center;
 
@@ -437,23 +435,13 @@ body{
 
 .carousel-btn svg,
 .carousel-btn img{
-  width: 34px;
-  height: 34px;
+  width: 46px;
+  height: 46px;
   display: block;
 }
 
 .carousel-btn:hover{
   opacity: .8;
-}
-
-/* =========================================
-   LARGE SCREENS (5 CARDS)
-========================================= */
-
-@media (min-width: 1400px){
-  .speaker-card{
-    flex-basis: calc((100% - (24px * 4)) / 5);
-  }
 }
 
 /* =========================================
