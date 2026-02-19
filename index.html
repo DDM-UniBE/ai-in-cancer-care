@@ -5,37 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI in Cancer Care</title>
 
-  <style>
-    :root{
-      --bg: #070A18;
-      --text: #ffffff;
+<style>
+:root{
+  --bg:#070A18;
+  --text:#ffffff;
 
-      /* AI4 vibe colours */
-      --pill-bg: rgba(20, 18, 45, .72);
-      --pill-stroke: rgba(255,255,255,.12);
---cta-purple:#6F49FF;
-      --accent: #6C4BFF;           /* AI4 purple-ish */
-      --accent-hover: #ffffff;      /* hover turns white */
-      --accent-hover-text: #101226;
+  /* AI4-ish */
+  --nav-solid:#14124b;
+  --cta-purple:#6F49FF;
+  --accent:#6C4BFF;
 
-      --meta: rgba(255,255,255,.80);
-      --meta2: rgba(255,255,255,.65);
-      --gold: #f2a35a;              /* small warm accent like AI4 */
-    }
+  --orange:#FFB463;
 
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
+  /* Glass pill */
+  --pill-bg: rgba(20, 18, 45, 0.14);      /* lighter */
+  --pill-border: rgba(140, 100, 255, 0.28);
+}
 
- /* ===== NAV (AI4-style: transparent -> solid on scroll) ===== */
+/* Base */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Shared container */
+.container{
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ===== NAV (transparent -> solid on scroll) ===== */
 .nav{
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100%;
   z-index: 1000;
   padding: 18px 0;
@@ -44,7 +51,7 @@
 }
 
 .nav.is-solid{
-  background: #14124b;
+  background: var(--nav-solid);
   box-shadow: 0 8px 30px rgba(0,0,0,.35);
 }
 
@@ -53,40 +60,33 @@
   margin: 0 auto;
   padding: 0 40px;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   gap: 28px;
 }
 
-/* LEFT brand stack (Ai4-like) */
-.nav__left{
-  display:flex;
-  align-items:center;
-}
-
+/* Brand stack */
 .nav-brand{
   display:flex;
   flex-direction:column;
   gap:4px;
   line-height:1.1;
 }
-
 .nav-brand__title{
-  font-weight:700;          /* less bold than 800 */
-  font-size:18px;
-  color:#fff;
+  font-weight: 650;
+  font-size: 18px;
+  color: #fff;
 }
-
 .nav-brand__subtitle{
-  font-weight:500;
-  font-size:13px;
-  letter-spacing:.06em;
-  text-transform:uppercase;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
   color: rgba(255,255,255,.72);
 }
 
-/* RIGHT: layout */
+/* Right links */
 .nav__right{
   display:flex;
   align-items:center;
@@ -94,7 +94,6 @@
   flex-wrap: nowrap;
 }
 
-/* RIGHT: normal link style */
 .nav__right a{
   display:inline-flex;
   align-items:center;
@@ -104,133 +103,104 @@
   font-size:15px;
   opacity:.95;
   padding: 6px 2px;
-  transition: color .2s ease, opacity .2s ease, transform .2s ease;
+  transition: color .2s ease, opacity .2s ease;
 }
 
-/* Hover orange ONLY for normal links (not CTA button) */
 .nav__right a:not(.nav__btn):hover{
-  color:#FFB463;
-  opacity:1;
+  color: var(--orange);
+  opacity: 1;
 }
 
-/* CTA button */
+/* CTA */
 .nav__btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
 
-  padding: 12px 26px;        /* ✅ fixed padding */
+  padding: 12px 26px;
   border-radius: 999px;
   background: var(--cta-purple);
   color:#fff;
 
   font-weight:700;
   font-size:15px;
-  opacity: 1;
   white-space:nowrap;
+
+  transition: background .2s ease, color .2s ease, transform .2s ease;
 }
 
-/* CTA hover stays white */
 .nav__btn:hover{
-  background: #ffffff;
+  background:#fff;
   color: var(--cta-purple);
   transform: translateY(-2px);
 }
 
-
-.brand{
+/* ===== HERO ===== */
+.hero{
+  position:relative;
+  min-height: 62vh;
   display:flex;
   align-items:center;
-  gap:14px;
-  white-space:nowrap;
+  justify-content:center;
+  overflow:hidden;
+  padding-top: 90px; /* room for nav */
 }
 
-.brand__meta{
-  display:flex;
-  flex-direction:column;
-  gap:2px;
-  border-left:0;         /* remove the divider if you don’t want it */
-  padding-left:0;
+/* Frame keeps “not full bleed” vibe */
+.hero__frame{
+  width: min(1320px, 92vw);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  padding: 90px 0 70px;
 }
 
-.brand__meta strong{
-  font-size:14px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.92);
-  font-weight:600;
+/* Background image */
+.hero__bg{
+  position:absolute;
+  inset:0;
+  background-image: url("assets/hero.jpeg");
+  background-size: cover;
+  background-position: center 20%;
+  transform: scale(1.03);
+  filter: saturate(1.05) contrast(1.05);
 }
 
-.brand__meta span{
-  font-size:12px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.70);
+/* Overlay (THIS is what was making your pill look “not transparent”) */
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg,
+      rgba(7,10,24,.22) 0%,
+      rgba(7,10,24,.42) 55%,
+      rgba(7,10,24,.62) 100%),
+    linear-gradient(90deg,
+      rgba(7,10,24,.50) 0%,
+      rgba(7,10,24,.26) 55%,
+      rgba(7,10,24,.22) 100%);
+  z-index:1;
 }
 
-
-    /* ===== HERO (AI4-style) ===== */
-    .hero{
-      position: relative;
-      min-height: 62vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-    padding-top: 90px;
-
-    }
-
-    /* “not full-bleed” feel: content sits in a centered frame */
-    .hero__frame{
-      width: min(1320px, 92vw);
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-      padding: 90px 0 70px;
-    }
-
-    /* background image sits behind the frame, still full screen */
-    .hero__bg{
-      position:absolute;
-      inset:0;
-      background-image: url("assets/hero.jpeg"); /* <-- your image */
-      background-size: cover;
-      background-position: center 20%; /* shows a bit more of the top */
-      transform: scale(1.03);
-      filter: saturate(1.05) contrast(1.05);
-    }
-
-    /* AI4-like dark overlay (not too dark) */
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(180deg, rgba(7,10,24,.35) 0%, rgba(7,10,24,.58) 55%, rgba(7,10,24,.78) 100%),
-        linear-gradient(90deg, rgba(7,10,24,.62) 0%, rgba(7,10,24,.32) 55%, rgba(7,10,24,.28) 100%);
-      z-index:1;
-    }
-
-    /* AI4 hero content is LEFT aligned (not centred) */
-    .hero__content{
-      max-width: 760px;
-    padding: 110px 0 70px;
-    }
+/* Content (left aligned like AI4) */
+.hero__content{
+  max-width: 760px;
+  padding: 110px 0 70px;
+  animation: heroIn .55s ease-out both;
+}
 
 .hero h1{
   font-weight: 700;
   font-size: clamp(64px, 6vw, 108px);
   line-height: 1.06;
-  letter-spacing: -0.02em;   /* ✅ moins large, plus “AI4” */
+  letter-spacing: -0.02em;
   margin: 0 0 44px;
-
-  max-width: 32ch;           /* ✅ laisse respirer => 2 lignes au lieu de 4 */
+  max-width: 32ch;
   text-wrap: balance;
 }
 
-
-    /* ===== AI4-style pill ===== */
+/* Pill (glass) */
 .hero__pill{
   display:flex;
   align-items:center;
@@ -239,158 +209,103 @@
 
   padding: 26px 40px;
   border-radius:999px;
-
-  width: fit-content;     /* 👈 THIS makes it shrink */
+  width: fit-content;
   max-width: 100%;
 
-  background: rgba(20, 18, 45, 0.18);
-  backdrop-filter: blur(8px);
--webkit-backdrop-filter: blur(8px);
+  background: var(--pill-bg);
+  backdrop-filter: blur(6px);            /* lower blur */
+  -webkit-backdrop-filter: blur(6px);
 
-  border: 1px solid rgba(140, 100, 255, 0.35);
+  border: 1px solid var(--pill-border);  /* slightly softer */
+  animation: heroIn .65s ease-out both;
 }
 
+/* Left content */
+.pill__left{
+  display:flex;
+  align-items:flex-start;
+  gap: 16px;
+  min-width: 0;
+}
 
-    .pill__left{
-      display:flex;
-      gap: 14px;
-      align-items:flex-start;
-      min-width: 0;
-    }
-
-    /* tiny warm bar like AI4 */
- .pill__bar{
+.pill__bar{
   width:4px;
   height:36px;
   border-radius:4px;
   background: linear-gradient(180deg, #7C3AED, #FF9B3D);
-  margin-right:16px;
+  flex:0 0 auto;
 }
 
+.pill__text{
+  display:flex;
+  flex-direction:column;
+  gap: 4px;
+  min-width:0;
+}
 
-    .pill__text{
-      display:flex;
-      flex-direction:column;
-      gap: 4px;
-      min-width:0;
-    }
-
-.pill__text strong{
+.pill__text strong,
+.pill__text span{
   font-size:13px;
   letter-spacing:.18em;
   text-transform:uppercase;
-  color:#FFB463;  /* orange */
-  font-weight:700;
+  color: var(--orange);
 }
 
 .pill__text span{
-  font-size:13px;
   letter-spacing:.16em;
-  text-transform:uppercase;
-  color:#FFB463;  /* orange */
 }
 
-
-    .pill__btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 14px 28px;
-      border-radius: 999px;
-      background: var(--accent);
-      color: #fff;
-      letter-spacing: 0.02em;
-      text-decoration:none;
-      font-weight: 500;
-      font-size: 14px;
-      white-space: nowrap;
-      transition: background .2s ease, color .2s ease, transform .2s ease;
-    }
-
-    .pill__btn:hover{
-      background: var(--accent-hover);
-      color: var(--accent-hover-text);
-      transform: translateY(-1px);
-    }
-
-    .container{
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 40px;
+.pill__btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: var(--accent);
+  color:#fff;
+  text-decoration:none;
+  font-weight: 550;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
 }
 
-.section{ padding: 90px 0; }
-
-.section--white{
+.pill__btn:hover{
   background:#fff;
-  color:#0b1020;
-}
-.section--white h2{
-  margin:0 0 14px;
-  font-size: 32px;
-}
-.section--white p{
-  margin:0;
-  max-width: 70ch;
-  line-height: 1.6;
-  color: rgba(11,16,32,.78);
+  color:#101226;
+  transform: translateY(-1px);
 }
 
-    /* ===== Responsive ===== */
-
-/* Desktop / Large screens */
-@media (min-width: 1200px){
-  .hero{
-    min-height: 60vh;   /* smaller hero on big screens */
-  }
+/* Subtle animation */
+@keyframes heroIn{
+  from{ opacity:0; transform: translateY(10px); }
+  to{ opacity:1; transform: translateY(0); }
 }
 
-/* Tablet and below */
+/* ===== Responsive ===== */
 @media (max-width: 980px){
-  .hero{
-    min-height: 72vh;
-  }
+  .nav__container{ padding:0 24px; }
+  .container{ padding:0 24px; }
 }
 
-/* Mobile */
 @media (max-width: 640px){
-  .hero{
-    min-height: 82vh;   /* taller on mobile */
-  }
+  .hero{ min-height: 82vh; }
 
   .hero__pill{
     width: 100%;
     border-radius: 22px;
     flex-direction: column;
     align-items: flex-start;
-    border: 1px solid transparent;
-  background:
-    linear-gradient(rgba(10,12,28,.28), rgba(10,12,28,.28)) padding-box,
-    linear-gradient(90deg, rgba(130,70,255,.5), rgba(130,70,255,.5)) border-box;  }
+    padding: 20px 22px;
+  }
 
   .pill__btn{
     width:100%;
     text-align:center;
   }
-
-  .pill__text span{
-    max-width: 100%;
-  }
 }
+</style>
 
-/* --- FORCE CTA padding (put at VERY end of CSS) --- */
-.nav__right .nav__btn{
-  padding: 12px 26px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  border-radius: 999px !important;
-  background: var(--cta-purple) !important;
-  color: #fff !important;
-  line-height: 1 !important;
-}
-
-  </style>
 </head>
 
 <body>
