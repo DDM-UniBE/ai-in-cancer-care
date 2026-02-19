@@ -10,8 +10,10 @@
   --bg:#070A18;
   --text:#ffffff;
   --nav-bg:rgba(9,10,24,.40);
+
   --red:#eb001e;
   --orange:#FF9B3D;
+
   --btn-hover-bg:#ffffff;
   --btn-hover-text:#111111;
 }
@@ -28,11 +30,10 @@ body{
 .container{
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 80px;  /* this creates the visual frame */
+  padding: 0 clamp(24px, 6vw, 80px);
 }
 
-
-/* ===== NAV (minimal) ===== */
+/* ===== NAV ===== */
 .nav{
   position:fixed;
   top:0;
@@ -52,6 +53,7 @@ body{
   gap:18px;
 }
 
+/* left */
 .brand{
   display:flex;
   align-items:center;
@@ -86,28 +88,29 @@ body{
   color:rgba(255,255,255,.70);
 }
 
+/* right */
+.nav__right{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+/* desktop links */
 .menu{
   display:flex;
   align-items:center;
-  gap:28px;          /* slightly more spacing */
+  gap:28px;
   font-weight:600;
-  font-size:15px;    /* was 14px */
+  font-size:15px;
 }
 
 .menu a{
   color:rgba(255,255,255,.88);
   text-decoration:none;
   transition:color .25s ease;
-letter-spacing: 0.02em;
+  letter-spacing: 0.02em;
 }
-
 .menu a:hover{ color:var(--orange); }
-
-.nav__actions{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
 
 .nav__contact{
   color:rgba(255,255,255,.88);
@@ -118,14 +121,14 @@ letter-spacing: 0.02em;
 }
 .nav__contact:hover{ color:var(--orange); }
 
-/* ===== Buttons: solid red + hover white ===== */
+/* Buttons */
 .btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
   padding:10px 18px;
   border-radius:999px;
-background: #ff5a1f; 
+  background: var(--red);
   color:#fff;
   text-decoration:none;
   font-weight:600;
@@ -133,19 +136,95 @@ background: #ff5a1f;
   white-space:nowrap;
   border:none;
   box-shadow:none;
-  transition: background .2s ease, color .2s ease;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
 }
-
 .btn:hover{
   background:var(--btn-hover-bg);
   color:var(--btn-hover-text);
+  transform: translateY(-1px);
+}
+.btn.nav-btn{
+  padding:14px 28px;
+  font-size:16px;
+  font-weight:700;
 }
 
-/* Make nav Register slightly larger */
-.btn.nav-btn{
-  padding:14px 28px;   /* bigger */
-  font-size:16px;      /* was 15px */
-  font-weight:700;     /* slightly stronger */
+/* ===== Mobile nav (CSS-only hamburger) ===== */
+.nav__toggle{
+  display:none;
+}
+.hamburger{
+  display:none;
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(9,10,24,.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor:pointer;
+  align-items:center;
+  justify-content:center;
+}
+.hamburger span{
+  display:block;
+  width:18px;
+  height:2px;
+  background: rgba(255,255,255,.88);
+  position:relative;
+}
+.hamburger span::before,
+.hamburger span::after{
+  content:"";
+  position:absolute;
+  left:0;
+  width:18px;
+  height:2px;
+  background: rgba(255,255,255,.88);
+}
+.hamburger span::before{ top:-6px; }
+.hamburger span::after{ top:6px; }
+
+/* dropdown panel */
+.mobile-menu{
+  display:none;
+  position:absolute;
+  top:72px;
+  right:clamp(24px, 6vw, 80px);
+  width:min(320px, calc(100vw - 48px));
+  padding:14px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(10,12,28,.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 18px 50px rgba(0,0,0,.45);
+}
+.mobile-menu a{
+  display:block;
+  padding:12px 10px;
+  text-decoration:none;
+  color:rgba(255,255,255,.90);
+  font-weight:600;
+  border-radius:12px;
+}
+.mobile-menu a:hover{
+  background: rgba(255,255,255,.08);
+  color: var(--orange);
+}
+.mobile-menu .mobile-actions{
+  display:flex;
+  gap:10px;
+  padding-top:10px;
+}
+.mobile-menu .mobile-actions a{
+  flex:1;
+  text-align:center;
+}
+
+/* toggle open */
+.nav__toggle:checked ~ .mobile-menu{
+  display:block;
 }
 
 /* ===== HERO ===== */
@@ -186,10 +265,10 @@ background: #ff5a1f;
   padding: 180px 0 120px;
 }
 
-
 .hero__left{
   max-width: 760px;
-  margin-left: clamp(60px, 8vw, 160px);
+  /* Ai4-like: not “centered” but also not glued to the edge */
+  margin-left: clamp(0px, 2vw, 28px);
 }
 
 .hero h1{
@@ -200,6 +279,7 @@ background: #ff5a1f;
   line-height:1.05;
 }
 
+/* Hero pill with gradient outline */
 .hero__pill{
   display:flex;
   align-items:center;
@@ -212,7 +292,6 @@ background: #ff5a1f;
   border-radius:999px;
   border:1px solid transparent;
 
-  /* Gradient outline + glass interior */
   background:
     linear-gradient(rgba(10,12,28,.55), rgba(10,12,28,.55)) padding-box,
     linear-gradient(90deg, rgba(235,0,30,.7), rgba(255,155,61,.7)) border-box;
@@ -221,13 +300,6 @@ background: #ff5a1f;
   -webkit-backdrop-filter: blur(12px);
 
   box-shadow: 0 14px 34px rgba(0,0,0,.30);
-}
-
-
-.hero__pill-left{
-  display:flex;
-  align-items:center;
-  min-width:0;
 }
 
 .hero__pill-text{
@@ -253,15 +325,16 @@ background: #ff5a1f;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
-  max-width: 380px;
+  max-width: 420px;
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 920px){
-  .menu{ display:none; }
-  .container{ padding:0 28px; width:min(1000px, 92vw); }
-  .hero__content{ padding-top: 140px; }
+@media (max-width: 980px){
+  /* swap desktop right side to hamburger */
+  .menu, .nav__contact, .btn.nav-btn{ display:none; }
+  .hamburger{ display:flex; }
 }
+
 @media (max-width: 520px){
   .brand__meta{ display:none; }
   .hero__pill{
@@ -291,17 +364,35 @@ background: #ff5a1f;
         </div>
       </div>
 
-      <nav class="menu">
-        <a href="#about">About</a>
-        <a href="#agenda">Agenda</a>
-        <a href="#speakers">Speakers</a>
-        <a href="#sponsors">Sponsors</a>
-      </nav>
+      <div class="nav__right">
+        <nav class="menu">
+          <a href="#about">About</a>
+          <a href="#agenda">Agenda</a>
+          <a href="#speakers">Speakers</a>
+          <a href="#sponsors">Sponsors</a>
+        </nav>
 
-      <div class="nav__actions">
         <a class="nav__contact" href="#contact">Contact</a>
         <a class="btn nav-btn" href="#register">Register Now</a>
+
+        <!-- Mobile toggle -->
+        <input class="nav__toggle" type="checkbox" id="nav-toggle" />
+        <label class="hamburger" for="nav-toggle" aria-label="Open menu">
+          <span></span>
+        </label>
+
+        <div class="mobile-menu">
+          <a href="#about">About</a>
+          <a href="#agenda">Agenda</a>
+          <a href="#speakers">Speakers</a>
+          <a href="#sponsors">Sponsors</a>
+          <a href="#contact">Contact</a>
+          <div class="mobile-actions">
+            <a class="btn" href="#register">Register Now</a>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 </header>
@@ -314,11 +405,9 @@ background: #ff5a1f;
       <h1>AI in Cancer Care Symposium</h1>
 
       <div class="hero__pill">
-        <div class="hero__pill-left">
-          <div class="hero__pill-text">
-            <div class="date">30 April 2026</div>
-            <div class="place">University of Bern • Inselspital • Bern</div>
-          </div>
+        <div class="hero__pill-text">
+          <div class="date">30 April 2026</div>
+          <div class="place">University of Bern • Inselspital • Bern</div>
         </div>
 
         <a class="btn" href="#register">Register Now</a>
