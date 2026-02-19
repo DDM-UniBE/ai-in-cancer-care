@@ -31,7 +31,7 @@
       color: var(--text);
     }
 
-    /* ===== NAV (AI4-style: transparent -> solid on scroll) ===== */
+ /* ===== NAV (AI4-style: transparent -> solid on scroll) ===== */
 .nav{
   position: fixed;
   top: 0;
@@ -39,15 +39,14 @@
   width: 100%;
   z-index: 1000;
 
-  padding: 20px 0;
+  padding: 18px 0;
   background: transparent;
-
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition: background .25s ease, box-shadow .25s ease;
 }
 
 .nav.is-solid{
   background: #14124b; /* dark purple */
-  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  box-shadow: 0 8px 30px rgba(0,0,0,.35);
 }
 
 .nav__container{
@@ -56,35 +55,60 @@
   padding: 0 40px;
 
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
+  gap: 28px;
 }
 
-.nav__logo{
+/* LEFT brand stack (Ai4-like) */
+.nav__left{ display:flex; align-items:center; }
+
+.nav-brand{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  line-height:1.1;
+}
+
+.nav-brand__title{
   font-weight: 800;
-  font-size: 22px;
-  color: white;
+  font-size: 18px;
+  color: #fff;
 }
 
+.nav-brand__subtitle{
+  font-weight: 600;
+  font-size: 13px;
+  color: rgba(255,255,255,.72);
+}
+
+/* RIGHT links */
 .nav__right{
-  display: flex;
-  align-items: center;
+  display:flex;
+  align-items:center;
   gap: 28px;
 }
 
 .nav__right a{
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  font-size: 15px;
+  text-decoration:none;
+  color:#fff;
+  font-weight:600;
+  font-size:15px;
+  opacity:.95;
 }
 
+.nav__right a:hover{
+  opacity: 1;
+}
+
+/* CTA */
 .nav__btn{
-  background: var(--cta-purple);/* your red */
+  background: var(--cta-purple);
   padding: 12px 24px;
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 700;
 }
+
 
 .brand{
   display:flex;
@@ -168,7 +192,7 @@
 
   .hero h1{
   font-weight:700;
-  font-size: clamp(48px, 4.5vw, 80px); /* slightly reduced vw */
+  font-size: clamp(56px, 5.5vw, 96px) /* slightly reduced vw */
   letter-spacing:-0.02em;
   line-height:1.08;
   margin:0 0 40px;
@@ -183,7 +207,7 @@
   justify-content:space-between;
   gap:24px;
 
-  padding:20px 32px;
+  padding: 26px 40px;
   border-radius:999px;
 
   width: fit-content;     /* 👈 THIS makes it shrink */
@@ -305,15 +329,16 @@
 
 <body>
 
-    <header class="nav">
+ <header class="nav">
   <div class="nav__container">
 
     <!-- LEFT -->
     <div class="nav__left">
-     <div class="brand">
-        <div class="brand__title">AI in Cancer Care</div>
-        <div class="brand__subtitle">Department of Digital Medicine</div>
+      <div class="nav-brand">
+        <div class="nav-brand__title">AI in Cancer Care</div>
+        <div class="nav-brand__subtitle">Department of Digital Medicine</div>
       </div>
+    </div>
 
     <!-- RIGHT -->
     <nav class="nav__right">
@@ -321,12 +346,12 @@
       <a href="#agenda">Agenda</a>
       <a href="#speakers">Speakers</a>
       <a href="#sponsors">Sponsors</a>
-
       <a href="#register" class="nav__btn">Register Now</a>
     </nav>
 
   </div>
 </header>
+
 
   <section class="hero">
     <div class="hero__bg" aria-hidden="true"></div>
