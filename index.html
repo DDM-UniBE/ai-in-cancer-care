@@ -483,70 +483,44 @@ body{
 }
 
 /* =========================================
-   Details panel below
+   SIMPLE TEXT DETAILS BELOW CAROUSEL
 ========================================= */
 
 .speaker-details{
-  margin-top: 26px;
+  margin-top: 36px;
   display: none;
+  max-width: 100%;
 }
 
 .speaker-details.is-open{
   display: block;
 }
 
-.speaker-details__box{
-  background: #fbf7f6;
-  border-radius: 18px;
-  padding: 22px 24px;
-
-  border: 2px solid transparent;
-  background:
-    linear-gradient(#fbf7f6, #fbf7f6) padding-box,
-    linear-gradient(180deg, #eb001e, #f59d0f) border-box;
-}
-
-.speaker-details__top{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap: 18px;
+/* Keep same framing width as carousel */
+.speaker-details__inner{
+  max-width: 100%;
+  padding: 0 6px; /* match carousel track padding */
 }
 
 .speaker-details__name{
-  margin: 0;
+  margin: 0 0 8px;
   font-size: 22px;
-  font-weight: 900;
+  font-weight: 700;
   color: #14124b;
 }
 
 .speaker-details__meta{
-  margin: 6px 0 0;
+  margin: 0 0 14px;
+  font-size: 15px;
   color: rgba(11,16,32,.75);
-  line-height: 1.5;
 }
 
 .speaker-details__bio{
-  margin: 14px 0 0;
-  color: rgba(11,16,32,.85);
+  margin: 0;
+  font-size: 16px;
   line-height: 1.6;
-  max-width: 85ch;
-}
-
-.speaker-details__close{
-  border: 0;
-  background: transparent;
-  font-size: 18px;
-  cursor: pointer;
-  opacity: .7;
-}
-.speaker-details__close:hover{ opacity: 1; }
-
-/* Mobile */
-@media (max-width: 640px){
-  .speakers-carousel.has-active .speaker-card{
-    opacity: .5;
-  }
+  color: rgba(11,16,32,.85);
+  max-width: 80ch;
 }
 
 /* =========================================
@@ -890,12 +864,13 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
     </div>
   </div>
 
-  <div class="speaker-details" id="speakerDetails">
-  <div class="speaker-details__box">
-    <h3 id="detailsName"></h3>
-    <p id="detailsMeta"></p>
-    <p id="detailsBio"></p>
+<div class="speaker-details" id="speakerDetails">
+  <div class="speaker-details__inner">
+    <h3 class="speaker-details__name"></h3>
+    <p class="speaker-details__meta"></p>
+    <p class="speaker-details__bio"></p>
   </div>
+</div>
 </div>
 </section>
 
