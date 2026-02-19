@@ -32,6 +32,7 @@
     }
 
  /* ===== NAV (AI4-style: transparent -> solid on scroll) ===== */
+/* ===== NAV (AI4-style: transparent -> solid on scroll) ===== */
 .nav{
   position: fixed;
   top: 0;
@@ -45,7 +46,7 @@
 }
 
 .nav.is-solid{
-  background: #14124b; /* dark purple */
+  background: #14124b;
   box-shadow: 0 8px 30px rgba(0,0,0,.35);
 }
 
@@ -61,7 +62,10 @@
 }
 
 /* LEFT brand stack (Ai4-like) */
-.nav__left{ display:flex; align-items:center; }
+.nav__left{
+  display:flex;
+  align-items:center;
+}
 
 .nav-brand{
   display:flex;
@@ -71,27 +75,28 @@
 }
 
 .nav-brand__title{
-  font-weight: 800;
-  font-size: 18px;
-  color: #fff;
+  font-weight:700;          /* less bold than 800 */
+  font-size:18px;
+  color:#fff;
 }
 
 .nav-brand__subtitle{
-  font-weight: 400;
-  font-size: 13px;
+  font-weight:500;
+  font-size:13px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
   color: rgba(255,255,255,.72);
 }
-
 
 /* RIGHT: layout */
 .nav__right{
   display:flex;
   align-items:center;
-  gap: 26px;            /* ✅ spacing between links */
+  gap: 26px;
   flex-wrap: nowrap;
 }
 
-/* RIGHT: link style */
+/* RIGHT: normal link style */
 .nav__right a{
   display:inline-flex;
   align-items:center;
@@ -101,31 +106,35 @@
   font-size:15px;
   opacity:.95;
   padding: 6px 2px;
-  transition: color .2s ease, opacity .2s ease;
+  transition: color .2s ease, opacity .2s ease, transform .2s ease;
 }
 
-/* Hover orange ONLY for normal links (not the button) */
+/* Hover orange ONLY for normal links (not CTA button) */
 .nav__right a:not(.nav__btn):hover{
   color:#FFB463;
   opacity:1;
 }
 
-/* CTA */
+/* CTA button */
 .nav__btn{
-  background: var(--cta-purple);
-  padding: 12px 24px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding: 12px 26px;        /* ✅ fixed padding */
   border-radius: 999px;
-  font-weight: 700;
+  background: var(--cta-purple);
+  color:#fff;
+
+  font-weight:700;
+  font-size:15px;
   opacity: 1;
+  white-space:nowrap;
 }
 
-/* Optional: keep CTA not turning orange */
-.nav__btn:hover{ color:#fff; }
-
-
-.nav__right a:hover{
-color: #FFB463;
-  opacity: 1;
+/* CTA hover stays white */
+.nav__btn:hover{
+  color:#fff;
 }
 
 
@@ -149,7 +158,7 @@ color: #FFB463;
   letter-spacing:.12em;
   text-transform:uppercase;
   color:rgba(255,255,255,.92);
-  font-weight:800;
+  font-weight:600;
 }
 
 .brand__meta span{
