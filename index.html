@@ -13,7 +13,7 @@
       /* AI4 vibe colours */
       --pill-bg: rgba(20, 18, 45, .72);
       --pill-stroke: rgba(255,255,255,.12);
-
+--cta-purple:#6F49FF;
       --accent: #6C4BFF;           /* AI4 purple-ish */
       --accent-hover: #ffffff;      /* hover turns white */
       --accent-hover-text: #101226;
@@ -80,16 +80,47 @@
 }
 
 .nav__btn{
-  background: #eb001e; /* your red */
+  background: var(--cta-purple);/* your red */
   padding: 12px 24px;
   border-radius: 999px;
   font-weight: 600;
 }
 
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  white-space:nowrap;
+}
+
+.brand__meta{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  border-left:0;         /* remove the divider if you don’t want it */
+  padding-left:0;
+}
+
+.brand__meta strong{
+  font-size:14px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.92);
+  font-weight:800;
+}
+
+.brand__meta span{
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.70);
+}
+
+
     /* ===== HERO (AI4-style) ===== */
     .hero{
       position: relative;
-      min-height: clamp(620px, 80vh, 860px);
+      min-height: 72vh;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -132,8 +163,7 @@
     /* AI4 hero content is LEFT aligned (not centred) */
     .hero__content{
       max-width: 760px;
-        padding-top: 220px;  /* adjust */
-  padding-bottom: 120px;
+    padding: 110px 0 70px;
     }
 
   .hero h1{
@@ -156,12 +186,16 @@
   padding:20px 32px;
   border-radius:999px;
 
-  background: rgba(30, 20, 90, 0.35);   /* MUCH more transparent */
+  width: fit-content;     /* 👈 THIS makes it shrink */
+  max-width: 100%;
+
+  background: rgba(30, 20, 90, 0.35);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 
-  border: 1px solid rgba(140, 100, 255, 0.35); /* thin subtle purple line */
+  border: 1px solid rgba(140, 100, 255, 0.35);
 }
+
 
     .pill__left{
       display:flex;
@@ -230,7 +264,7 @@
 /* Desktop / Large screens */
 @media (min-width: 1200px){
   .hero{
-    min-height: 65vh;   /* smaller hero on big screens */
+    min-height: 60vh;   /* smaller hero on big screens */
   }
 }
 
@@ -276,8 +310,10 @@
 
     <!-- LEFT -->
     <div class="nav__left">
-      <div class="nav__logo">DDM</div>
-    </div>
+     <div class="brand">
+        <div class="brand__title">AI in Cancer Care</div>
+        <div class="brand__subtitle">Department of Digital Medicine</div>
+      </div>
 
     <!-- RIGHT -->
     <nav class="nav__right">
