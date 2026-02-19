@@ -28,12 +28,12 @@ body{
   background:var(--bg);
 }
 
-/* ===== LAYOUT (pull content away from edges) ===== */
 .container{
-  width:min(980px, 88vw);        /* narrower */
-  margin:0 auto;
-  padding:0 64px;               /* more breathing room */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 80px;  /* this creates the visual frame */
 }
+
 
 /* ===== NAV (minimal) ===== */
 .nav{
@@ -184,8 +184,9 @@ body{
   display:flex;
   align-items:center;
   width:100%;
-  padding: 150px 0 90px; /* room for fixed nav */
+  padding: 150px 0 90px;
 }
+
 
 .hero__left{
   max-width: 760px;
