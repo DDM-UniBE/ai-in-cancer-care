@@ -564,6 +564,142 @@ body{
   opacity: .8;
 }
 
+/* ==========================
+   SPONSORS / PARTNERS SECTION
+========================== */
+
+.sponsors-section{
+  background: #ffffff;
+  color: #0b1020;
+  padding: 90px 0;
+}
+
+.sponsors-title{
+  margin: 0;
+  text-align: center;
+  font-size: clamp(34px, 3vw, 54px);
+  line-height: 1.1;
+  font-weight: 800;
+  color: #14124b;
+}
+
+.sponsors-subtitle{
+  margin: 14px auto 0;
+  text-align: center;
+  max-width: 70ch;
+  font-size: 18px;
+  line-height: 1.5;
+  color: rgba(11,16,32,.72);
+}
+
+/* Pill tabs (glass vibe) */
+.sponsors-tabs{
+  margin: 34px auto 0;
+  width: fit-content;
+  max-width: 100%;
+
+  display: inline-flex;
+  gap: 10px;
+  padding: 10px;
+
+  border-radius: 999px;
+  background: rgba(20, 18, 45, 0.06);
+  border: 1px solid rgba(20, 18, 45, 0.12);
+}
+
+.sponsors-tab{
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+
+  padding: 12px 22px;
+  border-radius: 999px;
+
+  font-weight: 650;
+  font-size: 14px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+
+  background: transparent;
+  color: rgba(20,18,45,.70);
+
+  transition: background .2s ease, color .2s ease, opacity .2s ease;
+}
+
+.sponsors-tab:hover{
+  opacity: .9;
+}
+
+/* Active tab = gradient pill */
+.sponsors-tab.is-active{
+  background: linear-gradient(90deg, #eb001e, #f59d0f);
+  color: #ffffff;
+}
+
+/* Panels spacing */
+.sponsors-panels{
+  margin-top: 34px;
+}
+
+/* Logo grid */
+.logos-grid{
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+}
+
+/* Logo cards */
+.logo-card{
+  display: grid;
+  place-items: center;
+
+  min-height: 92px;
+  padding: 18px 16px;
+  border-radius: 16px;
+
+  background: #fbf7f6;
+  border: 2px solid transparent;
+
+  transition: transform .18s ease, background .25s ease;
+  text-decoration: none;
+}
+
+.logo-card:hover{
+  transform: translateY(-2px);
+  background:
+    linear-gradient(#fbf7f6, #fbf7f6) padding-box,
+    linear-gradient(180deg, #eb001e, #f59d0f) border-box;
+}
+
+.logo-card img{
+  max-width: 170px;
+  width: 100%;
+  height: auto;
+  max-height: 42px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: .92;
+  transition: filter .2s ease, opacity .2s ease;
+}
+
+.logo-card:hover img{
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+/* Responsive grid */
+@media (max-width: 1100px){
+  .logos-grid{ grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 820px){
+  .logos-grid{ grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 520px){
+  .logos-grid{ grid-template-columns: repeat(2, 1fr); }
+  .logo-card img{ max-width: 150px; }
+}
+
 /* =========================================
    TABLET (3 CARDS)
 ========================================= */
@@ -755,7 +891,7 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
       <div class="carousel-viewport">
         <div class="carousel-track">
           <!-- 11 speakers (replace content + images) -->
-          <article class="speaker-card">
+          <article class="speaker-card"> data-speaker="daniel">
             <div class="speaker-photo">
               <img src="assets/speakers/danieltruhn.jpg" alt="Speaker 1">
             </div>
@@ -867,6 +1003,66 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
         <h3 class="speaker-details__name" id="detailsName"></h3>
         <p class="speaker-details__meta" id="detailsMeta"></p>
         <p class="speaker-details__bio" id="detailsBio"></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="sponsors-section" id="sponsors">
+  <div class="container">
+    <h2 class="sponsors-title">Sponsors & Partners</h2>
+    <p class="sponsors-subtitle">
+      We are grateful to our sponsors and partners for supporting the AI in Cancer Care Symposium.
+    </p>
+
+    <!-- Tabs pill -->
+    <div class="sponsors-tabs" role="tablist" aria-label="Sponsors and Partners tabs">
+      <button class="sponsors-tab is-active" type="button" role="tab" aria-selected="true" data-target="sponsors">
+        Sponsors
+      </button>
+      <button class="sponsors-tab" type="button" role="tab" aria-selected="false" data-target="partners">
+        Partners
+      </button>
+    </div>
+
+    <!-- Panels -->
+    <div class="sponsors-panels">
+      <!-- Sponsors -->
+      <div class="sponsors-panel is-active" id="panel-sponsors" role="tabpanel">
+        <div class="logos-grid">
+          <!-- Replace with your real logos -->
+          <a class="logo-card" href="#" target="_blank" rel="noopener">
+            <img src="assets/sponsors/aws.svg" alt="AWS">
+          </a>
+          <a class="logo-card" href="#" target="_blank" rel="noopener">
+            <img src="assets/sponsors/google-cloud.svg" alt="Google Cloud">
+          </a>
+          <a class="logo-card" href="#" target="_blank" rel="noopener">
+            <img src="assets/sponsors/ibm.svg" alt="IBM">
+          </a>
+          <a class="logo-card" href="#" target="_blank" rel="noopener">
+            <img src="assets/sponsors/deloitte.svg" alt="Deloitte">
+          </a>
+          <!-- add more... -->
+        </div>
+      </div>
+
+      <!-- Partners -->
+      <div class="sponsors-panel" id="panel-partners" role="tabpanel" hidden>
+        <div class="logos-grid">
+          <!-- Replace with your real logos -->
+          <a class="logo-card" href="#" target="_blank" rel="noopener">
+            <img src="assets/partners/inselspital.svg" alt="Inselspital">
+          </a>
+          <a class="logo-card" href="#" target="_blank" rel="noopener">
+            <img src="assets/partners/unibe.svg" alt="University of Bern">
+          </a>
+          <a class="logo-card" href="#" target="_blank" rel="noopener">
+            <img src="assets/partners/artorg.svg" alt="ARTORG Center">
+          </a>
+          <!-- add more... -->
+        </div>
       </div>
     </div>
 
@@ -1019,6 +1215,34 @@ cards.forEach(card => {
   });
 });
 
+// --- OPEN SPEAKER ---
+cards.forEach(card => {
+  card.addEventListener('click', (e) => {
+    e.stopPropagation(); // prevent document click from firing
+
+    const id = card.dataset.speaker;
+    if (id !== "daniel") return; 
+
+    // Toggle off if clicking same card
+    if (activeCard === card) {
+      closeDetails();
+      return;
+    }
+
+    cards.forEach(c => c.classList.remove('is-active'));
+    card.classList.add('is-active');
+
+    carousel.classList.add('has-active');
+
+    detailsName.textContent = "Prof. Daniel Truhn";
+    detailsMeta.textContent = "Head of Research, Center for AI-Based Radiation Therapy — Inselspital | University of Bern";
+    detailsBio.textContent = "Prof. Sarah Brüningk is leading the Center for AI in Radiation Oncology at the University Hospital Bern and the University of Bern, Switzerland. She is a physicist by training (TU Munich, Germany) and completed a PhD at the intersection of practical wet lab and computational biology at the Institute of Cancer Research (UK) before moving to ETH Zurich as a postdoctoral researcher focusing on AI for biomedical applications. Her research harnesses combinations of mathematical modelling and advanced machine learning to process multimodal data spanning form omics to imaging information for applications in oncology and pediatric digital health. ";
+
+    details.classList.add('is-open');
+    activeCard = card;
+  });
+});
+
 // --- CLOSE WHEN CLICKING OUTSIDE ---
 document.addEventListener('click', (e) => {
   const clickedInsideCard = e.target.closest('.speaker-card');
@@ -1035,6 +1259,39 @@ function closeDetails(){
   cards.forEach(c => c.classList.remove('is-active'));
   activeCard = null;
 }
+</script>
+
+<script>
+  (function(){
+    const tabs = Array.from(document.querySelectorAll('.sponsors-tab'));
+    const sponsorsPanel = document.getElementById('panel-sponsors');
+    const partnersPanel = document.getElementById('panel-partners');
+
+    if (!tabs.length || !sponsorsPanel || !partnersPanel) return;
+
+    function setActive(target){
+      const isSponsors = target === 'sponsors';
+
+      tabs.forEach(t => {
+        const active = t.dataset.target === target;
+        t.classList.toggle('is-active', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+
+      sponsorsPanel.classList.toggle('is-active', isSponsors);
+      partnersPanel.classList.toggle('is-active', !isSponsors);
+
+      sponsorsPanel.hidden = !isSponsors;
+      partnersPanel.hidden = isSponsors;
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => setActive(tab.dataset.target));
+    });
+
+    // default
+    setActive('sponsors');
+  })();
 </script>
 </body>
 </html>
