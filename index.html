@@ -82,30 +82,32 @@
   color: rgba(255,255,255,.72);
 }
 
-/* RIGHT links */
-.nav__right a{
-display:flex;
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  font-size: 15px;
-  transition: color .2s ease;
-gap: 26px; 
+
+/* RIGHT: layout */
+.nav__right{
+  display:flex;
+  align-items:center;
+  gap: 26px;            /* ✅ spacing between links */
+  flex-wrap: nowrap;
 }
 
+/* RIGHT: link style */
 .nav__right a{
-display:inline-flex;
+  display:inline-flex;
+  align-items:center;
   text-decoration:none;
   color:#fff;
   font-weight:600;
   font-size:15px;
   opacity:.95;
   padding: 6px 2px;
+  transition: color .2s ease, opacity .2s ease;
 }
 
-.nav__right a:hover{
-color: #FFB463;
-  opacity: 1;
+/* Hover orange ONLY for normal links (not the button) */
+.nav__right a:not(.nav__btn):hover{
+  color:#FFB463;
+  opacity:1;
 }
 
 /* CTA */
@@ -114,6 +116,16 @@ color: #FFB463;
   padding: 12px 24px;
   border-radius: 999px;
   font-weight: 700;
+  opacity: 1;
+}
+
+/* Optional: keep CTA not turning orange */
+.nav__btn:hover{ color:#fff; }
+
+
+.nav__right a:hover{
+color: #FFB463;
+  opacity: 1;
 }
 
 
@@ -197,13 +209,14 @@ color: #FFB463;
     padding: 110px 0 70px;
     }
 
- .hero h1{
+.hero h1{
   font-weight: 700;
-  font-size: clamp(60px, 6.5vw, 110px);
-  line-height: 1.05;
-  letter-spacing: 0.02em;
-  margin: 0 0 50px;
-  max-width: 24ch;
+  font-size: clamp(64px, 6vw, 108px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;   /* ✅ moins large, plus “AI4” */
+  margin: 0 0 44px;
+
+  max-width: 32ch;           /* ✅ laisse respirer => 2 lignes au lieu de 4 */
   text-wrap: balance;
 }
 
@@ -290,6 +303,13 @@ color: #FFB463;
       color: var(--accent-hover-text);
       transform: translateY(-1px);
     }
+
+    .container{
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
 .section{ padding: 90px 0; }
 
 .section--white{
