@@ -468,6 +468,10 @@ body{
     gap: 40px;
   }
 
+  .section h2{
+  max-width: 26ch;   /* ⬅ increase from 20ch */
+}
+
   .section-text{
     max-width: 100%;
   }
@@ -1193,9 +1197,12 @@ font-weight: 600;
     padding: 20px 22px;
   }
 
-  .pill__btn{
-    width:100%;
-    text-align:center;
+   .pill__btn{
+    width: auto;                 /* ⬅ no full width */
+    align-self: center;          /* ⬅ center inside pill */
+    padding: 16px 38px;          /* ⬅ slightly wider */
+    font-size: 17px;             /* ⬅ bigger text */
+    font-weight: 600;
   }
 }
 @media (min-width: 1100px){
