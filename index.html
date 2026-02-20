@@ -1566,18 +1566,28 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
 </section>
 
 
-  <script>
+<script>
+/* =========================
+   NAV: solid on scroll
+========================= */
+(function(){
   const nav = document.querySelector('.nav');
+  if(!nav) return;
 
   function updateNav(){
-    // tweak 40 if you want it to become solid earlier/later
     if (window.scrollY > 60) nav.classList.add('is-solid');
     else nav.classList.remove('is-solid');
   }
 
   updateNav();
   window.addEventListener('scroll', updateNav, { passive: true });
+})();
 </script>
+
+<script>
+/* =========================
+   SPONSORS / PARTNERS TABS
+========================= */
 (function(){
   const tabs = Array.from(document.querySelectorAll('.sponsors-tab'));
   const sponsorsPanel = document.getElementById('panel-sponsors');
@@ -1604,6 +1614,9 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
 </script>
 
 <script>
+/* =========================
+   HIGHLIGHTS CAROUSEL + DOTS + AUTOPLAY
+========================= */
 (function(){
   const track = document.querySelector('.highlights-track');
   const cards = document.querySelectorAll('.highlight-card');
@@ -1663,29 +1676,25 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
 
   window.addEventListener('resize', update, { passive: true });
 
-  // --- AUTOPLAY ---
-  const AUTO_MS = 3000; // change speed here
+  // Autoplay
+  const AUTO_MS = 3000;
   let timer = null;
 
   function startAuto(){
     stopAuto();
     timer = setInterval(goNext, AUTO_MS);
   }
-
   function stopAuto(){
     if(timer) clearInterval(timer);
     timer = null;
   }
-
   function restartAuto(){
     startAuto();
   }
 
-  // Pause on hover
   carousel.addEventListener('mouseenter', stopAuto);
   carousel.addEventListener('mouseleave', startAuto);
 
-  // Init
   createDots();
   update();
   startAuto();
@@ -1693,17 +1702,18 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
 </script>
 
 <script>
+/* =========================
+   SPEAKERS: CLICK TO OPEN DETAILS
+========================= */
 (function(){
-  const section = document.querySelector('.speakers-carousel');
-  if (!section) return;
+  const cards = document.querySelectorAll('.speaker-card');
+  const carousel = document.querySelector('.speakers-carousel');
 
-  const track = section.querySelector('.carousel-track');
-  const cards = Array.from(section.querySelectorAll('.speaker-card'));
-  const prev = section.querySelector('.speakers-btn.prev');
-  const next = section.querySelector('.speakers-btn.next');
+  const details = document.getElementById('speakerDetails');
+  const detailsName = document.getElementById('detailsName');
+  const detailsMeta = document.getElementById('detailsMeta');
+  const detailsBio = document.getElementById('detailsBio');
 
-  if (!track || !cards.length || !prev || !next) return;
-// Safety checks (prevents silent failures)
   if (!cards.length || !carousel || !details || !detailsName || !detailsMeta || !detailsBio) return;
 
   let activeCard = null;
@@ -1712,32 +1722,32 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
     daniel: {
       name: "Prof. Daniel Truhn",
       meta: "Senior Physician, Laboratory for Artificial Intelligence, Diagnostic and Interventional Radiology — RWTH Aachen, Germany",
-      bio: "Daniel is a Professor of Medicine at University Hospital Aachen, where he leads the Laboratory for Artificial Intelligence in Medicine. His work focuses on translating AI methods into clinical routine, with a particular emphasis on accelerating the deployment of AI models in oncology. With a background in both physics and medicine, his research bridges methodological innovation and real-world clinical application. In his talk, he will discuss agentic AI systems and their potential to transform diagnostic and therapeutic decision-making in clinical medicine. "
+      bio: "Daniel is a Professor of Medicine at University Hospital Aachen, where he leads the Laboratory for Artificial Intelligence in Medicine. His work focuses on translating AI methods into clinical routine, with a particular emphasis on accelerating the deployment of AI models in oncology. With a background in both physics and medicine, his research bridges methodological innovation and real-world clinical application. In his talk, he will discuss agentic AI systems and their potential to transform diagnostic and therapeutic decision-making in clinical medicine."
     },
     sarah: {
       name: "Prof. Sarah Brünningk",
       meta: "Head of Research, Center for AI-Based Radiation Therapy — Inselspital | University of Bern",
-      bio: "Prof. Sarah Brüningk is leading the Center for AI in Radiation Oncology at the University Hospital Bern and the University of Bern, Switzerland. She is a physicist by training (TU Munich, Germany) and completed a PhD at the intersection of practical wet lab and computational biology at the Institute of Cancer Research (UK) before moving to ETH Zurich as a postdoctoral researcher focusing on AI for biomedical applications. Her research harnesses combinations of mathematical modelling and advanced machine learning to process multimodal data spanning form omics to imaging information for applications in oncology and pediatric digital health. "
+      bio: "Prof. Sarah Brüningk is leading the Center for AI in Radiation Oncology at the University Hospital Bern and the University of Bern, Switzerland. She is a physicist by training (TU Munich, Germany) and completed a PhD at the intersection of practical wet lab and computational biology at the Institute of Cancer Research (UK) before moving to ETH Zurich as a postdoctoral researcher focusing on AI for biomedical applications. Her research harnesses combinations of mathematical modelling and advanced machine learning to process multimodal data spanning from omics to imaging for applications in oncology and pediatric digital health."
     },
     mauricio: {
       name: "Prof. Mauricio Reyes",
       meta: "Group Head, ARTORG Center for Biomedical Engineering Research — University of Bern",
-      bio: "Professor Mauricio Reyes began his academic journey in 2003 when he was awarded a French-Chilean scholarship to conduct his PhD studies at INRIA, France. His research work focused on developing AI technologies to improve the workflow for cancer patients. His PhD thesis led to the development of novel image reconstruction techniques for respiratory motion compensation in PET imaging. This research significantly improved the assessment of treatment response in lung cancer patients, demonstrating the potential of medical image computing technologies in medicine.  Through EU-funded projects, he began to develop AI solutions for neuro-oncology in 2010, with a particular focus on automated assessment of brain tumor burden. His seminal research work led to the recipient of the MICCAI Young Scientist Publication award in 2016. His work has pioneered in the important aspects of robust AI, and explainable AI (XAI), in the field of medical image analysis."
+      bio: "Professor Mauricio Reyes began his academic journey in 2003 when he was awarded a French-Chilean scholarship to conduct his PhD studies at INRIA, France. His research focused on AI technologies to improve cancer workflows and led to novel image reconstruction techniques for respiratory motion compensation in PET imaging. Through EU-funded projects, he developed AI solutions for neuro-oncology, with a focus on automated brain tumor assessment. He received the MICCAI Young Scientist Publication award in 2016 and has pioneered robust and explainable AI in medical image analysis."
     },
-      chantal: {
+    chantal: {
       name: "Chantal Britt",
-      meta: "Patient Expert, Bern University of Applied Sciences,SPO, Swiss PPIE Network",
-      bio: "Chantal Britt holds an MA in Translation from the University of Geneva. She worked 13 years as a financial and science journalist at Bloomberg News and Swissinfo.ch, followed by a decade in science communication and public affairs for non-profit organisations in cancer research, microbiology, infectious diseases, toxicology, veterinary medicine and preclinical research. After developing long Covid in 2020, she co-founded and now serves as president of patient organisation Long Covid Switzerland and chairs Long COVID Europe. As a trained patient advocate and expert for patient involvement, citizen science, and science communication, she contributes to research assessment at SNSF, SPHN, and Citizen Science Zürich, promotes co-creation in healthcare, and trains patients and healthcare professionals. Since 2022, Chantal has worked in participatory research at Bern University of Applied Sciences. She is on the board of EUPATI Switzerland and Swiss PPIE Network, and serves on the patient advisory board of the Swiss Patient Organisation SPO."
+      meta: "Patient Expert, Bern University of Applied Sciences, SPO, Swiss PPIE Network",
+      bio: "Chantal Britt holds an MA in Translation from the University of Geneva. She worked 13 years as a financial and science journalist at Bloomberg News and Swissinfo.ch, then a decade in science communication and public affairs for non-profits across health and research. After developing long Covid in 2020, she co-founded Long Covid Switzerland and chairs Long COVID Europe. She contributes to patient involvement, citizen science, and participatory research, and serves on several patient advisory and network boards in Switzerland."
     },
-      kuangyu: {
+    kuangyu: {
       name: "Prof. Kuangyu Shi",
-      meta: "Chief Medical Physicist, Artificial Intelligence and Translational Theranostics, Inselspital/University of Bern",
-      bio: "Prof. Kuangyu Shi is the Chief Medical Physicist and Head of the Lab for Artificial Intelligence and Translational Theranostics at the Department of Nuclear Medicine, University of Bern, Switzerland. Additionally, he is a senior lecturer at the Computer-aided Medical Procedure, School of Computation, Information & Technology at the Technical University of Munich, Germany.His research is centered on advancing artificial intelligence and computational modeling techniques for nuclear medicine imaging, dosimetry and therapy, aiming to link the outcomes with underlying pathophysiological processes. Additionally, he is dedicated to developing both in vivo and ex vivo experimental methods, pushing the boundaries of microscopic nuclear imaging. He is currently a member of the AI committee of EANM, Task Group 36 & 130 of the International Commission on Radiological Protection (ICRP), and serves as an associate editors of EANM Journal, IEEE TRPMS and Nuklearmedizin."
+      meta: "Chief Medical Physicist, Artificial Intelligence and Translational Theranostics — Inselspital | University of Bern",
+      bio: "Prof. Kuangyu Shi is the Chief Medical Physicist and Head of the Lab for Artificial Intelligence and Translational Theranostics at the Department of Nuclear Medicine, University of Bern. He is also a senior lecturer at TU Munich. His research advances AI and computational modeling for nuclear medicine imaging, dosimetry and therapy, linking outcomes with underlying pathophysiology, and developing in vivo and ex vivo experimental methods for microscopic nuclear imaging. He is involved with EANM AI initiatives and ICRP task groups and serves on editorial boards in the field."
     },
     bastian: {
       name: "PD Dr. Dr. med. Bastian Dislich",
-      meta: "Senior Physician, Clinical Pathology, IGMP, University of Bern",
-      bio: "Prof. Kuangyu Shi is the Chief Medical Physicist and Head of the Lab for Artificial Intelligence and Translational Theranostics at the Department of Nuclear Medicine, University of Bern, Switzerland. Additionally, he is a senior lecturer at the Computer-aided Medical Procedure, School of Computation, Information & Technology at the Technical University of Munich, Germany.His research is centered on advancing artificial intelligence and computational modeling techniques for nuclear medicine imaging, dosimetry and therapy, aiming to link the outcomes with underlying pathophysiological processes. Additionally, he is dedicated to developing both in vivo and ex vivo experimental methods, pushing the boundaries of microscopic nuclear imaging. He is currently a member of the AI committee of EANM, Task Group 36 & 130 of the International Commission on Radiological Protection (ICRP), and serves as an associate editors of EANM Journal, IEEE TRPMS and Nuklearmedizin."
+      meta: "Senior Physician, Clinical Pathology, IGMP — University of Bern",
+      bio: "Add Bastian Dislich's bio here."
     }
   };
 
@@ -1756,7 +1766,6 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
       const speaker = speakerData[id];
       if (!speaker) return;
 
-      // Toggle off
       if (activeCard === card) {
         closeDetails();
         return;
@@ -1776,7 +1785,6 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
     });
   });
 
-  // Close when clicking outside
   document.addEventListener('click', (e) => {
     const insideCard = e.target.closest('.speaker-card');
     const insideDetails = e.target.closest('#speakerDetails');
@@ -1784,6 +1792,23 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
   });
 })();
 </script>
+
+<script>
+/* =========================
+   SPEAKERS: ARROWS (translateX)
+   (No mobile swipe changes yet)
+========================= */
+(function(){
+  const section = document.querySelector('.speakers-carousel');
+  if (!section) return;
+
+  const track = section.querySelector('.carousel-track');
+  const cards = Array.from(section.querySelectorAll('.speaker-card'));
+  const prev = section.querySelector('.speakers-btn.prev');
+  const next = section.querySelector('.speakers-btn.next');
+
+  if (!track || !cards.length || !prev || !next) return;
+
   let index = 0;
 
   function cardsPerView(){
@@ -1820,5 +1845,6 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
   update();
 })();
 </script>
+
 </body>
 </html>
