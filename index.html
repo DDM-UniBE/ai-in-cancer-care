@@ -693,142 +693,184 @@ body{
 }
 
 /* ==========================
-   HIGHLIGHTS SECTION
+   HIGHLIGHTS (AI4-style)
 ========================== */
 
 .highlights-section{
-  padding: 110px 0;
-  color: #fff;
-  background:
-    radial-gradient(900px 500px at 80% 0%, rgba(255, 155, 61, .25), transparent 60%),
-    radial-gradient(800px 500px at 0% 100%, rgba(124, 58, 237, .25), transparent 60%),
-    linear-gradient(180deg, #06122b 0%, #0b1c45 60%, #06122b 100%);
+  padding: 110px 0 120px;
+  background: #fbf6f2;           /* cream */
+  color: #0b1020;
 }
 
 .highlights-title{
   margin: 0;
   text-align: center;
-  font-size: clamp(36px, 3vw, 54px);
-  font-weight: 800;
+  font-size: clamp(36px, 3vw, 56px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #14124b;
 }
 
 .highlights-subtitle{
   margin: 18px auto 0;
   text-align: center;
   max-width: 70ch;
-  color: rgba(255,255,255,.75);
+  color: rgba(11,16,32,.72);
   font-size: 18px;
+  line-height: 1.55;
 }
 
 /* Carousel Layout */
 .highlights-carousel{
-  margin-top: 60px;
+  margin-top: 56px;
   position: relative;
 }
 
 .highlights-viewport{
   overflow: hidden;
+  padding: 10px 0;              /* breathing room so shadow doesn’t clip */
 }
 
 .highlights-track{
   display: flex;
-  gap: 28px;
-  transition: transform .4s ease;
+  gap: 34px;
+  transition: transform .45s ease;
+  will-change: transform;
+  align-items: stretch;
+  padding: 0 6px;
 }
 
 /* Card */
 .highlight-card{
-  flex: 0 0 calc((100% - 56px) / 3);
-  background: rgba(255,255,255,.06);
-  border-radius: 20px;
+  flex: 0 0 calc((100% - (34px * 2)) / 3);
+  background: #ffffff;
+  border-radius: 16px;
   overflow: hidden;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 18px 45px rgba(0,0,0,.08);
+  border: 1px solid rgba(11,16,32,.06);
+  position: relative;
+}
+
+/* Image */
+.highlight-image{
+  height: 190px;                /* AI4-ish crop */
+  overflow: hidden;
 }
 
 .highlight-image img{
   width: 100%;
-  height: 230px;
+  height: 100%;
   object-fit: cover;
+  display: block;
 }
 
+/* Content panel that overlaps the image */
 .highlight-content{
-  padding: 26px;
+  position: relative;
+  margin: -26px 18px 18px;      /* pulls content up over image */
+  padding: 22px 22px 24px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 16px 35px rgba(0,0,0,.10);
 }
 
+/* Tag */
 .highlight-tag{
+  display: inline-block;
   font-size: 12px;
-  letter-spacing: .25em;
+  letter-spacing: .28em;
   text-transform: uppercase;
-  color: #f59d0f;
-  font-weight: 700;
+  font-weight: 800;
+  color: rgba(11,16,32,.55);    /* subtle like AI4 */
 }
 
+/* Title */
 .highlight-card h3{
   margin: 10px 0 10px;
-  font-size: 22px;
+  font-size: 24px;
+  line-height: 1.15;
+  font-weight: 900;
+  color: #6d28d9;               /* AI4 purple */
 }
 
+/* Body */
 .highlight-card p{
   margin: 0;
-  color: rgba(255,255,255,.78);
-  line-height: 1.6;
+  color: rgba(11,16,32,.78);
+  line-height: 1.65;
+  font-size: 16px;
 }
 
-/* Arrows */
+/* Arrows (purple, no circle) */
 .highlights-btn{
   position: absolute;
-  top: 50%;
+  top: 52%;
   transform: translateY(-50%);
   background: transparent;
   border: none;
-  width: 60px;
-  height: 60px;
+  width: 54px;
+  height: 54px;
   display: grid;
   place-items: center;
   cursor: pointer;
-  opacity: .7;
-  transition: opacity .2s ease;
-    color: #ffffff;
+  opacity: 1;
+  z-index: 5;
 }
 
 .highlights-btn svg{
   width: 34px;
   height: 34px;
-  stroke: #ffffff;
 }
 
-.highlights-btn:hover{
-  opacity: 1;
+.highlights-btn svg path{
+  stroke: #6d28d9;              /* purple */
+  stroke-width: 2.4;
 }
 
 .highlights-btn.prev{ left: -60px; }
 .highlights-btn.next{ right: -60px; }
 
-.highlights-btn:hover{ opacity: 1; }
+.highlights-btn:hover{ opacity: .75; }
 
 /* Dots */
 .highlights-dots{
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 18px;
   margin-top: 34px;
 }
 
 .highlights-dots button{
-  width: 14px;              /* slightly bigger */
+  width: 14px;
   height: 14px;
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: rgba(255,255,255,.35);  /* inactive */
+  background: rgba(11,16,32,.18);     /* grey */
   cursor: pointer;
   transition: transform .2s ease, background .2s ease;
 }
 
 .highlights-dots button.active{
-  background: #f59d0f;      /* plain orange */
-  transform: scale(1.1);
+  background: #6d28d9;               /* purple active */
+  transform: scale(1.12);
+}
+
+/* Responsive */
+@media (max-width: 1100px){
+  .highlight-card{
+    flex: 0 0 calc((100% - 34px) / 2);
+  }
+  .highlights-btn.prev{ left: -24px; }
+  .highlights-btn.next{ right: -24px; }
+}
+
+@media (max-width: 640px){
+  .highlight-card{
+    flex: 0 0 100%;
+  }
+  .highlights-btn.prev{ left: -8px; }
+  .highlights-btn.next{ right: -8px; }
 }
 
 /* =========================================
@@ -925,28 +967,161 @@ body{
   transform: none !important; /* no movement */
 }
 
+/* ==========================
+   MOBILE NAV (Hamburger)
+========================== */
+
+.brand-short{ display:none; }
+
+.nav__toggle{
+  display:none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.nav__toggle span{
+  display:block;
+  height: 2px;
+  width: 100%;
+  background: #fff;
+  border-radius: 2px;
+  margin: 6px 0;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+/* Mobile layout */
+@media (max-width: 820px){
+  /* show hamburger */
+  .nav__toggle{ display:block; }
+
+  /* swap logo text */
+  .brand-full{ display:none; }
+  .brand-short{ display:inline; }
+
+  /* hide subtitle on mobile */
+  .nav-brand__subtitle{ display:none; }
+
+  /* turn links into a dropdown panel */
+  .nav__right{
+    position: absolute;
+    top: 64px;                 /* under the nav bar */
+    right: 16px;
+    left: 16px;
+
+    display: none;             /* hidden by default */
+    flex-direction: column;
+    gap: 10px;
+
+    padding: 14px;
+    border-radius: 16px;
+
+    background: rgba(5, 19, 33, 0.96);
+    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .nav__right a{
+    padding: 10px 10px;
+    border-radius: 12px;
+  }
+
+  .nav__right a:not(.nav__btn):hover{
+    background: rgba(255,255,255,.06);
+    color: #fff;
+  }
+
+  .nav__right .nav__btn{
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* opened state */
+  .nav.is-open .nav__right{ display:flex; }
+
+  /* animate hamburger -> X */
+  .nav.is-open .nav__toggle span:nth-child(1){
+    transform: translateY(8px) rotate(45deg);
+  }
+  .nav.is-open .nav__toggle span:nth-child(2){
+    opacity: 0;
+  }
+  .nav.is-open .nav__toggle span:nth-child(3){
+    transform: translateY(-8px) rotate(-45deg);
+  }
+}
+
+/* ==========================
+   SPEAKERS ARROWS ON MOBILE
+   (you were hiding them)
+========================== */
+
+@media (max-width: 520px){
+  .carousel-btn{
+    display: grid;          /* ✅ show again */
+    width: 44px;
+    height: 44px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: .95;
+  }
+
+  /* keep inside the carousel area on mobile */
+  .carousel-btn.prev{ left: 6px; }
+  .carousel-btn.next{ right: 6px; }
+
+  /* ensure they are visible */
+  .carousel-btn svg{
+    width: 26px;
+    height: 26px;
+  }
+
+  .carousel-btn svg path{
+    stroke: #051321;        /* dark stroke on light speaker section */
+    stroke-width: 2.4;
+  }
+
+  /* give the buttons a subtle touch target without changing your style */
+  .carousel-btn{
+    background: rgba(255,255,255,.72) !important;
+    border-radius: 999px !important;
+  }
+}
 </style>
 </head>
 
 <body>
- <header class="nav">
+<header class="nav">
   <div class="nav__container">
 
     <!-- LEFT -->
     <div class="nav__left">
       <div class="nav-brand">
-        <div class="nav-brand__title">AI in Cancer Care</div>
+        <div class="nav-brand__title">
+          <span class="brand-full">AI in Cancer Care</span>
+          <span class="brand-short">AICCS</span>
+        </div>
         <div class="nav-brand__subtitle">APRIL 30, 2026 | BERN</div>
       </div>
     </div>
 
+    <!-- HAMBURGER (mobile) -->
+    <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
     <!-- RIGHT -->
-    <nav class="nav__right">
+    <nav class="nav__right" id="navMenu">
       <a href="#about">About</a>
       <a href="#agenda">Agenda</a>
       <a href="#speakers">Speakers</a>
       <a href="#sponsors">Sponsors</a>
-<a href="#register" class="nav__btn">Register Now</a>
+      <a href="#register" class="nav__btn">Register Now</a>
     </nav>
 
   </div>
@@ -1180,25 +1355,27 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
   </div>
 </section>
 
+
 <section class="highlights-section" id="highlights">
   <div class="container">
 
-    <h2 class="highlights-title">Highlights & Special Moments</h2>
+    <h2 class="highlights-title">Highlights & Special Events</h2>
     <p class="highlights-subtitle">
-      Discover key sessions, discussions and experiences from the AI in Cancer Care Symposium.
+      AI in Cancer Care 2026 is packed with insightful sessions and special moments.
     </p>
 
     <div class="highlights-carousel">
-      
-     <button class="highlights-btn prev">
-  <svg viewBox="0 0 24 24" fill="none">
-    <path d="M15 18L9 12L15 6"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-  </svg>
-</button>
+
+      <!-- LEFT ARROW -->
+      <button class="highlights-btn prev" aria-label="Previous highlight">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+        </svg>
+      </button>
 
       <div class="highlights-viewport">
         <div class="highlights-track">
@@ -1206,13 +1383,14 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
           <!-- CARD 1 -->
           <article class="highlight-card">
             <div class="highlight-image">
-              <img src="assets/highlights/highlight-1.jpg" alt="Research Summit">
+              <img src="assets/highlights/highlight-1.jpg" alt="AI Research Summit">
             </div>
+
             <div class="highlight-content">
               <span class="highlight-tag">SPOTLIGHT</span>
               <h3>AI Research Summit</h3>
               <p>
-                Bringing together leading AI and oncology researchers to discuss 
+                Bringing together leading AI and oncology researchers to discuss
                 cutting-edge applications and translational impact.
               </p>
             </div>
@@ -1221,14 +1399,15 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
           <!-- CARD 2 -->
           <article class="highlight-card">
             <div class="highlight-image">
-              <img src="assets/highlights/highlight-2.jpg" alt="Panel Discussion">
+              <img src="assets/highlights/highlight-2.jpg" alt="Expert Panel Discussion">
             </div>
+
             <div class="highlight-content">
               <span class="highlight-tag">PANEL</span>
               <h3>Expert Panel Discussion</h3>
               <p>
-                Clinicians, data scientists and innovators debate 
-                the real-world implementation of AI in cancer care.
+                Clinicians, data scientists and innovators debate the real-world
+                implementation of AI in cancer care.
               </p>
             </div>
           </article>
@@ -1236,48 +1415,52 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
           <!-- CARD 3 -->
           <article class="highlight-card">
             <div class="highlight-image">
-              <img src="assets/highlights/highlight-3.jpg" alt="Networking">
+              <img src="assets/highlights/highlight-3.jpg" alt="Networking Reception">
             </div>
+
             <div class="highlight-content">
               <span class="highlight-tag">NETWORKING</span>
               <h3>Networking Reception</h3>
               <p>
-                An opportunity to connect across disciplines and 
-                build new collaborations in digital medicine.
+                An opportunity to connect across disciplines and build new
+                collaborations in digital medicine.
               </p>
             </div>
           </article>
-    <!-- ✅ CARD 4 (Trade Display) MUST be here -->
-    <article class="highlight-card">
-      <div class="highlight-image">
-        <img src="assets/highlights/highlight-4.jpg" alt="Trade Display">
-      </div>
-      <div class="highlight-content">
-        <span class="highlight-tag">TRADE DISPLAY</span>
-        <h3>Sponsors</h3>
-        <p>
-          Explore curated demos and research showcases highlighting AI tools,
-          clinical use cases and emerging innovations shaping cancer care.
-        </p>
-      </div>
-    </article>
+
+          <!-- CARD 4 -->
+          <article class="highlight-card">
+            <div class="highlight-image">
+              <img src="assets/highlights/highlight-4.jpg" alt="Trade Display">
+            </div>
+
+            <div class="highlight-content">
+              <span class="highlight-tag">TRADE DISPLAY</span>
+              <h3>Trade Display & Innovation Showcase</h3>
+              <p>
+                Explore curated demos and research showcases highlighting AI tools,
+                clinical use cases and emerging innovations shaping cancer care.
+              </p>
+            </div>
+          </article>
+
         </div>
       </div>
 
-
-    <button class="highlights-btn next">
-  <svg viewBox="0 0 24 24" fill="none">
-    <path d="M9 6L15 12L9 18"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-  </svg>
-</button>
+      <!-- RIGHT ARROW -->
+      <button class="highlights-btn next" aria-label="Next highlight">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9 6L15 12L9 18"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+        </svg>
+      </button>
 
     </div>
 
-    <!-- Dots -->
+    <!-- DOTS -->
     <div class="highlights-dots"></div>
 
   </div>
