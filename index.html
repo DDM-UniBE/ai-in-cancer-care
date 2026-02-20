@@ -123,7 +123,7 @@ body{
   align-items:center;
   justify-content:center;
 
-  padding: 12px 32px;
+   padding: 12px 32px !important;
   border-radius: 999px;
   background: var(--cta-purple);
   color:#fff;
@@ -164,15 +164,30 @@ body{
 }
 
 .nav__toggle span{
-  display:block;
+  position: absolute;
+  left: 50%;
+  width: 26px;
   height: 2px;
-  width: 100%;
   border-radius: 2px;
-  margin: 6px 0;
-  transition: transform .2s ease, opacity .2s ease;
-
-  /* 🔥 Gradient stroke */
+  transform: translateX(-50%);
   background: linear-gradient(90deg, #eb001e, #f59d0f);
+  transition: top .2s ease, transform .2s ease, opacity .2s ease;
+}
+
+.nav__toggle span:nth-child(1){ top: 20px; }
+.nav__toggle span:nth-child(2){ top: 27px; }
+.nav__toggle span:nth-child(3){ top: 34px; }
+
+.nav.is-open .nav__toggle span:nth-child(1){
+  top: 27px;
+  transform: translateX(-50%) rotate(45deg);
+}
+.nav.is-open .nav__toggle span:nth-child(2){
+  opacity: 0;
+}
+.nav.is-open .nav__toggle span:nth-child(3){
+  top: 27px;
+  transform: translateX(-50%) rotate(-45deg);
 }
 
 /* Mobile layout */
@@ -203,7 +218,7 @@ body{
     flex-direction: column;
 
     padding: 110px 24px 28px;      /* space below top bar */
-    gap: 18px;
+    gap: 24px;
 
     background: var(--nav-solid);  /* your colors */
     z-index: 1100;
@@ -664,8 +679,8 @@ body{
   .speakers-btn.next{ right: 6px; }
 
   .speakers-btn{
-    width: 54px;
-    height: 54px;
+    width: 36px;
+    height: 36px;
 
     background: transparent !important;
     border-radius: 0 !important;
@@ -673,8 +688,8 @@ body{
   }
 
   .speakers-btn svg{
-    width: 36px;
-    height: 36px;
+    width: 26px;
+    height: 26px;
   }
 
   .speakers-btn svg path{
@@ -1956,7 +1971,7 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
 
   function update(){
   if (window.innerWidth <= 820) return;  // 🔥 NEW LINE
-
+  
   function update(){
     index = Math.min(Math.max(index, 0), maxIndex());
     const x = index * (cardWidth() + gapPx());
