@@ -652,9 +652,9 @@ body{
 .logos-grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 28px;                     /* reduced spacing */
-  max-width: 820px;              /* slightly tighter */
-  margin: 40px auto 0;           /* space from tabs */
+  gap: 18px;                 /* 👈 reduced from 40px */
+  max-width: 880px;          /* slightly wider container */
+  margin: 30px auto 0;       /* tighter top spacing */
   align-items: center;
 }
 
@@ -662,8 +662,8 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 90px;                  /* 🔥 uniform height */
-  padding: 10px 20px;            /* small breathing room */
+  height: 110px;             
+  padding: 10px 16px;        /* less side padding */
   text-decoration: none;
   transition: transform .2s ease, opacity .2s ease;
 }
@@ -675,8 +675,8 @@ body{
 
 
 .logo-link img{
-  max-height: 60px;              
-  max-width: 180px;
+  max-height: 120px;          /* 👈 was 60px → now bigger */
+  max-width: 220px;
   width: auto;
   height: auto;
   object-fit: contain;
