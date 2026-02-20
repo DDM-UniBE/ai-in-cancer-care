@@ -1578,99 +1578,6 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
   updateNav();
   window.addEventListener('scroll', updateNav, { passive: true });
 </script>
-<script>
-(() => {
-  const cards = document.querySelectorAll('.speaker-card');
-  const carousel = document.querySelector('.speakers-carousel');
-
-  const details = document.getElementById('speakerDetails');
-  const detailsName = document.getElementById('detailsName');
-  const detailsMeta = document.getElementById('detailsMeta');
-  const detailsBio = document.getElementById('detailsBio');
-
-  // Safety checks (prevents silent failures)
-  if (!cards.length || !carousel || !details || !detailsName || !detailsMeta || !detailsBio) return;
-
-  let activeCard = null;
-
-  const speakerData = {
-    daniel: {
-      name: "Prof. Daniel Truhn",
-      meta: "Senior Physician, Laboratory for Artificial Intelligence, Diagnostic and Interventional Radiology — RWTH Aachen, Germany",
-      bio: "Daniel is a Professor of Medicine at University Hospital Aachen, where he leads the Laboratory for Artificial Intelligence in Medicine. His work focuses on translating AI methods into clinical routine, with a particular emphasis on accelerating the deployment of AI models in oncology. With a background in both physics and medicine, his research bridges methodological innovation and real-world clinical application. In his talk, he will discuss agentic AI systems and their potential to transform diagnostic and therapeutic decision-making in clinical medicine. "
-    },
-    sarah: {
-      name: "Prof. Sarah Brünningk",
-      meta: "Head of Research, Center for AI-Based Radiation Therapy — Inselspital | University of Bern",
-      bio: "Prof. Sarah Brüningk is leading the Center for AI in Radiation Oncology at the University Hospital Bern and the University of Bern, Switzerland. She is a physicist by training (TU Munich, Germany) and completed a PhD at the intersection of practical wet lab and computational biology at the Institute of Cancer Research (UK) before moving to ETH Zurich as a postdoctoral researcher focusing on AI for biomedical applications. Her research harnesses combinations of mathematical modelling and advanced machine learning to process multimodal data spanning form omics to imaging information for applications in oncology and pediatric digital health. "
-    },
-    mauricio: {
-      name: "Prof. Mauricio Reyes",
-      meta: "Group Head, ARTORG Center for Biomedical Engineering Research — University of Bern",
-      bio: "Professor Mauricio Reyes began his academic journey in 2003 when he was awarded a French-Chilean scholarship to conduct his PhD studies at INRIA, France. His research work focused on developing AI technologies to improve the workflow for cancer patients. His PhD thesis led to the development of novel image reconstruction techniques for respiratory motion compensation in PET imaging. This research significantly improved the assessment of treatment response in lung cancer patients, demonstrating the potential of medical image computing technologies in medicine.  Through EU-funded projects, he began to develop AI solutions for neuro-oncology in 2010, with a particular focus on automated assessment of brain tumor burden. His seminal research work led to the recipient of the MICCAI Young Scientist Publication award in 2016. His work has pioneered in the important aspects of robust AI, and explainable AI (XAI), in the field of medical image analysis."
-    },
-      chantal: {
-      name: "Chantal Britt",
-      meta: "Patient Expert, Bern University of Applied Sciences,SPO, Swiss PPIE Network",
-      bio: "Chantal Britt holds an MA in Translation from the University of Geneva. She worked 13 years as a financial and science journalist at Bloomberg News and Swissinfo.ch, followed by a decade in science communication and public affairs for non-profit organisations in cancer research, microbiology, infectious diseases, toxicology, veterinary medicine and preclinical research. After developing long Covid in 2020, she co-founded and now serves as president of patient organisation Long Covid Switzerland and chairs Long COVID Europe. As a trained patient advocate and expert for patient involvement, citizen science, and science communication, she contributes to research assessment at SNSF, SPHN, and Citizen Science Zürich, promotes co-creation in healthcare, and trains patients and healthcare professionals. Since 2022, Chantal has worked in participatory research at Bern University of Applied Sciences. She is on the board of EUPATI Switzerland and Swiss PPIE Network, and serves on the patient advisory board of the Swiss Patient Organisation SPO."
-    },
-      kuangyu: {
-      name: "Prof. Kuangyu Shi",
-      meta: "Chief Medical Physicist, Artificial Intelligence and Translational Theranostics, Inselspital/University of Bern",
-      bio: "Prof. Kuangyu Shi is the Chief Medical Physicist and Head of the Lab for Artificial Intelligence and Translational Theranostics at the Department of Nuclear Medicine, University of Bern, Switzerland. Additionally, he is a senior lecturer at the Computer-aided Medical Procedure, School of Computation, Information & Technology at the Technical University of Munich, Germany.His research is centered on advancing artificial intelligence and computational modeling techniques for nuclear medicine imaging, dosimetry and therapy, aiming to link the outcomes with underlying pathophysiological processes. Additionally, he is dedicated to developing both in vivo and ex vivo experimental methods, pushing the boundaries of microscopic nuclear imaging. He is currently a member of the AI committee of EANM, Task Group 36 & 130 of the International Commission on Radiological Protection (ICRP), and serves as an associate editors of EANM Journal, IEEE TRPMS and Nuklearmedizin."
-    },
-    bastian: {
-      name: "PD Dr. Dr. med. Bastian Dislich",
-      meta: "Senior Physician, Clinical Pathology, IGMP, University of Bern",
-      bio: "Prof. Kuangyu Shi is the Chief Medical Physicist and Head of the Lab for Artificial Intelligence and Translational Theranostics at the Department of Nuclear Medicine, University of Bern, Switzerland. Additionally, he is a senior lecturer at the Computer-aided Medical Procedure, School of Computation, Information & Technology at the Technical University of Munich, Germany.His research is centered on advancing artificial intelligence and computational modeling techniques for nuclear medicine imaging, dosimetry and therapy, aiming to link the outcomes with underlying pathophysiological processes. Additionally, he is dedicated to developing both in vivo and ex vivo experimental methods, pushing the boundaries of microscopic nuclear imaging. He is currently a member of the AI committee of EANM, Task Group 36 & 130 of the International Commission on Radiological Protection (ICRP), and serves as an associate editors of EANM Journal, IEEE TRPMS and Nuklearmedizin."
-    }
-  };
-
-  function closeDetails(){
-    details.classList.remove('is-open');
-    carousel.classList.remove('has-active');
-    cards.forEach(c => c.classList.remove('is-active'));
-    activeCard = null;
-  }
-
-  cards.forEach(card => {
-    card.addEventListener('click', (e) => {
-      e.stopPropagation();
-
-      const id = card.dataset.speaker;
-      const speaker = speakerData[id];
-      if (!speaker) return;
-
-      // Toggle off
-      if (activeCard === card) {
-        closeDetails();
-        return;
-      }
-
-      cards.forEach(c => c.classList.remove('is-active'));
-      card.classList.add('is-active');
-
-      carousel.classList.add('has-active');
-
-      detailsName.textContent = speaker.name;
-      detailsMeta.textContent = speaker.meta;
-      detailsBio.textContent = speaker.bio;
-
-      details.classList.add('is-open');
-      activeCard = card;
-    });
-  });
-
-  // Close when clicking outside
-  document.addEventListener('click', (e) => {
-    const insideCard = e.target.closest('.speaker-card');
-    const insideDetails = e.target.closest('#speakerDetails');
-    if (!insideCard && !insideDetails) closeDetails();
-  });
-})();
-</script>
-
-<script>
 (function(){
   const tabs = Array.from(document.querySelectorAll('.sponsors-tab'));
   const sponsorsPanel = document.getElementById('panel-sponsors');
@@ -1796,7 +1703,87 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
   const next = section.querySelector('.speakers-btn.next');
 
   if (!track || !cards.length || !prev || !next) return;
+// Safety checks (prevents silent failures)
+  if (!cards.length || !carousel || !details || !detailsName || !detailsMeta || !detailsBio) return;
 
+  let activeCard = null;
+
+  const speakerData = {
+    daniel: {
+      name: "Prof. Daniel Truhn",
+      meta: "Senior Physician, Laboratory for Artificial Intelligence, Diagnostic and Interventional Radiology — RWTH Aachen, Germany",
+      bio: "Daniel is a Professor of Medicine at University Hospital Aachen, where he leads the Laboratory for Artificial Intelligence in Medicine. His work focuses on translating AI methods into clinical routine, with a particular emphasis on accelerating the deployment of AI models in oncology. With a background in both physics and medicine, his research bridges methodological innovation and real-world clinical application. In his talk, he will discuss agentic AI systems and their potential to transform diagnostic and therapeutic decision-making in clinical medicine. "
+    },
+    sarah: {
+      name: "Prof. Sarah Brünningk",
+      meta: "Head of Research, Center for AI-Based Radiation Therapy — Inselspital | University of Bern",
+      bio: "Prof. Sarah Brüningk is leading the Center for AI in Radiation Oncology at the University Hospital Bern and the University of Bern, Switzerland. She is a physicist by training (TU Munich, Germany) and completed a PhD at the intersection of practical wet lab and computational biology at the Institute of Cancer Research (UK) before moving to ETH Zurich as a postdoctoral researcher focusing on AI for biomedical applications. Her research harnesses combinations of mathematical modelling and advanced machine learning to process multimodal data spanning form omics to imaging information for applications in oncology and pediatric digital health. "
+    },
+    mauricio: {
+      name: "Prof. Mauricio Reyes",
+      meta: "Group Head, ARTORG Center for Biomedical Engineering Research — University of Bern",
+      bio: "Professor Mauricio Reyes began his academic journey in 2003 when he was awarded a French-Chilean scholarship to conduct his PhD studies at INRIA, France. His research work focused on developing AI technologies to improve the workflow for cancer patients. His PhD thesis led to the development of novel image reconstruction techniques for respiratory motion compensation in PET imaging. This research significantly improved the assessment of treatment response in lung cancer patients, demonstrating the potential of medical image computing technologies in medicine.  Through EU-funded projects, he began to develop AI solutions for neuro-oncology in 2010, with a particular focus on automated assessment of brain tumor burden. His seminal research work led to the recipient of the MICCAI Young Scientist Publication award in 2016. His work has pioneered in the important aspects of robust AI, and explainable AI (XAI), in the field of medical image analysis."
+    },
+      chantal: {
+      name: "Chantal Britt",
+      meta: "Patient Expert, Bern University of Applied Sciences,SPO, Swiss PPIE Network",
+      bio: "Chantal Britt holds an MA in Translation from the University of Geneva. She worked 13 years as a financial and science journalist at Bloomberg News and Swissinfo.ch, followed by a decade in science communication and public affairs for non-profit organisations in cancer research, microbiology, infectious diseases, toxicology, veterinary medicine and preclinical research. After developing long Covid in 2020, she co-founded and now serves as president of patient organisation Long Covid Switzerland and chairs Long COVID Europe. As a trained patient advocate and expert for patient involvement, citizen science, and science communication, she contributes to research assessment at SNSF, SPHN, and Citizen Science Zürich, promotes co-creation in healthcare, and trains patients and healthcare professionals. Since 2022, Chantal has worked in participatory research at Bern University of Applied Sciences. She is on the board of EUPATI Switzerland and Swiss PPIE Network, and serves on the patient advisory board of the Swiss Patient Organisation SPO."
+    },
+      kuangyu: {
+      name: "Prof. Kuangyu Shi",
+      meta: "Chief Medical Physicist, Artificial Intelligence and Translational Theranostics, Inselspital/University of Bern",
+      bio: "Prof. Kuangyu Shi is the Chief Medical Physicist and Head of the Lab for Artificial Intelligence and Translational Theranostics at the Department of Nuclear Medicine, University of Bern, Switzerland. Additionally, he is a senior lecturer at the Computer-aided Medical Procedure, School of Computation, Information & Technology at the Technical University of Munich, Germany.His research is centered on advancing artificial intelligence and computational modeling techniques for nuclear medicine imaging, dosimetry and therapy, aiming to link the outcomes with underlying pathophysiological processes. Additionally, he is dedicated to developing both in vivo and ex vivo experimental methods, pushing the boundaries of microscopic nuclear imaging. He is currently a member of the AI committee of EANM, Task Group 36 & 130 of the International Commission on Radiological Protection (ICRP), and serves as an associate editors of EANM Journal, IEEE TRPMS and Nuklearmedizin."
+    },
+    bastian: {
+      name: "PD Dr. Dr. med. Bastian Dislich",
+      meta: "Senior Physician, Clinical Pathology, IGMP, University of Bern",
+      bio: "Prof. Kuangyu Shi is the Chief Medical Physicist and Head of the Lab for Artificial Intelligence and Translational Theranostics at the Department of Nuclear Medicine, University of Bern, Switzerland. Additionally, he is a senior lecturer at the Computer-aided Medical Procedure, School of Computation, Information & Technology at the Technical University of Munich, Germany.His research is centered on advancing artificial intelligence and computational modeling techniques for nuclear medicine imaging, dosimetry and therapy, aiming to link the outcomes with underlying pathophysiological processes. Additionally, he is dedicated to developing both in vivo and ex vivo experimental methods, pushing the boundaries of microscopic nuclear imaging. He is currently a member of the AI committee of EANM, Task Group 36 & 130 of the International Commission on Radiological Protection (ICRP), and serves as an associate editors of EANM Journal, IEEE TRPMS and Nuklearmedizin."
+    }
+  };
+
+  function closeDetails(){
+    details.classList.remove('is-open');
+    carousel.classList.remove('has-active');
+    cards.forEach(c => c.classList.remove('is-active'));
+    activeCard = null;
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      const id = card.dataset.speaker;
+      const speaker = speakerData[id];
+      if (!speaker) return;
+
+      // Toggle off
+      if (activeCard === card) {
+        closeDetails();
+        return;
+      }
+
+      cards.forEach(c => c.classList.remove('is-active'));
+      card.classList.add('is-active');
+
+      carousel.classList.add('has-active');
+
+      detailsName.textContent = speaker.name;
+      detailsMeta.textContent = speaker.meta;
+      detailsBio.textContent = speaker.bio;
+
+      details.classList.add('is-open');
+      activeCard = card;
+    });
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    const insideCard = e.target.closest('.speaker-card');
+    const insideDetails = e.target.closest('#speakerDetails');
+    if (!insideCard && !insideDetails) closeDetails();
+  });
+})();
+</script>
   let index = 0;
 
   function cardsPerView(){
