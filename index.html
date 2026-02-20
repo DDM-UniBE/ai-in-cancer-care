@@ -265,20 +265,6 @@ body{
     background: transparent;
     color: #fff;
   }
-
-  /* Animate hamburger -> X (Image 2) */
-  .nav.is-open .nav__toggle{
-    background: rgba(255,255,255,.10);
-  }
-  .nav.is-open .nav__toggle span:nth-child(1){
-    transform: translateY(9px) rotate(45deg);
-  }
-  .nav.is-open .nav__toggle span:nth-child(2){
-    opacity: 0;
-  }
-  .nav.is-open .nav__toggle span:nth-child(3){
-    transform: translateY(-9px) rotate(-45deg);
-  }
 }
 /* ===== HERO ===== */
 .hero{
@@ -679,8 +665,8 @@ body{
   .speakers-btn.next{ right: 6px; }
 
   .speakers-btn{
-    width: 36px;
-    height: 36px;
+    width: 56px;
+    height: 56px;
 
     background: transparent !important;
     border-radius: 0 !important;
@@ -688,8 +674,8 @@ body{
   }
 
   .speakers-btn svg{
-    width: 26px;
-    height: 26px;
+    width: 36px;
+    height: 36px;
   }
 
   .speakers-btn svg path{
@@ -1932,29 +1918,23 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
 
 <script>
 /* =========================
-   SPEAKERS: ARROWS (translateX)
-   (No mobile swipe changes yet)
+   SPEAKERS: ARROWS
+   Desktop = translateX
+   Mobile = native scrollBy (swipe still works)
 ========================= */
 (function(){
   const section = document.querySelector('.speakers-carousel');
   if (!section) return;
 
+  const viewport = section.querySelector('.carousel-viewport');
   const track = section.querySelector('.carousel-track');
   const cards = Array.from(section.querySelectorAll('.speaker-card'));
   const prev = section.querySelector('.speakers-btn.prev');
   const next = section.querySelector('.speakers-btn.next');
 
-  if (!track || !cards.length || !prev || !next) return;
+  if (!viewport || !track || !cards.length || !prev || !next) return;
 
   let index = 0;
-
-  function cardsPerView(){
-    const w = window.innerWidth;
-    if (w <= 520) return 1;
-    if (w <= 820) return 2;
-    if (w <= 1100) return 3;
-    return 4;
-  }
 
   function gapPx(){
     const styles = getComputedStyle(track);
@@ -1965,41 +1945,57 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
     return cards[0].getBoundingClientRect().width || 0;
   }
 
+  function cardsPerView(){
+    const w = window.innerWidth;
+    if (w <= 520) return 1;
+    if (w <= 820) return 2;
+    if (w <= 1100) return 3;
+    return 4;
+  }
+
   function maxIndex(){
     return Math.max(0, cards.length - cardsPerView());
   }
 
-  function update(){
-  if (window.innerWidth <= 820) return;  // 🔥 NEW LINE
-  
-  function update(){
+  function updateDesktop(){
     index = Math.min(Math.max(index, 0), maxIndex());
     const x = index * (cardWidth() + gapPx());
     track.style.transform = `translateX(${-x}px)`;
   }
 
-prev.addEventListener('click', () => {
-  if (window.innerWidth <= 820){
-    section.querySelector('.carousel-viewport')
-      .scrollBy({ left: -cardWidth(), behavior: 'smooth' });
-  } else {
-    index -= 1;
-    update();
+  function isMobile(){
+    return window.innerWidth <= 820;
   }
-});
 
-next.addEventListener('click', () => {
-  if (window.innerWidth <= 820){
-    section.querySelector('.carousel-viewport')
-      .scrollBy({ left: cardWidth(), behavior: 'smooth' });
-  } else {
-    index += 1;
-    update();
-  }
-});
+  prev.addEventListener('click', () => {
+    if (isMobile()){
+      viewport.scrollBy({ left: -(cardWidth() + gapPx()), behavior: 'smooth' });
+    } else {
+      index -= 1;
+      updateDesktop();
+    }
+  });
 
-  window.addEventListener('resize', update, { passive: true });
-  update();
+  next.addEventListener('click', () => {
+    if (isMobile()){
+      viewport.scrollBy({ left: (cardWidth() + gapPx()), behavior: 'smooth' });
+    } else {
+      index += 1;
+      updateDesktop();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    // reset desktop transform when switching to mobile
+    if (isMobile()){
+      track.style.transform = '';
+      index = 0;
+    } else {
+      updateDesktop();
+    }
+  }, { passive: true });
+
+  if (!isMobile()) updateDesktop();
 })();
 </script>
 </body>
