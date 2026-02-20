@@ -651,11 +651,13 @@ body{
 /* LOGOS grid (no beige cards) */
 .logos-grid{
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;                 /* 👈 reduced from 40px */
-  max-width: 880px;          /* slightly wider container */
-  margin: 30px auto 0;       /* tighter top spacing */
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* ✅ always 3 columns */
+  column-gap: 18px;  /* ✅ horizontal gap */
+  row-gap: 22px;     /* ✅ vertical gap */
+  max-width: 760px;  /* ✅ tighter overall block (reduces “empty space”) */
+  margin: 30px auto 0;
   align-items: center;
+  justify-items: center;
 }
 
 .logo-link{
