@@ -1320,6 +1320,8 @@ font-weight: 600;
   .sponsors-subtitle,
   .highlights-subtitle{
     margin-top: 10px;
+    max-width: 22ch; 
+  }
   }
 
   @media (max-width: 820px){
@@ -1372,6 +1374,16 @@ font-weight: 600;
   .speakers-carousel .carousel-viewport{
     padding-top: 5px !important;
   }
+}
+
+@media (max-width: 640px){
+
+  .hero h1{
+    font-size: 42px;        /* slightly larger than clamp gives */
+    line-height: 1.1;
+    max-width: 18ch;        /* controls wrapping */
+  }
+
 }
 
 </style>
