@@ -1272,22 +1272,22 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
       Leading experts in oncology, artificial intelligence and digital medicine exploring how AI is transforming cancer diagnosis, treatment and patient care.
     </p>
 
-<div class="speakers-carousel" aria-label="Speakers carousel">
+    <div class="speakers-carousel" aria-label="Speakers carousel">
 
-  <!-- LEFT ARROW (same SVG as highlights) -->
-  <button class="speakers-btn prev" aria-label="Previous speaker">
-    <svg viewBox="0 0 24 24" fill="none">
-      <path d="M15 18L9 12L15 6"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"/>
-    </svg>
-  </button>
+      <!-- LEFT ARROW -->
+      <button class="speakers-btn prev" aria-label="Previous speaker" type="button">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+        </svg>
+      </button>
 
       <div class="carousel-viewport">
         <div class="carousel-track">
-          <!-- 11 speakers (replace content + images) -->
+          <!-- speaker cards -->
           <article class="speaker-card" data-speaker="daniel">
             <div class="speaker-photo">
               <img src="assets/speakers/danieltruhn.jpg" alt="Speaker 1">
@@ -1297,17 +1297,17 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
             <p class="speaker-org">RWTH Aachen, Germany</p>
           </article>
 
-<article class="speaker-card" data-speaker="sarah">
-  <div class="speaker-photo">
-    <img src="assets/speakers/sarahbrueningk2.jpg" alt="Prof. Sarah Brünningk">
-  </div>
-  <h3 class="speaker-name">Prof. Sarah Brünningk</h3>
-  <p class="speaker-role">Head of Research, Center for AI-Based Radiation Therapy</p>
-  <p class="speaker-org">Inselspital | University of Bern</p>
-</article>
+          <article class="speaker-card" data-speaker="sarah">
+            <div class="speaker-photo">
+              <img src="assets/speakers/sarahbrueningk2.jpg" alt="Prof. Sarah Brünningk">
+            </div>
+            <h3 class="speaker-name">Prof. Sarah Brünningk</h3>
+            <p class="speaker-role">Head of Research, Center for AI-Based Radiation Therapy</p>
+            <p class="speaker-org">Inselspital | University of Bern</p>
+          </article>
 
-<article class="speaker-card" data-speaker="mauricio">            
-    <div class="speaker-photo">
+          <article class="speaker-card" data-speaker="mauricio">
+            <div class="speaker-photo">
               <img src="assets/speakers/mreyesportraitv2.jpg" alt="Speaker 3">
             </div>
             <h3 class="speaker-name">Prof. Mauricio Reyes</h3>
@@ -1315,7 +1315,7 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
             <p class="speaker-org">University of Bern</p>
           </article>
 
-<article class="speaker-card" data-speaker="chantal"> 
+          <article class="speaker-card" data-speaker="chantal">
             <div class="speaker-photo">
               <img src="assets/speakers/chantalbrittheadshotv2.jpg" alt="Speaker 4">
             </div>
@@ -1324,7 +1324,7 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
             <p class="speaker-org">Bern University of Applied Sciences, SPO, Swiss PPIE Network</p>
           </article>
 
-<article class="speaker-card" data-speaker="kuangyu">            
+          <article class="speaker-card" data-speaker="kuangyu">
             <div class="speaker-photo">
               <img src="assets/speakers/shikuangyu.jpg" alt="Speaker 5">
             </div>
@@ -1333,7 +1333,7 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
             <p class="speaker-org">Inselspital | University of Bern</p>
           </article>
 
-<article class="speaker-card" data-speaker="bastian">
+          <article class="speaker-card" data-speaker="bastian">
             <div class="speaker-photo">
               <img src="assets/speakers/dislichBastian2.jpg" alt="Speaker 6">
             </div>
@@ -1389,8 +1389,21 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
         </div>
       </div>
 
-          </div>
-        <div class="speaker-details" id="speakerDetails">
+      <!-- RIGHT ARROW -->
+      <button class="speakers-btn next" aria-label="Next speaker" type="button">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9 6L15 12L9 18"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+    </div><!-- /.speakers-carousel -->
+
+    <!-- Details stays INSIDE container (and below carousel) -->
+    <div class="speaker-details" id="speakerDetails">
       <div class="speaker-details__inner">
         <h3 class="speaker-details__name" id="detailsName"></h3>
         <p class="speaker-details__meta" id="detailsMeta"></p>
@@ -1398,18 +1411,7 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
       </div>
     </div>
 
-    <!-- RIGHT ARROW (same SVG as highlights) -->
-  <button class="speakers-btn next" aria-label="Next speaker">
-    <svg viewBox="0 0 24 24" fill="none">
-      <path d="M9 6L15 12L9 18"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"/>
-    </svg>
-          </div>
-    </div>
-  </button>
+  </div><!-- /.container -->
 </section>
 
 <section class="sponsors-section" id="sponsors">
