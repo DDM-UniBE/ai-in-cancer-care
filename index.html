@@ -568,8 +568,33 @@ body{
    SPONSORS / PARTNERS (clean)
 ========================== */
 
+.sponsors-section{
+  background: #ffffff;
+  color: #0b1020;
+  padding: 90px 0;
+}
+
+.sponsors-title{
+  margin: 0;
+  text-align: center;
+  font-size: clamp(34px, 3vw, 54px);
+  line-height: 1.1;
+  font-weight: 800;
+  color: #14124b;
+}
+
+.sponsors-subtitle{
+  margin: 14px auto 0;
+  text-align: center;
+  max-width: 70ch;
+  font-size: 18px;
+  line-height: 1.5;
+  color: rgba(11,16,32,.72);
+}
+
+/* TEXT ONLY tabs (no pill, no outline) */
 .sponsors-tabs{
-  margin-top: 8px;          /* keeps normal spacing above */
+  margin-top: 8px;
   display: flex;
   justify-content: center;
   gap: 34px;
@@ -580,7 +605,7 @@ body{
   background: transparent;
   cursor: pointer;
 
-  padding: 10px 0 6px;      /* slightly smaller bottom padding */
+  padding: 10px 0;
   font-weight: 800;
   font-size: 14px;
   letter-spacing: .22em;
@@ -602,10 +627,9 @@ body{
 .sponsors-tab.is-active::after{
   content:"";
   position:absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;                 /* 👈 was -10px */
-  width: 70%;                /* optional: makes it shorter and elegant */
+  left: 0;
+  right: 0;
+  bottom: -10px;
   height: 3px;
   border-radius: 999px;
   background: linear-gradient(90deg, #eb001e, #f59d0f);
@@ -758,7 +782,7 @@ body{
   cursor: pointer;
   opacity: .7;
   transition: opacity .2s ease;
-color: #ffffff;
+    color: #ffffff;
 }
 
 .highlights-btn svg{
@@ -1296,7 +1320,7 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
     mauricio: {
       name: "Prof. Mauricio Reyes",
       meta: "Group Head, ARTORG Center for Biomedical Engineering Research — University of Bern",
-      bio: "Professor Mauricio Reyes began his academic journey in 2003 when he was awarded a French-Chilean scholarship to conduct his PhD studies at INRIA, France. His research work focused on developing AI technologies to improve the workflow for cancer patients. His translational research efforts led to the first-of-its-kind FDA-approved AI technology for brain tumor patients, and a Boston-based startup with a subsidiary branch in Switzerland to further develop AI technologies. "
+      bio: "Add Mauricio bio here."
     }
   };
 
