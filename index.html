@@ -629,8 +629,8 @@ body{
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    overscroll-behavior-x: contain;
 
     /* prevents the page from shifting a bit while you swipe the carousel */
     touch-action: pan-x;
@@ -654,6 +654,7 @@ body{
   /* card width < 100% so the next card peeks in */
   .speakers-carousel .speaker-card{
     scroll-snap-align: start;
+    scroll-snap-stop: always;
     flex: 0 0 82%;
     min-height: 440px;
   }
@@ -1954,13 +1955,33 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
   }
 
   function update(){
+  if (window.innerWidth <= 820) return;  // 🔥 NEW LINE
+
+  function update(){
     index = Math.min(Math.max(index, 0), maxIndex());
     const x = index * (cardWidth() + gapPx());
     track.style.transform = `translateX(${-x}px)`;
   }
 
-  prev.addEventListener('click', () => { index -= 1; update(); });
-  next.addEventListener('click', () => { index += 1; update(); });
+prev.addEventListener('click', () => {
+  if (window.innerWidth <= 820){
+    section.querySelector('.carousel-viewport')
+      .scrollBy({ left: -cardWidth(), behavior: 'smooth' });
+  } else {
+    index -= 1;
+    update();
+  }
+});
+
+next.addEventListener('click', () => {
+  if (window.innerWidth <= 820){
+    section.querySelector('.carousel-viewport')
+      .scrollBy({ left: cardWidth(), behavior: 'smooth' });
+  } else {
+    index += 1;
+    update();
+  }
+});
 
   window.addEventListener('resize', update, { passive: true });
   update();
