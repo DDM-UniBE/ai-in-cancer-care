@@ -660,16 +660,23 @@ body{
   .speakers-btn.prev{ left: 6px; }
   .speakers-btn.next{ right: 6px; }
 
-  /* optional touch target */
   .speakers-btn{
-    width: 44px;
-    height: 44px;
-    background: rgba(255,255,255,.72);
-    border-radius: 999px;
+    width: 36px;
+    height: 36px;
+
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
   }
+
   .speakers-btn svg{
     width: 26px;
     height: 26px;
+  }
+
+  .speakers-btn svg path{
+    stroke: #eb001e;   /* your red */
+    stroke-width: 2.4;
   }
 
   /* Make the photo feel less “zoomed” by showing more top area */
