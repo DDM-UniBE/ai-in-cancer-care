@@ -636,6 +636,14 @@ body{
   margin-top: 34px;
 }
 
+.coming-soon{
+  text-align: center;
+  font-size: 18px;
+  color: rgba(11,16,32,.6);
+  font-weight: 500;
+  margin-top: 40px;
+}
+
 /* LOGOS grid (no beige cards) */
 .logos-grid{
   display: grid;
@@ -666,6 +674,10 @@ body{
   max-width: 300px;
   height: auto;
   object-fit: contain;
+}
+
+#panel-sponsors .logos-grid {
+  display: none;
 }
 
 /* Responsive */
@@ -1145,8 +1157,9 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
     </div>
 
     <div class="sponsors-panels">
-      <div class="sponsors-panel is-active" id="panel-sponsors" role="tabpanel">
-        <div class="logos-grid">
+  <div class="sponsors-panel is-active" id="panel-sponsors" role="tabpanel">
+  <p class="coming-soon">Sponsors to be announced soon.</p>
+</div>
           <a class="logo-link" href="#" target="_blank" rel="noopener">
             <img src="assets/sponsors/aws.svg" alt="AWS">
           </a>
