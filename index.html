@@ -651,11 +651,11 @@ body{
 /* LOGOS grid (no beige cards) */
 .logos-grid{
   display: grid;
-  grid-template-columns: repeat(3, auto);  /* 👈 key change */
-  gap: 16px;                                /* real tight gap */
-  justify-content: center;                  /* center block */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;                 /* 👈 reduced from 40px */
+  max-width: 880px;          /* slightly wider container */
+  margin: 30px auto 0;       /* tighter top spacing */
   align-items: center;
-  margin: 30px auto 0;
 }
 
 .logo-link{
