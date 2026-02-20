@@ -648,22 +648,33 @@ body{
   margin-top: 40px;
 }
 
-/* LOGOS grid (no beige cards) */
+/* ==========================
+   SPONSORS / PARTNERS LOGOS
+   (flex-wrap = tighter packing)
+========================== */
+
 .logos-grid{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;                 /* 👈 reduced from 40px */
-  max-width: 880px;          /* slightly wider container */
-  margin: 30px auto 0;       /* tighter top spacing */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
+
+  /* tighter spacing between logos */
+  gap: 10px 14px;              /* row gap / column gap */
+
+  max-width: 980px;
+  margin: 24px auto 0;
 }
 
 .logo-link{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 110px;             
-  padding: 10px 16px;        /* less side padding */
+
+  /* reduce “air” around each logo */
+  height: 86px;
+  padding: 6px 10px;
+
   text-decoration: none;
   transition: transform .2s ease, opacity .2s ease;
 }
@@ -673,15 +684,24 @@ body{
   opacity: 1;
 }
 
-
 .logo-link img{
-  max-height: 120px;          /* 👈 was 60px → now bigger */
-  max-width: 220px;
+  display: block;
   width: auto;
   height: auto;
+
+  /* keep logos consistent + not oversized */
+  max-height: 64px;
+  max-width: 200px;
+
   object-fit: contain;
 }
 
+/* Optional: slightly tighter on small screens */
+@media (max-width: 520px){
+  .logos-grid{ gap: 8px 10px; }
+  .logo-link{ height: 78px; }
+  .logo-link img{ max-height: 56px; }
+}
 #panel-sponsors .logos-grid {
   display: none;
 }
