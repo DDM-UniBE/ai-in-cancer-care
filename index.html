@@ -460,6 +460,62 @@ body{
   color: #0b1020;
 }
 
+/* Speakers arrows (same design as highlights) */
+.speakers-btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: 1;
+  z-index: 5;
+}
+
+.speakers-btn svg{
+  width: 34px;
+  height: 34px;
+}
+
+.speakers-btn svg path{
+  stroke: #eb001e;
+  stroke-width: 2.4;
+}
+
+.speakers-btn:hover{ opacity: .75; }
+
+/* Position (desktop) */
+.speakers-btn.prev{ left: -60px; }
+.speakers-btn.next{ right: -60px; }
+
+/* Responsive positions like highlights */
+@media (max-width: 1100px){
+  .speakers-btn.prev{ left: -24px; }
+  .speakers-btn.next{ right: -24px; }
+}
+
+@media (max-width: 520px){
+  .speakers-btn.prev{ left: 6px; }
+  .speakers-btn.next{ right: 6px; }
+
+  /* Optional: subtle touch target on mobile */
+  .speakers-btn{
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,.72);
+    border-radius: 999px;
+  }
+
+  .speakers-btn svg{
+    width: 26px;
+    height: 26px;
+  }
+}
+
 /* =========================================
    Click-to-expand speaker details behaviour
 ========================================= */
@@ -730,9 +786,9 @@ body{
 .highlights-title{
   margin: 0;
   text-align: center;
-  font-size: clamp(36px, 3vw, 56px);
-  font-weight: 900;
-  letter-spacing: 0em;
+  font-size: clamp(34px, 3vw, 54px);
+  line-height: 1.1;
+  font-weight: 800;
   color: #051321;
 }
 
@@ -1216,16 +1272,18 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
       Leading experts in oncology, artificial intelligence and digital medicine exploring how AI is transforming cancer diagnosis, treatment and patient care.
     </p>
 
-      <!-- LEFT ARROW -->
-      <button class="highlights-btn prev" aria-label="Previous highlight">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M15 18L9 12L15 6"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-        </svg>
-      </button>
+<div class="speakers-carousel" aria-label="Speakers carousel">
+
+  <!-- LEFT ARROW (same SVG as highlights) -->
+  <button class="speakers-btn prev" aria-label="Previous speaker">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M15 18L9 12L15 6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+    </svg>
+  </button>
 
       <div class="carousel-viewport">
         <div class="carousel-track">
@@ -1331,16 +1389,18 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
         </div>
       </div>
 
-      <!-- RIGHT ARROW -->
-      <button class="highlights-btn next" aria-label="Next highlight">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M9 6L15 12L9 18"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-        </svg>
-      </button>
+  <!-- RIGHT ARROW (same SVG as highlights) -->
+  <button class="speakers-btn next" aria-label="Next speaker">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M9 6L15 12L9 18"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+</div>
 
     </div>
         <div class="speaker-details" id="speakerDetails">
@@ -1732,8 +1792,8 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
 
   const track = section.querySelector('.carousel-track');
   const cards = Array.from(section.querySelectorAll('.speaker-card'));
-  const prev = section.querySelector('.carousel-btn.prev');
-  const next = section.querySelector('.carousel-btn.next');
+  const prev = section.querySelector('.speakers-btn.prev');
+  const next = section.querySelector('.speakers-btn.next');
 
   if (!track || !cards.length || !prev || !next) return;
 
@@ -1744,7 +1804,7 @@ Join us as we reflect on how innovation and clinical expertise can shape the fut
     if (w <= 520) return 1;
     if (w <= 820) return 2;
     if (w <= 1100) return 3;
-    return 4; // desktop: 4 visible
+    return 4;
   }
 
   function gapPx(){
