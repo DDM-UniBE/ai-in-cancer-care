@@ -1133,7 +1133,7 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
   </div>
 </section>
 
-<<section class="sponsors-section" id="sponsors">
+<section class="sponsors-section" id="sponsors">
   <div class="container">
     <h2 class="sponsors-title">Sponsors & Partners</h2>
     <p class="sponsors-subtitle">
@@ -1478,8 +1478,57 @@ Through practical insights and interdisciplinary discussion, we aim to examine b
 
   // Init
   createDots();
-  update();x
+  update();
   startAuto();
+})();
+</script>
+
+<script>
+(function(){
+  const section = document.querySelector('.speakers-carousel');
+  if (!section) return;
+
+  const track = section.querySelector('.carousel-track');
+  const cards = Array.from(section.querySelectorAll('.speaker-card'));
+  const prev = section.querySelector('.carousel-btn.prev');
+  const next = section.querySelector('.carousel-btn.next');
+
+  if (!track || !cards.length || !prev || !next) return;
+
+  let index = 0;
+
+  function cardsPerView(){
+    const w = window.innerWidth;
+    if (w <= 520) return 1;
+    if (w <= 820) return 2;
+    if (w <= 1100) return 3;
+    return 4; // desktop: 4 visible
+  }
+
+  function gapPx(){
+    const styles = getComputedStyle(track);
+    return parseFloat(styles.gap || '0') || 0;
+  }
+
+  function cardWidth(){
+    return cards[0].getBoundingClientRect().width || 0;
+  }
+
+  function maxIndex(){
+    return Math.max(0, cards.length - cardsPerView());
+  }
+
+  function update(){
+    index = Math.min(Math.max(index, 0), maxIndex());
+    const x = index * (cardWidth() + gapPx());
+    track.style.transform = `translateX(${-x}px)`;
+  }
+
+  prev.addEventListener('click', () => { index -= 1; update(); });
+  next.addEventListener('click', () => { index += 1; update(); });
+
+  window.addEventListener('resize', update, { passive: true });
+  update();
 })();
 </script>
 </body>
