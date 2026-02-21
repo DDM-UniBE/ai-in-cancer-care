@@ -122,15 +122,19 @@ body{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 32px;
+
+  padding: 12px 28px;   /* ✅ restored proper horizontal padding */
   border-radius: 999px;
-  background: var(--cta);
+
+  background: #eb001e;
   color: #fff;
-  font-weight: 500;
+
+  font-weight: 600;
   font-size: 15px;
-  white-space: nowrap;
   line-height: 1;
-  transition: background .2s ease, color .2s ease;
+  white-space: nowrap;
+
+  transition: opacity .2s ease;
 }
 
 .nav__btn:hover{
@@ -417,7 +421,7 @@ body{
   background: #fbf7f6;
   border-radius: 16px;
   padding: 18px;
-  min-height: 430px;
+  min-height: unset;
   border: 2px solid transparent;
   transition: background .25s ease, opacity .2s ease, transform .2s ease;
   display: flex;
@@ -436,7 +440,7 @@ body{
   border-radius: 12px;
   overflow: hidden;
   aspect-ratio: 4 / 3;
-  height: 230px;
+height: 280px; 
 }
 
 .speaker-photo img{
@@ -645,19 +649,20 @@ body{
   justify-content: center;
   margin: 28px auto 0;
   padding: 14px 36px;
-  background: var(--accent);
+  background: #eb001e;
   color: #ffffff;
   font-weight: 600;
   font-size: 16px;
   text-decoration: none;
   border-radius: 999px;
-  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+  transition: opacity .2s ease; /* only subtle fade */
 }
 
+
 .sponsor-cta:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(235,0,30,.25);
-  opacity: .95;
+  opacity: .92;      /* optional */
+  transform: none;   /* ✅ no lift */
+  box-shadow: none;  /* ✅ no shadow */
 }
 
 /* Logos (flex-wrap) */
@@ -881,11 +886,11 @@ body{
 
 .footer-col h5{
   margin: 0 0 18px;
-  font-size: 14px;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: rgba(255,255,255,.6);
+  font-size: 15px;          /* slightly stronger presence */
+  letter-spacing: .02em;    /* much less spacing */
+  text-transform: none;     /* remove ALL CAPS */
+  font-weight: 700;         /* bolder */
+  color: #ffffff;           /* stronger contrast */
 }
 
 .footer-col p{
@@ -900,12 +905,12 @@ body{
   text-decoration: none;
   color: rgba(255,255,255,.75);
   font-weight: 500;
-  transition: transform .2s ease, color .2s ease;
+  transition: color .2s ease; /* only colour */
 }
 
 .footer-col a:hover{
   color: #f59d0f;
-  transform: translateX(4px);
+  transform: none; /* ✅ no slide */
 }
 
 .footer-highlight{
@@ -914,7 +919,17 @@ body{
   text-transform: uppercase;
   font-weight: 600;
 }
+/* Force specific links to stay red */
+a.contact-link,
+a.sponsor-link{
+  color: #eb001e !important;
+}
 
+a.contact-link:hover,
+a.sponsor-link:hover{
+  color: #eb001e !important;
+  opacity: .92; /* optional */
+}
 /* ==========================
    RESPONSIVE
 ========================== */
@@ -1034,7 +1049,7 @@ body{
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x proximity;
     overscroll-behavior-x: contain;
-    padding-right: 36px;
+    padding-right: 48px
     scrollbar-width: none;
   }
   .speakers-carousel .carousel-viewport::-webkit-scrollbar{ display: none; }
@@ -1047,7 +1062,7 @@ body{
   .speakers-carousel .speaker-card{
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    flex: 0 0 78%;
+    flex: 0 0 72%; 
     min-height: 380px;
     padding: 16px;
   }
@@ -1055,7 +1070,7 @@ body{
   .speakers-btn.prev{ left: -12px; }
   .speakers-btn.next{ right: -12px; }
 
-  .speaker-photo{ height: 220px; }
+  .speaker-photo{ height: 250px; }
   .speaker-photo img{ object-position: 50% 10%; }
 
   /* Footer */
@@ -1541,8 +1556,8 @@ body{
 
     <div class="footer-col">
       <h5>Get Involved</h5>
-      <a href="#sponsors"class="footer-highlight">BECOME A SPONSOR</a>
-      <a href="mailto:info.ddm@unibe.ch"class="footer-highlight">CONTACT US</a>
+      <a href="#sponsors"class="sponsor-cta sponsor-link">BECOME A SPONSOR</a>
+      <a href="mailto:info.ddm@unibe.ch"class="contact-link">CONTACT US</a>
     </div>
 
   </div>
