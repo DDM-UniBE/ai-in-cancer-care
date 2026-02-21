@@ -1397,6 +1397,27 @@ font-weight: 600;
 
 }
 
+/* MOBILE: reduce left/right padding everywhere */
+@media (max-width: 640px){
+
+  /* main page content */
+  .container{
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  /* nav content */
+  .nav__container{
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  /* hero frame uses vw, but this helps keep it aligned with container */
+  .hero__frame{
+    width: calc(100vw - 36px); /* 18px + 18px */
+  }
+}
+
 </style>
 </head>
 
@@ -2025,7 +2046,7 @@ font-weight: 600;
       meta: "Senior Physician, Clinical Pathology, IGMP — University of Bern",
       bio: "After completing his double degree in human medicine and "Medical Life Sciences" at the Technical University of Munich, Bastian Dislich completed his pathology training at the Institute of Pathology at the University of Bern. There he works as a senior physician in the departments of gastrointestinal pathology, soft tissue pathology, hematopathology and molecular pathology. His research focus is on carcinomas of the gastroesophageal junction and the stomach."
     }
-  };
+  }
 
   function closeDetails(){
     details.classList.remove('is-open');
