@@ -1408,31 +1408,28 @@ a.sponsor-link:hover{
   line-height: 1 !important;    /* let flex center it */
 }
 
-/* HERO simple positioning */
+/* HERO precise positioning */
 
 .hero{
   min-height: 95vh;
-  padding-top: 120px;   /* space under nav */
+  padding-top: 140px;   /* pushes whole hero lower */
 }
 
-/* Move entire hero block right */
+/* Control horizontal placement */
 .hero__content{
-  margin-left: clamp(40px, 6vw, 120px);
-  margin-top: 120px;    /* push down */
-  max-width: 900px;
+  margin-left: clamp(24px, 4vw, 80px);  /* reduced from before */
+  margin-top: 140px;                   /* push lower */
+  max-width: none;                     /* allow natural width */
 }
 
-/* Headline sizing + tighter spacing */
+/* Headline adjustments */
 .hero h1{
-  font-size: clamp(64px, 6vw, 110px);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
+  font-size: clamp(58px, 5.6vw, 92px); /* slightly smaller */
+  line-height: 1.04;
+  letter-spacing: -0.02em;
   margin-bottom: 36px;
-}
-
-/* Pill spacing */
-.hero__pill{
-  margin-top: 0;
+  max-width: none;                     /* removes forced wrap */
+  white-space: normal;                 /* allow natural wrapping */
 }
 </style>
 </head>
