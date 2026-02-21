@@ -1380,6 +1380,34 @@ a.sponsor-link:hover{
   }
 }
 
+/* ==========================
+   NAV: taller bar
+   (paste at VERY END)
+========================== */
+
+/* Taller navbar */
+.nav{
+  padding: 22px 0 !important;   /* increase height */
+}
+
+/* Register button like Ai4 (slightly taller + wider) */
+.nav .nav__right .nav__btn{
+  height: 46px !important;      /* consistent pill height */
+  padding: 0 34px !important;   /* width */
+  font-size: 14px !important;   
+  font-weight: 600 !important;  /* less heavy */
+  border-radius: 999px !important;
+  line-height: 46px !important; /* vertical centering */
+}
+
+/* In case any older rules fight the line-height */
+.nav .nav__right .nav__btn{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;    /* let flex center it */
+}
+
 </style>
 </head>
 
