@@ -538,8 +538,8 @@ body{
   min-width: 0;
   background: #fbf7f6;
   border-radius: 16px;
-  padding: 22px;
-  min-height: 460px;
+  padding: 18px;      /* was 22px */
+  min-height: 410px;
 
   border: 2px solid transparent;
   transition: background .25s ease, opacity .2s ease, transform .2s ease;
@@ -667,8 +667,8 @@ body{
   }
 
   /* arrows INSIDE the carousel on mobile */
-  .speakers-btn.prev{ left: 2px; }
-  .speakers-btn.next{ right: 2px; }
+  .speakers-btn.prev{ left: -8px; }
+  .speakers-btn.next{ right: -8px; }
 
   .speakers-btn{
     width: 56px;
@@ -1301,7 +1301,6 @@ font-weight: 600;
     line-height: 1.55;
     color: rgb(10, 10, 10);
        font: weight 500px;
-
   }
 
   .speakers-subtitle,
@@ -1311,15 +1310,11 @@ font-weight: 600;
     line-height: 1.5;
     max-width: 48ch; /* keeps it tighter */
     color: rgb(10, 10, 10);
-       font: weight 500px;
+    font: weight 500px;
+    margin-top: 10px;
 
   }
 
-    .section h2,
-    max-width: none;        /* remove 18ch restriction */
-    padding-left: 0;
-    padding-right: 0;
-  }
 
   /* Slightly reduce title spacing */
   .speakers-title,
@@ -1328,13 +1323,6 @@ font-weight: 600;
     margin-bottom: 10px;
   }
 
-  .speakers-subtitle,
-  .sponsors-subtitle,
-  .highlights-subtitle{
-    margin-top: 10px;
-  }
-  }
-
   @media (max-width: 820px){
 
   /* remove the “start gap” on BOTH carousels */
@@ -1367,6 +1355,15 @@ font-weight: 600;
   .speakers-carousel .carousel-viewport{
     padding-left: 0 !important;
     padding-right: 36px; /* keep the peek */
+  }
+}
+
+/* ---------- MOBILE ONLY (clean) ---------- */
+@media (max-width: 820px){
+  .section h2{
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
@@ -1449,7 +1446,8 @@ font-weight: 600;
 @media (max-width: 820px){
   .speakers-carousel .speaker-card{
     flex: 0 0 78%;       /* was 82% */
-    min-height: 420px;
+    min-height: 380px;  /* tighter */
+    padding: 16px;
   }
 }
 
