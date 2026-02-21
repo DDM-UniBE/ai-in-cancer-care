@@ -1279,6 +1279,59 @@ a.sponsor-link:hover{
   letter-spacing: .04em !important;
 }
 
+/* ==========================
+   Ai4-like NAV WIDTH + PLACEMENT (paste at VERY END)
+========================== */
+
+/* Wider container + smaller side padding (this is the big win) */
+.nav__container{
+  max-width: 1560px !important;              /* was 1300 */
+  padding-left: clamp(16px, 2vw, 28px) !important;  /* was 40 */
+  padding-right: clamp(16px, 2vw, 28px) !important;
+}
+
+/* Make sure the right side hugs the right edge */
+.nav__right{
+  margin-left: auto !important;
+  gap: 26px !important;                      /* was 42 */
+  flex-wrap: nowrap !important;
+}
+
+/* Trim link padding so the group takes less horizontal room */
+.nav__right a:not(.nav__btn){
+  padding: 8px 0 !important;                 /* was 10px 0 */
+}
+
+/* Keep CTA tight and ensure it’s the last thing on the right */
+.nav__btn{
+  margin-left: 10px !important;
+  padding: 12px 26px !important;
+}
+
+/* Slightly reduce nav vertical padding (Ai4 feels a bit tighter) */
+.nav{
+  padding: 14px 0 !important;                /* was 18 */
+}
+
+/* On very large screens, allow it to breathe even more (optional) */
+@media (min-width: 1600px){
+  .nav__container{
+    max-width: 1680px !important;
+  }
+}
+
+/* Mobile: keep your existing behaviour */
+@media (max-width: 820px){
+  .nav__container{
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .nav__right{
+    margin-left: 0 !important;
+    gap: 24px !important;
+  }
+}
+
 </style>
 </head>
 
@@ -1308,12 +1361,14 @@ a.sponsor-link:hover{
       <a href="#agenda">Agenda</a>
       <a href="#speakers">Speakers</a>
       <a href="#sponsors">Sponsors</a>
+
       <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=ejgA1C8h6kOsf3eqEteXfgmqy2S5705HuR4je5SoNfZUOUlPMUJBNkNVR0xWTDMxTTNEUkIxMDBSOS4u"
-   class="nav__btn"
-   target="_blank"
-   rel="noopener">
-   Register Now
-</a>
+         class="nav__btn"
+         target="_blank"
+         rel="noopener">
+        Register Now
+      </a>
+    </nav>
 
   </div>
 </header>
