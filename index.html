@@ -925,6 +925,22 @@ a.sponsor-link:hover{
   color: #eb001e !important;
   opacity: .92; /* optional */
 }
+/* Footer red text links (no button look) */
+.footer-action{
+  display: block;
+  margin-top: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #eb001e;
+  text-decoration: none;
+  transition: opacity .2s ease;
+}
+
+.footer-action:hover{
+  opacity: .75;
+}
+
+
 /* ==========================
    RESPONSIVE
 ========================== */
@@ -1551,8 +1567,8 @@ a.sponsor-link:hover{
 
     <div class="footer-col">
       <h5>Get Involved</h5>
-      <a href="#" class="sponsor-cta">BECOME A SPONSOR</a>
-      <a href="mailto:info.ddm@unibe.ch" class="sponsor-cta">CONTACT US</a>
+<a href="#" class="footer-action">BECOME A SPONSOR</a>
+<a href="#" class="footer-action">CONTACT US</a>
     </div>
 
   </div>
