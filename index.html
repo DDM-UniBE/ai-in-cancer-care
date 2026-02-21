@@ -905,8 +905,6 @@ body{
   font-size: 16px;
   text-decoration: none;
   border-radius: 999px;
-
-  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
 }
 
 /* Center it */
@@ -1230,8 +1228,10 @@ font-weight: 600;
   text-decoration: none;
   color: rgba(255,255,255,.75);
   font-weight: 500;
-  transition: color .2s ease, transform .2s ease;
+transition: all .2s ease;
+
 }
+
 
 .footer-col a:hover{
   color: #f59d0f;
@@ -1239,8 +1239,9 @@ font-weight: 600;
 }
 
 .footer-highlight{
-  letter-spacing: .18em;     /* increase spacing */
-  text-transform: uppercase; /* optional, looks strong */
+  color: var(--accent);  /* your red */
+  letter-spacing: .18em;
+  text-transform: uppercase;
   font-weight: 600;
 }
 
@@ -1816,10 +1817,11 @@ font-weight: 600;
     <div class="sponsors-panels">
   <div class="sponsors-panel is-active" id="panel-sponsors" role="tabpanel">
   <p class="coming-soon">Sponsors to be announced soon.</p>
-</div>
-<a href="#contact" class="sponsor-cta">
+  <a href="#contact" class="sponsor-cta">
   Become a Sponsor
 </a>
+</div>
+
 
 
       <div class="sponsors-panel" id="panel-partners" role="tabpanel" hidden>
