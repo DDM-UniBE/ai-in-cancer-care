@@ -892,6 +892,35 @@ body{
   margin-top: 40px;
 }
 
+/* Sponsor CTA Button */
+.sponsor-cta{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 28px auto 0;
+  padding: 14px 36px;
+
+  background: linear-gradient(90deg, #eb001e, #f59d0f);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 999px;
+
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+
+/* Center it */
+#panel-sponsors{
+  text-align: center;
+}
+
+.sponsor-cta:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(235,0,30,.25);
+  opacity: .95;
+}
+
 /* ==========================
    SPONSORS / PARTNERS LOGOS
    (flex-wrap + bigger logos)
@@ -1790,6 +1819,9 @@ font-weight: 600;
   <div class="sponsors-panel is-active" id="panel-sponsors" role="tabpanel">
   <p class="coming-soon">Sponsors to be announced soon.</p>
 </div>
+<a href="#contact" class="sponsor-cta">
+  Become a Sponsor
+</a>
 
 
       <div class="sponsors-panel" id="panel-partners" role="tabpanel" hidden>
@@ -1943,15 +1975,12 @@ font-weight: 600;
 
     <div class="footer-col">
       <h5>Get Involved</h5>
-      <a href="#sponsors">Become a Sponsor</a>
-      <a href="mailto:your@email.com">Contact Us</a>
+      <a href="#sponsors">BECOME A SPONSOR</a>
+      <a href="mailto:info.ddm@unibe.ch">CONTACT US</a>
     </div>
 
   </div>
 
-  <div class="footer-bottom">
-    © 2026 AI in Cancer Care Symposium • University of Bern
-  </div>
 </footer>
 
 <script>
