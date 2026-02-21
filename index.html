@@ -936,6 +936,20 @@ a.sponsor-link:hover{
   transition: opacity .2s ease;
 }
 
+.site-footer .footer-action{
+  color: #eb001e !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  transition: opacity .2s ease !important;
+}
+
+.site-footer .footer-action:hover{
+  color: #eb001e !important;
+  opacity: .78 !important;
+}
+
 .footer-action:hover{
   opacity: .75;
 }
@@ -1158,6 +1172,32 @@ a.sponsor-link:hover{
 
   .carousel-btn svg{ width: 26px; height: 26px; }
   .carousel-btn svg path{ stroke: #051321; stroke-width: 2.4; }
+}
+
+/* ==========================
+   NAV: force Register button padding everywhere
+   (paste at VERY END)
+========================== */
+
+.nav .nav__right .nav__btn{
+  padding: 12px 30px !important;
+  border-radius: 999px !important;
+  background: #eb001e !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Optional: keep it a touch smaller inside the full-screen mobile menu */
+@media (max-width: 820px){
+  .nav.is-open .nav__right .nav__btn{
+    padding: 14px 34px !important;
+  }
 }
 </style>
 </head>
@@ -1567,8 +1607,8 @@ a.sponsor-link:hover{
 
     <div class="footer-col">
       <h5>Get Involved</h5>
-<a href="#" class="footer-action">BECOME A SPONSOR</a>
-<a href="#" class="footer-action">CONTACT US</a>
+<a class="footer-action" href="...">BECOME A SPONSOR</a>
+<a class="footer-action" href="...">CONTACT US</a>
     </div>
 
   </div>
