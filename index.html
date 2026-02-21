@@ -1205,6 +1205,79 @@ a.sponsor-link:hover{
     padding: 14px 34px !important;
   }
 }
+
+/* ==========================
+   Ai4-like NAV (override)
+   paste at END of CSS
+========================== */
+
+/* more spacing between links */
+.nav__right{
+  gap: 42px !important; /* increase spacing */
+}
+
+/* links: not uppercase, slightly smaller, more letter spacing */
+.nav__right a:not(.nav__btn){
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: .06em !important;
+  text-transform: none !important;  /* ✅ keep normal case */
+  opacity: .92 !important;
+  padding: 10px 0 !important;
+}
+
+/* CTA in nav: less heavy, slightly bigger */
+.nav .nav__right .nav__btn{
+  font-size: 13px !important;
+  font-weight: 600 !important;      /* less heavy */
+  letter-spacing: .04em !important;
+  text-transform: none !important;  /* keep normal case if you want */
+  padding: 12px 26px !important;
+}
+
+
+/* ==========================
+   HERO: stop wrapping + more left padding
+========================== */
+
+/* Give hero content more inset on the left */
+.hero__content{
+  max-width: 980px !important;
+  padding-left: 96px !important;    /* more left gap like Ai4 */
+}
+
+/* Remove the “max-width: 32ch” behaviour that forces wrapping */
+.hero h1{
+  max-width: none !important;       /* ✅ stops early wrap */
+  font-size: clamp(50px, 5.2vw, 96px) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.015em !important;
+  margin-bottom: 26px !important;
+}
+
+
+/* ==========================
+   HERO PILL: smaller pill, bigger/lighter button
+========================== */
+
+.hero__pill{
+  padding: 16px 20px !important;    /* smaller than yours */
+  gap: 16px !important;
+}
+
+.pill__text strong,
+.pill__text span{
+  font-size: 12px !important;
+  letter-spacing: .16em !important;
+}
+
+/* Button: bigger but lighter weight (Ai4 feel) */
+.pill__btn{
+  padding: 14px 26px !important;    /* bigger button */
+  font-size: 14px !important;
+  font-weight: 600 !important;      /* less heavy */
+  letter-spacing: .04em !important;
+}
 </style>
 </head>
 
