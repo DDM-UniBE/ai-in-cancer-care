@@ -51,7 +51,7 @@ body{
   top: 0; left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 18px 0;
+  padding: 22px 0;
   background: transparent;
   transition: background .25s ease, box-shadow .25s ease;
 }
@@ -97,7 +97,7 @@ body{
 .nav__right{
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 36px; /* was 26px */
   flex-wrap: nowrap;
 }
 
@@ -106,29 +106,30 @@ body{
   align-items: center;
   text-decoration: none;
   color: #fff;
-  font-weight: 600;
-  font-size: 15px;
-  opacity: .95;
-  padding: 6px 2px;
+  font-weight: 500;          /* lighter */
+  font-size: 14px;           /* slightly smaller */
+  letter-spacing: .08em;     /* more premium spacing */
+  text-transform: uppercase; /* Ai4 feel */
+  opacity: .85;
+  padding: 8px 0;
   transition: color .2s ease, opacity .2s ease;
 }
 
 .nav__right a:not(.nav__btn):hover{
-  color: var(--orange);
   opacity: 1;
+  color: var(--orange);
 }
 
 /* CTA */
 .nav__btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 28px;
+  padding: 10px 22px;
   border-radius: 999px;
   background: #eb001e;
   color: #fff;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 13px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
   white-space: nowrap;
   transition: opacity .2s ease;
 }
@@ -184,26 +185,18 @@ body{
 }
 
 /* ==========================
-   HERO
+   HERO 
 ========================== */
 .hero{
   position: relative;
-  min-height: 62vh;
+  min-height: 72vh;
   display: flex;
   align-items: center;
-  justify-content: center;
   overflow: hidden;
   padding-top: 90px; /* room for nav */
 }
 
-.hero__frame{
-  width: min(1320px, 92vw);
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
-  padding: 90px 0 70px;
-}
-
+/* Background stays full-bleed */
 .hero__bg{
   position: absolute;
   inset: 0;
@@ -220,58 +213,70 @@ body{
   inset: 0;
   background:
     linear-gradient(180deg,
-      rgba(7,10,24,.18) 0%,
-      rgba(7,10,24,.36) 55%,
-      rgba(7,10,24,.56) 100%),
+      rgba(7,10,24,.20) 0%,
+      rgba(7,10,24,.42) 55%,
+      rgba(7,10,24,.64) 100%),
     linear-gradient(90deg,
-      rgba(7,10,24,.45) 0%,
-      rgba(7,10,24,.22) 55%,
-      rgba(7,10,24,.20) 100%);
+      rgba(7,10,24,.55) 0%,
+      rgba(7,10,24,.26) 55%,
+      rgba(7,10,24,.18) 100%);
   z-index: 1;
 }
 
-.hero__content{
-  max-width: 760px;
-  padding: 110px 0 70px;
+/* Frame: increase left padding / remove “tight” centered look */
+.hero__frame{
+  position: relative;
+  z-index: 2;
+  width: min(1480px, 96vw);
+  margin: 0 auto;
+  padding: 96px 0 70px;
 }
 
+/* The left block: more gap on the left & more room so H1 wraps less */
+.hero__content{
+  max-width: 920px;        /* was 760 */
+  padding: 96px 0 56px;    /* slightly lighter */
+  padding-left: 72px;      /* gives the Ai4 “inset” feel */
+}
+
+/* Title: slightly smaller, better line-height, less forced wrapping */
 .hero h1{
-  font-weight: 700;
-  font-size: clamp(64px, 6vw, 108px);
-  line-height: 1.06;
-  letter-spacing: -0.02em;
-  margin: 0 0 44px;
-  max-width: 32ch;
+  margin: 0 0 28px;
+  font-weight: 750;
+  font-size: clamp(46px, 5.1vw, 92px); /* was 64→108 */
+  line-height: 1.08;                   /* a touch taller */
+  letter-spacing: -0.015em;
+  max-width: 42ch;                     /* was 32ch (too restrictive) */
   text-wrap: balance;
 }
 
-/* Pill (glass) */
+/* Pill: smaller + closer to Ai4 proportions */
 .hero__pill{
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 26px 40px;
+  gap: 18px;
+  padding: 18px 22px;     /* was 26px 40px */
   border-radius: 999px;
   width: fit-content;
   max-width: 100%;
-  background: var(--pill-bg);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(20,18,45,.26);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--pill-border);
 }
 
+/* Left stack inside pill */
 .pill__left{
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  align-items: center;
+  gap: 14px;
   min-width: 0;
 }
 
 .pill__bar{
-  width: 4px;
-  height: 36px;
-  border-radius: 4px;
+  width: 3px;
+  height: 34px;
+  border-radius: 3px;
   background: linear-gradient(180deg, #eb001e, #f59d0f);
   flex: 0 0 auto;
 }
@@ -279,40 +284,45 @@ body{
 .pill__text{
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   min-width: 0;
 }
 
+/* Make the pill text feel “tight + premium” */
 .pill__text strong,
 .pill__text span{
-  font-size: 13px;
+  font-size: 12px;            /* was 13 */
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--orange);
+  color: rgba(255,255,255,.90);
 }
 
-.pill__text span{ letter-spacing: .16em; }
+.pill__text span{
+  color: rgba(255,255,255,.70);
+}
 
+/* Button smaller like Ai4 */
 .pill__btn{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 14px 28px;
+  padding: 12px 20px;         /* was 14px 28px */
   border-radius: 999px;
   background: var(--accent);
   color: #fff;
   text-decoration: none;
-  font-weight: 550;
-  font-size: 14px;
+  font-weight: 650;
+  font-size: 13px;            /* was 14 */
+  letter-spacing: .02em;
   white-space: nowrap;
-  transition: background .2s ease, color .2s ease;
+  transition: opacity .2s ease, background .2s ease, color .2s ease;
 }
 
 .pill__btn:hover{
+  opacity: .92;
   background: #fff;
   color: #101226;
 }
-
 /* ==========================
    SECTION (About)
 ========================== */
@@ -1120,10 +1130,22 @@ a.sponsor-link:hover{
 @media (max-width: 640px){
   .hero{ min-height: 82vh; }
 
+  .hero__frame{
+    width: calc(100vw - 28px);
+    padding: 72px 0 42px;
+  }
+
+  .hero__content{
+    padding: 78px 0 34px;
+    padding-left: 0; /* no inset on mobile */
+    max-width: 100%;
+  }
+
   .hero h1{
     font-size: 42px;
-    line-height: 1.1;
-    max-width: 18ch;
+    line-height: 1.10;
+    max-width: 22ch;
+    margin-bottom: 18px;
   }
 
   .hero__pill{
@@ -1131,17 +1153,17 @@ a.sponsor-link:hover{
     border-radius: 22px;
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px 22px;
+    padding: 18px 18px;
+    gap: 14px;
   }
 
   .pill__btn{
     width: auto;
-    align-self: center;
-    padding: 16px 38px;
-    font-size: 17px;
-    font-weight: 600;
+    align-self: flex-start;
+    padding: 14px 22px;
+    font-size: 14px;
   }
-
+}
   /* Page padding */
   .container{
     padding-left: 20px;
