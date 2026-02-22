@@ -1065,12 +1065,11 @@
       gap: 5px;
     }
     .hamburger span {
-      display: block; height: 2.5px; border-radius: 2px;
-      background: linear-gradient(90deg, #CC0000, #F5820A);
+      display: block; height: 2.5px; border-radius: 2px; width: 22px;
     }
-    .hamburger span:nth-child(1) { width: 22px; }
-    .hamburger span:nth-child(2) { width: 16px; align-self: flex-start; margin-left: 3px; }
-    .hamburger span:nth-child(3) { width: 22px; }
+    .hamburger span:nth-child(1) { background: #CC0000; }
+    .hamburger span:nth-child(2) { background: #D94000; }
+    .hamburger span:nth-child(3) { background: #F5820A; }
 
     /* ── MOBILE FULL-SCREEN MENU ──────────────────────────── */
     .mobile-menu {
@@ -1105,16 +1104,11 @@
     }
     .mobile-nav-links li { border-bottom: 1px solid rgba(255,255,255,0.07); }
     .mobile-nav-links li a {
-      display: flex; align-items: center;
-      justify-content: space-between;
+      display: block;
       padding: 20px 0; color: #fff;
       text-decoration: none; font-size: 20px; font-weight: 400;
     }
-    .mobile-nav-links li a .arr {
-      width: 8px; height: 8px; border-top: 2px solid #F5820A;
-      border-right: 2px solid #F5820A;
-      transform: rotate(45deg); flex-shrink: 0;
-    }
+    .mobile-nav-links li a .arr { display: none; }
     .mobile-nav-register {
       display: block; margin: 4px 0 28px;
       background: linear-gradient(110deg,#CC0000,#F5820A);
@@ -1190,15 +1184,16 @@
         display: flex; flex-direction: column; align-items: center;
       }
       .hero-title { font-size: clamp(32px,9vw,50px); text-align: center; }
-      .hero-theme { font-size: 14px; text-align: center; }
+      .hero-theme { font-size: 18px; text-align: center; font-weight: 600; }
       .hero-cta-group {
         flex-direction: column; align-items: center;
         padding: 20px 20px; gap: 16px;
         border-radius: 20px; width: 100%; max-width: 340px;
       }
+      .cta-bar { display: none; }
       .cta-left { align-items: center; }
       .cta-meta { text-align: center; }
-      .btn-cta { width: 100%; text-align: center; font-size: 17px; padding: 15px 24px; }
+      .btn-cta { width: auto; text-align: center; font-size: 16px; padding: 13px 32px; }
 
       /* Intro */
       .intro-inner { padding: 0 20px; }
@@ -1207,12 +1202,11 @@
       .intro-img-stack { display: none; }
       .intro-title { font-size: clamp(28px,7vw,40px); }
 
-      /* Speakers — 1 card + peek */
-      .speakers { padding: 52px 0; }
-      .speakers-inner { padding: 0 8px; }
-      .speakers-title { font-size: 28px; }
-      .speaker-card { flex: 0 0 78%; }
-      .carousel-arrow { font-size: 28px; padding: 0 2px; }
+      /* Speakers — 1 card + peek of next */
+      .speakers-inner { padding: 0 0 0 16px; }
+      .speaker-card { flex: 0 0 76%; }
+      .carousel-arrow { font-size: 26px; padding: 0 2px; }
+      #speakersCarousel { overflow: visible; }
 
       /* Program */
       .program-inner { padding: 0 20px; }
@@ -1228,11 +1222,26 @@
       .sponsors-grid { gap: 20px 28px; }
       .sponsor-logo img { max-height: 34px; max-width: 100px; }
 
+
+      /* Tighter section spacing on mobile */
+      .speakers-title, .highlights-title, .program-title, .sponsors-title { margin-bottom: 6px; }
+      .speakers-sub, .highlights-sub, .program-sub { margin-bottom: 24px; line-height: 1.45; }
+      .intro-title { line-height: 1.1; }
+      .intro-inner p { line-height: 1.5; }
+      .speakers { padding: 40px 0 36px; }
+      .highlights { padding: 40px 0 32px; }
+
       /* Highlights */
-      .highlights { padding: 52px 0 36px; }
+      .highlights { padding: 40px 0 32px; }
       .highlights-inner { padding: 0 16px; }
-      .highlights-title { font-size: 28px; text-align: left; }
-      .highlights-sub { text-align: left; font-size: 15px; }
+      .highlights-title { font-size: 32px; text-align: center; }
+
+      /* Bigger section titles */
+      .speakers-title { font-size: 32px; }
+      .sponsors-title { font-size: 30px; }
+      .program-title { font-size: 32px; }
+
+      .highlights-sub { text-align: center; font-size: 15px; }
       .hl-card { flex: 0 0 84%; }
       .hl-arrow { font-size: 34px; padding: 0 2px; }
       .hl-name { font-size: 20px; }
@@ -1251,7 +1260,7 @@
       /* Get Involved — always visible, no dropdown */
       .footer-col:first-child .footer-col-btn { display: none; }
       .footer-col:first-child .footer-col-title { display: block; padding: 16px 0 12px; border-bottom: 1px dashed rgba(204,0,0,0.2); }
-      .footer-col:first-child .footer-col-links { display: flex; padding-bottom: 0; }
+      .footer-col:first-child .footer-col-links { display: flex; padding-bottom: 24px; border-bottom: 1px dashed rgba(204,0,0,0.2); margin-bottom: 8px; }
       /* Social col */
       .footer-col-social { padding-top: 24px; }
       .footer-col-social .footer-col-btn { display: none; }
@@ -1463,10 +1472,10 @@
 
   <!-- ── PROGRAM SECTION ── -->
   <section class="program" id="agenda">
+    <canvas id="nodesCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.55;"></canvas>
     <div class="program-inner">
       <h2 class="program-title">Program</h2>
       <p class="program-sub">30 April 2026 — Inselspital, Bern</p>
-      <canvas id="nodesCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.5;"></canvas>
       <div class="program-scroll">
         <div class="program-item">
           <div class="program-time">14:30</div>
@@ -1844,23 +1853,38 @@
     // Highlights carousel with auto-advance
     let hlIndex = 0;
     const hlTotal = 4;
-    const hlMax = hlTotal - 3;
+
+    function getHlVisible() {
+      const track = document.getElementById('highlightsTrack');
+      const cards = track.querySelectorAll('.hl-card');
+      if (!cards.length) return 1;
+      const cardW = cards[0].offsetWidth + 20;
+      const wrapW = track.parentElement.offsetWidth;
+      return Math.max(1, Math.round(wrapW / cardW));
+    }
+
+    function getHlMax() {
+      return Math.max(0, hlTotal - getHlVisible());
+    }
 
     function updateHighlights() {
       const track = document.getElementById('highlightsTrack');
       const cards = track.querySelectorAll('.hl-card');
       if (!cards.length) return;
       const cardWidth = cards[0].offsetWidth + 20;
+      const max = getHlMax();
+      if (hlIndex > max) hlIndex = max;
       track.style.transform = `translateX(-${hlIndex * cardWidth}px)`;
       document.querySelectorAll('.hl-dot').forEach((d, i) => d.classList.toggle('active', i === hlIndex));
     }
     function slideHighlights(dir) {
+      const max = getHlMax();
       hlIndex = (hlIndex + dir + hlTotal) % hlTotal;
-      if (hlIndex > hlMax) hlIndex = 0;
+      if (hlIndex > max) hlIndex = dir > 0 ? 0 : max;
       updateHighlights();
     }
     function goHighlight(i) {
-      hlIndex = Math.min(i, hlMax);
+      hlIndex = Math.min(i, getHlMax());
       updateHighlights();
     }
     // AI nodes animation
@@ -1895,6 +1919,30 @@
 
     setInterval(() => slideHighlights(1), 4000);
     window.addEventListener('resize', updateHighlights);
+
+    // Touch swipe — Speakers
+    (function() {
+      const el = document.getElementById('speakersCarousel');
+      if (!el) return;
+      let sx = 0;
+      el.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+      el.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - sx;
+        if (Math.abs(dx) > 40) slideCarousel(dx < 0 ? 1 : -1);
+      }, { passive: true });
+    })();
+
+    // Touch swipe — Highlights
+    (function() {
+      const el = document.querySelector('.highlights-carousel-wrap');
+      if (!el) return;
+      let sx = 0;
+      el.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+      el.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - sx;
+        if (Math.abs(dx) > 40) slideHighlights(dx < 0 ? 1 : -1);
+      }, { passive: true });
+    })();
   </script>
 
 </body>
