@@ -1343,11 +1343,11 @@
       transition: transform 0.35s ease, opacity 0.25s ease, background 0.3s ease;
     }
     .hamburger span:nth-child(1) { background: #E6002E; }
-    .hamburger span:nth-child(2) { background: #D94000; }
-    .hamburger span:nth-child(3) { background: #F5820A; }
+    .hamburger span:nth-child(2) { background: #e82d2d; }
+    .hamburger span:nth-child(3) { background: #ef3939; }
     /* X state */
     .hamburger.open span:nth-child(1) {
-      background: linear-gradient(90deg, #CC0000, #F5820A);
+      background: linear-gradient(90deg, #E6002E, #ef3939);
       transform: translateY(7.5px) rotate(45deg);
     }
     .hamburger.open span:nth-child(2) {
@@ -1355,7 +1355,7 @@
       transform: scaleX(0);
     }
     .hamburger.open span:nth-child(3) {
-      background: linear-gradient(90deg, #F5820A, #CC0000);
+      background: linear-gradient(90deg, #ef3939, #E6002E);
       transform: translateY(-7.5px) rotate(-45deg);
     }
 
@@ -1477,8 +1477,8 @@
         position: absolute;
         left: 0; right: 0;
         top: 86px;
-        bottom: 196px; /* height of 2×2 info bar (~196px) */
-        padding: 0 24px;
+        bottom: 0; /* let the info bar sit at the very bottom */
+        padding: 0 24px 220px; /* reserve space so title/theme stay above the info bar */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1551,7 +1551,7 @@
         width: 100%;
         border-left: 1px solid rgba(255,255,255,0.2);
         border-top: 1px solid rgba(255,255,255,0.2);
-        font-size: 13px;
+        font-size: 15px;
         letter-spacing: 1px;
         padding: 18px 16px;
         text-align: left;
@@ -2151,7 +2151,7 @@
 <div class="program-inner">
       <div class="program-panel">
       <h2 class="program-title">Program</h2>
-      <p class="program-sub">30 April 2026 | 14H35 - 16H30 | Inselspital, Bern</p>
+      <p class="program-sub">30 April 2026 | 14H30 - 18H35 | Inselspital, Bern</p>
       <div class="program-scroll">
         <div class="program-item">
           <div class="program-step"><span class="program-step-box"></span><span class="program-step-line"></span></div>
@@ -2568,13 +2568,24 @@
     function isMobile() { return window.innerWidth <= 767; }
     function slideCarousel(dir) {
       if (isMobile()) {
-        // On mobile use native scroll
+        // Mobile: the carousel is a real horizontal scroller.
+        // Use a deterministic "snap to next card" scroll so arrows always work.
         const carousel = document.getElementById('speakersCarousel');
         const track = document.getElementById('speakersTrack');
-        const cards = track.querySelectorAll('.speaker-card');
+        if (!carousel || !track) return;
+
+        const cards = Array.from(track.querySelectorAll('.speaker-card'));
         if (!cards.length) return;
-        const cardWidth = cards[0].offsetWidth + 14;
-        carousel.scrollBy({ left: dir * cardWidth, behavior: 'smooth' });
+
+        // Read the actual gap between cards (fallback to 14).
+        const cs = window.getComputedStyle(track);
+        const gap = parseFloat(cs.columnGap || cs.gap || '14') || 14;
+
+        const cardW = cards[0].getBoundingClientRect().width + gap;
+        const current = Math.round(carousel.scrollLeft / cardW);
+        const next = Math.max(0, Math.min(current + dir, cards.length - 1));
+
+        carousel.scrollTo({ left: next * cardW, behavior: 'smooth' });
         return;
       }
       const track = document.getElementById('speakersTrack');
@@ -2586,7 +2597,16 @@
       carouselIndex = Math.max(0, Math.min(carouselIndex + dir, max));
       track.style.transform = `translateX(-${carouselIndex * cardWidth}px)`;
     }
-    window.addEventListener('resize', () => { if (!isMobile()) slideCarousel(0); });
+    window.addEventListener('resize', () => {
+      const track = document.getElementById('speakersTrack');
+      if (isMobile()) {
+        // Ensure desktop translateX doesn't carry over when switching to mobile.
+        carouselIndex = 0;
+        if (track) track.style.transform = 'translateX(0px)';
+      } else {
+        slideCarousel(0);
+      }
+    });
 
     // Highlights carousel with auto-advance
     let hlIndex = 0;
