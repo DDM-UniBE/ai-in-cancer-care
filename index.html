@@ -821,16 +821,8 @@
     }
 
     /* ── SPEAKER BIO MODAL ──────────────────────────────────── */
-    .speaker-card {
-      cursor: pointer;
-    }
-    .speaker-card:hover .speaker-img img {
-      transform: scale(1.04);
-    }
-    .speaker-img img {
-      transition: transform 0.35s ease;
-    }
-    .bio-overlay {
+    .speaker-card{ cursor: pointer; }
+.bio-overlay {
       position: fixed;
       inset: 0;
       background: rgba(10,8,28,0.75);
@@ -1243,8 +1235,7 @@
       .speakers-carousel-wrap { gap: 0; }
       .carousel-arrow { display: none; }
 
-      /* Keep the PAGE locked (no sideways pan/white gutters),
-         but allow horizontal swipe inside the carousel */
+      /* Horizontal swipe carousel (Ai4-like: 2 cards visible) */
       .speakers-carousel{
         padding: 12px 0 12px 18px;
         overflow-x: auto;
@@ -1254,28 +1245,41 @@
         scroll-padding-left: 18px;
         overscroll-behavior-x: contain;
       }
+
+      /* Disable the desktop translateX carousel behaviour on mobile */
       .speakers-track{
         gap: 12px;
         width: max-content;
-        padding-right: 18px; /* breathing room at the end */
+        padding-right: 18px;
+        transform: none !important;
+        transition: none !important;
       }
 
-      /* Ai4-like: two cards visible + slight peek */
+      /* Two cards across (with a tiny gap) */
       .speaker-card{
-        flex: 0 0 calc((100% - 12px) / 2);
+        flex: 0 0 calc((100vw - 18px - 18px - 12px) / 2);
+        max-width: 420px;
         padding: 8px 8px 10px;
         border-radius: 14px;
         scroll-snap-align: start;
       }
 
-      .speaker-img{ height: 150px; margin-bottom: 10px; border-radius: 12px; }
-      .speaker-img img{ transform: scale(1); transition: none; }
+      .speaker-img{ height: 132px; margin-bottom: 10px; border-radius: 12px; }
+      .speaker-img img{ transform: scale(1) !important; transition: none !important; }
 
       .speaker-name{ font-size: 16px; margin-bottom: 4px; }
-      .speaker-role{ font-size: 12.5px; margin-bottom: 6px; line-height: 1.35; }
-      .speaker-org{ font-size: 12.5px; } 
+      .speaker-role{
+        font-size: 12.5px;
+        margin-bottom: 6px;
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .speaker-org{ font-size: 12.5px; }
 
-/* Program */
+      /* Program */
       .program-inner { padding: 0 20px; }
       .program-title { font-size: 30px; }
       .program-scroll { max-height: 340px; }
