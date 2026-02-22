@@ -668,7 +668,7 @@
     }
     .program-item:last-child { border-bottom: none; }
     .program-time {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--gold);
       width: 52px;
@@ -677,7 +677,7 @@
       letter-spacing: 0.5px;
     }
     .program-name {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
       color: #fff;
       margin-bottom: 5px;
@@ -1052,17 +1052,102 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── RESPONSIVE ──────────────────────────────────────── */
+    /* ── HAMBURGER ────────────────────────────────────────── */
+    .hamburger {
+      display: none;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: none; cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .hamburger span {
+      display: block; height: 2.5px; border-radius: 2px;
+      background: linear-gradient(90deg, #CC0000, #F5820A);
+    }
+    .hamburger span:nth-child(1) { width: 22px; }
+    .hamburger span:nth-child(2) { width: 16px; align-self: flex-start; margin-left: 3px; }
+    .hamburger span:nth-child(3) { width: 22px; }
 
-    /* Large screens (1440px+) */
+    /* ── MOBILE FULL-SCREEN MENU ──────────────────────────── */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0;
+      background: #0D0C1D; z-index: 300;
+      flex-direction: column; padding: 0 28px;
+      overflow-y: auto;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu-top {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      height: 68px; flex-shrink: 0;
+    }
+    .mobile-menu-logo img { height: 28px; filter: brightness(0) invert(1); }
+    .mobile-close {
+      position: relative; width: 44px; height: 44px;
+      border-radius: 50%; background: rgba(255,255,255,0.10);
+      border: none; cursor: pointer;
+    }
+    .mobile-close::before, .mobile-close::after {
+      content: ''; position: absolute;
+      top: 50%; left: 50%;
+      width: 20px; height: 2.5px; border-radius: 2px;
+      background: linear-gradient(90deg, #CC0000, #F5820A);
+    }
+    .mobile-close::before { transform: translate(-50%,-50%) rotate(45deg); }
+    .mobile-close::after  { transform: translate(-50%,-50%) rotate(-45deg); }
+    .mobile-nav-links {
+      list-style: none; display: flex;
+      flex-direction: column; padding: 8px 0 24px; flex: 1;
+    }
+    .mobile-nav-links li { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .mobile-nav-links li a {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 20px 0; color: #fff;
+      text-decoration: none; font-size: 20px; font-weight: 400;
+    }
+    .mobile-nav-links li a .arr {
+      width: 8px; height: 8px; border-top: 2px solid #F5820A;
+      border-right: 2px solid #F5820A;
+      transform: rotate(45deg); flex-shrink: 0;
+    }
+    .mobile-nav-register {
+      display: block; margin: 4px 0 28px;
+      background: linear-gradient(110deg,#CC0000,#F5820A);
+      color: #fff; text-decoration: none;
+      padding: 15px 24px; border-radius: 50px;
+      font-size: 18px; font-weight: 600; text-align: center;
+    }
+
+    /* ── FOOTER DROPDOWN (mobile) ─────────────────────────── */
+    .footer-col-btn {
+      display: none; width: 100%; background: none; border: none;
+      font-family: 'DM Sans', sans-serif; font-size: 15px;
+      font-weight: 700; color: #1a1a2e;
+      padding: 16px 0; cursor: pointer;
+      align-items: center; justify-content: space-between;
+      border-bottom: 1px dashed rgba(204,0,0,0.2);
+    }
+    .footer-col-btn .chev {
+      width: 10px; height: 10px;
+      border-right: 2px solid #CC0000; border-bottom: 2px solid #CC0000;
+      transform: rotate(45deg); transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+    .footer-col.open .footer-col-btn .chev { transform: rotate(-135deg); }
+    .footer-col-links { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
     @media (min-width: 1440px) {
       .hero-content { padding-left: 15%; }
       .intro-inner, .program-inner, .sponsors-inner, .footer-inner { padding-left: 15%; padding-right: 15%; }
       .highlights-inner { padding: 0 12%; }
       .speakers-inner { padding: 0 30px; }
     }
-
-    /* Tablets landscape (1024px–1279px) */
     @media (max-width: 1279px) {
       .hero-content { padding-left: 15%; }
       .intro-inner, .program-inner, .sponsors-inner, .footer-inner { padding-left: 12%; padding-right: 12%; }
@@ -1070,8 +1155,6 @@
       .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px 48px; }
       .speaker-card { flex: 0 0 calc((100% - 64px) / 5); }
     }
-
-    /* Tablets portrait (768px–1023px) */
     @media (max-width: 1023px) {
       nav { padding: 0 24px; }
       .nav-links li:not(:last-child):not(:nth-last-child(2)) { display: none; }
@@ -1080,7 +1163,6 @@
       .intro-inner { padding: 0 6%; }
       .intro-body { grid-template-columns: 1fr; gap: 40px; }
       .intro-images { grid-template-columns: 1fr 1fr; height: 320px; }
-      .intro-img-large { grid-row: 1; }
       .program-inner, .sponsors-inner { padding: 0 6%; }
       .highlights-inner { padding: 0 20px; }
       .footer-inner { padding: 0 6%; grid-template-columns: 1fr 1fr; gap: 32px; }
@@ -1091,65 +1173,101 @@
       .bio-modal { grid-template-columns: 200px 1fr; max-width: 90vw; }
       .bio-modal-img { width: 200px; }
     }
-
-    /* Mobile (max 767px) */
     @media (max-width: 767px) {
+      /* Nav */
       nav { padding: 0 16px; height: 60px; }
       .nav-links { display: none; }
       .brand-meta { display: none; }
       .brand-divider { display: none; }
+      .hamburger { display: flex; }
 
+      /* Hero — centred */
       .hero { min-height: 100svh; }
-      .hero-content { padding: 0 20px; bottom: 60px; top: auto; transform: none; position: absolute; }
-      .hero-title { font-size: clamp(32px, 9vw, 48px); }
-      .hero-theme { font-size: 14px; }
-      .hero-cta-group { flex-direction: column; align-items: flex-start; padding: 16px 20px; gap: 14px; border-radius: 16px; }
-      .btn-cta { width: 100%; text-align: center; font-size: 16px; padding: 13px 24px; }
+      .hero-content {
+        position: absolute; left: 0; right: 0;
+        top: 50%; transform: translateY(-50%);
+        padding: 0 24px; text-align: center;
+        display: flex; flex-direction: column; align-items: center;
+      }
+      .hero-title { font-size: clamp(32px,9vw,50px); text-align: center; }
+      .hero-theme { font-size: 14px; text-align: center; }
+      .hero-cta-group {
+        flex-direction: column; align-items: center;
+        padding: 20px 20px; gap: 16px;
+        border-radius: 20px; width: 100%; max-width: 340px;
+      }
+      .cta-left { align-items: center; }
+      .cta-meta { text-align: center; }
+      .btn-cta { width: 100%; text-align: center; font-size: 17px; padding: 15px 24px; }
 
+      /* Intro */
       .intro-inner { padding: 0 20px; }
       .intro-body { grid-template-columns: 1fr; gap: 32px; }
       .intro-images { grid-template-columns: 1fr; height: 260px; }
       .intro-img-stack { display: none; }
-      .intro-title { font-size: clamp(26px, 7vw, 38px); }
+      .intro-title { font-size: clamp(28px,7vw,40px); }
 
-      .speakers { padding: 56px 0; }
-      .speakers-inner { padding: 0 10px; }
-      .speaker-card { flex: 0 0 calc((100% - 16px) / 2); }
-      .carousel-arrow { font-size: 32px; padding: 0 4px; }
+      /* Speakers — 1 card + peek */
+      .speakers { padding: 52px 0; }
+      .speakers-inner { padding: 0 8px; }
+      .speakers-title { font-size: 28px; }
+      .speaker-card { flex: 0 0 78%; }
+      .carousel-arrow { font-size: 28px; padding: 0 2px; }
 
+      /* Program */
       .program-inner { padding: 0 20px; }
-      .program-title { font-size: 28px; }
+      .program-title { font-size: 30px; }
       .program-scroll { max-height: 340px; }
-      .program-item { gap: 16px; padding: 14px 0; }
-      .program-time { font-size: 13px; width: 44px; }
-      .program-name { font-size: 14px; }
+      .program-item { gap: 14px; padding: 14px 0; }
+      .program-time { font-size: 14px; width: 44px; }
+      .program-name { font-size: 16px; }
 
+      /* Sponsors */
       .sponsors-inner { padding: 0 20px; }
-      .sponsors-title { font-size: 22px; }
-      .sponsors-grid { gap: 24px 32px; }
-      .sponsor-logo img { max-height: 36px; max-width: 110px; }
+      .sponsors-title { font-size: 26px; }
+      .sponsors-grid { gap: 20px 28px; }
+      .sponsor-logo img { max-height: 34px; max-width: 100px; }
 
-      .highlights { padding: 56px 0 40px; }
-      .highlights-inner { padding: 0 12px; }
-      .highlights-title { font-size: 24px; }
-      .hl-card { flex: 0 0 calc(100% - 0px); }
-      .hl-arrow { font-size: 36px; padding: 0 2px; }
+      /* Highlights */
+      .highlights { padding: 52px 0 36px; }
+      .highlights-inner { padding: 0 16px; }
+      .highlights-title { font-size: 28px; text-align: left; }
+      .highlights-sub { text-align: left; font-size: 15px; }
+      .hl-card { flex: 0 0 84%; }
+      .hl-arrow { font-size: 34px; padding: 0 2px; }
+      .hl-name { font-size: 20px; }
 
-      .footer-inner { padding: 0 20px; grid-template-columns: 1fr 1fr; gap: 28px 20px; padding-bottom: 40px; }
-      .footer-col-social { grid-column: 1 / -1; }
+      /* Footer — stacked with dropdowns */
+      .footer { padding: 32px 0 24px; }
+      .footer-inner {
+        padding: 0 20px; grid-template-columns: 1fr;
+        gap: 0; padding-bottom: 0;
+      }
+      .footer-col { gap: 0; }
+      .footer-col-title { display: none; }
+      .footer-col-btn { display: flex; }
+      .footer-col-links { display: none; padding: 12px 0 16px; gap: 10px; }
+      .footer-col.open .footer-col-links { display: flex; }
+      /* Get Involved — always visible, no dropdown */
+      .footer-col:first-child .footer-col-btn { display: none; }
+      .footer-col:first-child .footer-col-title { display: block; padding: 16px 0 12px; border-bottom: 1px dashed rgba(204,0,0,0.2); }
+      .footer-col:first-child .footer-col-links { display: flex; padding-bottom: 0; }
+      /* Social col */
+      .footer-col-social { padding-top: 24px; }
+      .footer-col-social .footer-col-btn { display: none; }
+      .footer-col-social .footer-col-title { display: block; }
+      .footer-col-social .footer-col-links { display: flex; }
 
+      /* Bio modal */
       .bio-modal { grid-template-columns: 1fr; max-width: 94vw; }
       .bio-modal-img { width: 100%; height: 220px; border-radius: 20px 20px 0 0; min-height: unset; }
       .bio-modal-img img { height: 220px; }
       .bio-modal-body { padding: 20px; }
       .bio-modal-name { font-size: 18px; }
     }
-
-    /* Very small phones */
     @media (max-width: 400px) {
       .hero-title { font-size: 30px; }
-      .speaker-card { flex: 0 0 100%; }
-      .footer-inner { grid-template-columns: 1fr; }
+      .speaker-card { flex: 0 0 88%; }
     }
   </style>
 </head>
@@ -1176,7 +1294,28 @@
       <li><a href="#contact">Contact</a></li>
       <li><a href="#" class="btn-register">Register Now</a></li>
     </ul>
+    <button class="hamburger" onclick="openMobileMenu()" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- ── MOBILE MENU ── -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-top">
+      <div class="mobile-menu-logo">
+        <img src="/mnt/user-data/uploads/DDM-Logo_Kurz-RGB-email_signature.png" alt="DDM"/>
+      </div>
+      <button class="mobile-close" onclick="closeMobileMenu()" aria-label="Close"></button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="#about" onclick="closeMobileMenu()">About<span class="arr"></span></a></li>
+      <li><a href="#speakers" onclick="closeMobileMenu()">Speakers<span class="arr"></span></a></li>
+      <li><a href="#agenda" onclick="closeMobileMenu()">Agenda<span class="arr"></span></a></li>
+      <li><a href="#sponsors" onclick="closeMobileMenu()">Sponsors<span class="arr"></span></a></li>
+      <li><a href="#contact" onclick="closeMobileMenu()">Contact<span class="arr"></span></a></li>
+    </ul>
+    <a href="#" class="mobile-nav-register" onclick="closeMobileMenu()">Register Now</a>
+  </div>
 
   <!-- ── HERO ── -->
   <section class="hero">
@@ -1386,7 +1525,7 @@
       </div>
     </div>
   </section>
-  <section class="sponsors">
+  <section class="sponsors" id="sponsors">
     <div class="sponsors-inner">
       <h2 class="sponsors-title">Check Out Our 2026 Sponsors &amp; Partners</h2>
       <div class="sponsors-tabs">
@@ -1505,32 +1644,60 @@
     <div class="footer-inner">
       <div class="footer-col">
         <div class="footer-col-title">Get Involved</div>
-        <a href="#sponsors" class="footer-link-cta">Become a Sponsor</a>
+        <div class="footer-col-links">
+          <a href="#sponsors" class="footer-link-cta">Become a Sponsor</a>
+        </div>
       </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Symposium 2026</div>
-        <a href="#agenda" class="footer-link">Agenda</a>
-        <a href="#speakers" class="footer-link">Speakers</a>
-        <a href="#sponsors" class="footer-link">Sponsors</a>
-        <a href="#highlights" class="footer-link">Highlights</a>
-        <a href="#contact" class="footer-link">Contact</a>
+      <div class="footer-col" id="fc-symposium">
+        <div class="footer-col-title">AI in Cancer Care 2026</div>
+        <button class="footer-col-btn" onclick="toggleFooterCol('fc-symposium')">AI in Cancer Care 2026 <span class="chev"></span></button>
+        <div class="footer-col-links">
+          <a href="#agenda" class="footer-link">Agenda</a>
+          <a href="#speakers" class="footer-link">Speakers</a>
+          <a href="#sponsors" class="footer-link">Sponsors</a>
+          <a href="#highlights" class="footer-link">Highlights</a>
+          <a href="#contact" class="footer-link">Contact</a>
+        </div>
       </div>
-      <div class="footer-col">
+      <div class="footer-col" id="fc-support">
         <div class="footer-col-title">Support</div>
-        <a href="#" class="footer-link">Contact Us</a>
+        <button class="footer-col-btn" onclick="toggleFooterCol('fc-support')">Support <span class="chev"></span></button>
+        <div class="footer-col-links">
+          <a href="#" class="footer-link">Contact Us</a>
+        </div>
       </div>
       <div class="footer-col footer-col-social">
-        <div class="footer-social-row">
-          <a href="#" class="footer-social" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.27c-.97 0-1.75-.79-1.75-1.76s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.76-1.75 1.76zm13.5 11.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.88v1.36h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.59v5.61z"/></svg>
-          </a>
+        <div class="footer-col-title">Follow Us</div>
+        <div class="footer-col-links">
+          <div class="footer-social-row">
+            <a href="#" class="footer-social" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.27c-.97 0-1.75-.79-1.75-1.76s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.76-1.75 1.76zm13.5 11.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.88v1.36h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.59v5.61z"/></svg>
+            </a>
+          </div>
+          <p class="footer-note">Organised by the Department of Digital Medicine, University of Bern.</p>
         </div>
-        <p class="footer-note">Organised by the Department of Digital Medicine, University of Bern.</p>
       </div>
     </div>
   </footer>
 
   <script>
+
+    // Mobile menu
+    function openMobileMenu() {
+      document.getElementById('mobileMenu').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMobileMenu() {
+      document.getElementById('mobileMenu').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Footer dropdowns
+    function toggleFooterCol(id) {
+      const col = document.getElementById(id);
+      if (col) col.classList.toggle('open');
+    }
+
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 20);
