@@ -39,7 +39,7 @@
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -293,7 +293,7 @@
     }
 
     .speakers-title {
-      font-size: clamp(28px, 3.5vw, 46px);
+      font-size: clamp(32px, 4.2vw, 56px);
       font-weight: 800;
       color: #1a1a2e;
       text-align: center;
@@ -301,7 +301,7 @@
     }
 
     .speakers-sub {
-      font-size: 16px;
+      font-size: 17px;
       line-height: 1.75;
       color: #3a3a4a;
       text-align: center;
@@ -366,7 +366,7 @@
       box-sizing: border-box;
 
       border: 1px solid rgba(245, 157, 15, 0.12);
-      transition: background .18s ease, border-color .18s ease;
+      transition: background .18s ease, border-color .18s ease; /* no zoom */
       position: relative;
     }
 
@@ -393,7 +393,8 @@
       object-position: 50% 10%;
       transform-origin: 50% 15%;
       display: block;
-      transform: scale(1.15);
+      transform: scale(1);
+      transition: none;
     }
 
     .speaker-name {
@@ -435,7 +436,7 @@
     }
 
     .intro-title {
-      font-size: clamp(32px, 4vw, 56px);
+      font-size: clamp(36px, 4.5vw, 62px);
       font-weight: 700;
       line-height: 1.15;
       text-align: center;
@@ -518,7 +519,7 @@
       box-sizing: border-box;
     }
     .highlights-title {
-      font-size: clamp(28px, 3.5vw, 44px);
+      font-size: clamp(32px, 4vw, 52px);
       font-weight: 800;
       color: #1a1a2e;
       text-align: center;
@@ -589,7 +590,7 @@
       color: var(--gold);
       margin-bottom: 8px;
     }
-   .hl-name {
+    .hl-name {
   font-size: 22px;
   font-weight: 700;
   background: linear-gradient(90deg, #EB001E 0%, #F59D0F 100%);
@@ -1105,7 +1106,7 @@
     /* ── MOBILE FULL-SCREEN MENU ──────────────────────────── */
     .mobile-menu {
       display: none; position: fixed; inset: 0;
-      background: #0D0C1D; z-index: 300;
+      background: #0D0C1D; z-index: 1100;
       flex-direction: column; padding: 0 28px;
       overflow-y: auto;
     }
@@ -1113,7 +1114,7 @@
     .mobile-menu-top {
       display: flex; align-items: center;
       justify-content: space-between;
-      height: 68px; flex-shrink: 0;
+      height: 74px; flex-shrink: 0;
     }
     .mobile-menu-logo img { height: 28px; filter: brightness(0) invert(1); }
     .mobile-close {
@@ -1245,24 +1246,34 @@
       /* Keep the PAGE locked (no sideways pan/white gutters),
          but allow horizontal swipe inside the carousel */
       .speakers-carousel{
-        padding: 12px 0 12px 20px;
+        padding: 12px 0 12px 18px;
         overflow-x: auto;
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         scroll-snap-type: x mandatory;
-        scroll-padding-left: 20px;
+        scroll-padding-left: 18px;
         overscroll-behavior-x: contain;
       }
       .speakers-track{
         gap: 12px;
         width: max-content;
-        padding-right: 20px; /* breathing room at the end */
+        padding-right: 18px; /* breathing room at the end */
       }
+
+      /* Ai4-like: two cards visible + slight peek */
       .speaker-card{
         flex: 0 0 calc((100% - 12px) / 2);
+        padding: 8px 8px 10px;
+        border-radius: 14px;
         scroll-snap-align: start;
       }
-      .speaker-img{ height: 170px; margin-bottom: 12px; }
+
+      .speaker-img{ height: 150px; margin-bottom: 10px; border-radius: 12px; }
+      .speaker-img img{ transform: scale(1); transition: none; }
+
+      .speaker-name{ font-size: 16px; margin-bottom: 4px; }
+      .speaker-role{ font-size: 12.5px; margin-bottom: 6px; line-height: 1.35; }
+      .speaker-org{ font-size: 12.5px; } 
 
 /* Program */
       .program-inner { padding: 0 20px; }
@@ -1294,9 +1305,9 @@
       .highlights-title { font-size: 34px; text-align: center; }
 
       /* Bigger section titles */
-      .speakers-title { font-size: 34px; }
-      .sponsors-title { font-size: 30px; }
-      .program-title { font-size: 32px; }
+      .speakers-title { font-size: 40px; }
+      .sponsors-title { font-size: 34px; }
+      .program-title { font-size: 38px; }
 
       .highlights-sub { text-align: center; font-size: 15px; }
       .hl-card { flex: 0 0 84%; }
@@ -1333,7 +1344,6 @@
     }
     @media (max-width: 400px) {
       .hero-title { font-size: 30px; }
-      .speaker-card { flex: 0 0 88%; }
     }
   </style>
 </head>
@@ -1371,6 +1381,7 @@
       <div class="mobile-menu-logo">
         <img src="/mnt/user-data/uploads/DDM-Logo_Kurz-RGB-email_signature.png" alt="DDM"/>
       </div>
+      <button class="mobile-close" onclick="closeMobileMenu()" aria-label="Close menu"></button>
     </div>
     <ul class="mobile-nav-links">
       <li><a href="#about" onclick="closeMobileMenu()">About<span class="arr"></span></a></li>
