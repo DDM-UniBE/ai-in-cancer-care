@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
   <title>AI in Cancer Care Symposium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,6 +19,13 @@
       --white:      #FFFFFF;
       --muted:      rgba(255,255,255,0.65);
       --off-white:  #FAF9FF;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
     }
 
     body {
@@ -1063,13 +1070,29 @@
       align-items: center;
       justify-content: center;
       gap: 5px;
+      position: relative;
+      z-index: 400;
     }
     .hamburger span {
       display: block; height: 2.5px; border-radius: 2px; width: 22px;
+      transform-origin: center;
+      transition: transform 0.35s ease, opacity 0.25s ease, background 0.3s ease;
     }
     .hamburger span:nth-child(1) { background: #CC0000; }
     .hamburger span:nth-child(2) { background: #D94000; }
     .hamburger span:nth-child(3) { background: #F5820A; }
+    /* X state */
+    .hamburger.open span:nth-child(1) {
+      background: linear-gradient(90deg,#CC0000,#F5820A);
+      transform: translateY(7.5px) rotate(45deg);
+    }
+    .hamburger.open span:nth-child(2) {
+      opacity: 0; transform: scaleX(0);
+    }
+    .hamburger.open span:nth-child(3) {
+      background: linear-gradient(90deg,#F5820A,#CC0000);
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
 
     /* ── MOBILE FULL-SCREEN MENU ──────────────────────────── */
     .mobile-menu {
@@ -1187,13 +1210,13 @@
       .hero-theme { font-size: 18px; text-align: center; font-weight: 600; }
       .hero-cta-group {
         flex-direction: column; align-items: center;
-        padding: 20px 20px; gap: 16px;
-        border-radius: 20px; width: 100%; max-width: 340px;
+        padding: 24px 24px; gap: 18px;
+        border-radius: 24px; width: 100%; max-width: 400px;
       }
       .cta-bar { display: none; }
       .cta-left { align-items: center; }
       .cta-meta { text-align: center; }
-      .btn-cta { width: auto; text-align: center; font-size: 16px; padding: 13px 32px; }
+      .btn-cta { width: 100%; text-align: center; font-size: 17px; padding: 16px 32px; border-radius: 50px; }
 
       /* Intro */
       .intro-inner { padding: 0 20px; }
@@ -1202,13 +1225,33 @@
       .intro-img-stack { display: none; }
       .intro-title { font-size: clamp(28px,7vw,40px); }
 
-      /* Speakers — 1 card + peek of next */
-      .speakers-inner { padding: 0 0 0 16px; }
-      .speaker-card { flex: 0 0 76%; }
-      .carousel-arrow { font-size: 26px; padding: 0 2px; }
-      #speakersCarousel { overflow: visible; }
+      /* Speakers — swipe-only on mobile */
+      .speakers-inner { padding: 0; }
+      .speakers-carousel-wrap { gap: 0; }
+      .carousel-arrow { display: none; }
 
-      /* Program */
+      /* Keep the PAGE locked (no sideways pan/white gutters),
+         but allow horizontal swipe inside the carousel */
+      .speakers-carousel{
+        padding: 12px 0 12px 20px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        scroll-padding-left: 20px;
+        overscroll-behavior-x: contain;
+      }
+      .speakers-track{
+        gap: 12px;
+        width: max-content;
+        padding-right: 20px; /* breathing room at the end */
+      }
+      .speaker-card{
+        flex: 0 0 72%;
+        scroll-snap-align: start;
+      }
+
+/* Program */
       .program-inner { padding: 0 20px; }
       .program-title { font-size: 30px; }
       .program-scroll { max-height: 340px; }
@@ -1234,10 +1277,10 @@
       /* Highlights */
       .highlights { padding: 40px 0 32px; }
       .highlights-inner { padding: 0 16px; }
-      .highlights-title { font-size: 32px; text-align: center; }
+      .highlights-title { font-size: 34px; text-align: center; }
 
       /* Bigger section titles */
-      .speakers-title { font-size: 32px; }
+      .speakers-title { font-size: 34px; }
       .sponsors-title { font-size: 30px; }
       .program-title { font-size: 32px; }
 
@@ -1303,7 +1346,7 @@
       <li><a href="#contact">Contact</a></li>
       <li><a href="#" class="btn-register">Register Now</a></li>
     </ul>
-    <button class="hamburger" onclick="openMobileMenu()" aria-label="Open menu">
+    <button class="hamburger" onclick="this.classList.contains('open') ? closeMobileMenu() : openMobileMenu()" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
   </nav>
@@ -1314,7 +1357,6 @@
       <div class="mobile-menu-logo">
         <img src="/mnt/user-data/uploads/DDM-Logo_Kurz-RGB-email_signature.png" alt="DDM"/>
       </div>
-      <button class="mobile-close" onclick="closeMobileMenu()" aria-label="Close"></button>
     </div>
     <ul class="mobile-nav-links">
       <li><a href="#about" onclick="closeMobileMenu()">About<span class="arr"></span></a></li>
@@ -1694,10 +1736,12 @@
     // Mobile menu
     function openMobileMenu() {
       document.getElementById('mobileMenu').classList.add('open');
+      document.querySelector('.hamburger').classList.add('open');
       document.body.style.overflow = 'hidden';
     }
     function closeMobileMenu() {
       document.getElementById('mobileMenu').classList.remove('open');
+      document.querySelector('.hamburger').classList.remove('open');
       document.body.style.overflow = '';
     }
 
@@ -1920,15 +1964,33 @@
     setInterval(() => slideHighlights(1), 4000);
     window.addEventListener('resize', updateHighlights);
 
-    // Touch swipe — Speakers
+    // Touch swipe — Speakers (smooth live drag)
     (function() {
-      const el = document.getElementById('speakersCarousel');
-      if (!el) return;
-      let sx = 0;
-      el.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
-      el.addEventListener('touchend', e => {
+      const track = document.getElementById('speakersTrack');
+      if (!track) return;
+      let sx = 0, startOffset = 0, dragging = false;
+      function getOffset() {
+        const m = track.style.transform.match(/translateX\((-?[\d.]+)px\)/);
+        return m ? parseFloat(m[1]) : 0;
+      }
+      track.addEventListener('touchstart', e => {
+        sx = e.touches[0].clientX;
+        startOffset = getOffset();
+        dragging = true;
+        track.style.transition = 'none';
+      }, { passive: true });
+      track.addEventListener('touchmove', e => {
+        if (!dragging) return;
+        const dx = e.touches[0].clientX - sx;
+        track.style.transform = `translateX(${startOffset + dx}px)`;
+      }, { passive: true });
+      track.addEventListener('touchend', e => {
+        if (!dragging) return;
+        dragging = false;
+        track.style.transition = 'transform 0.4s ease';
         const dx = e.changedTouches[0].clientX - sx;
         if (Math.abs(dx) > 40) slideCarousel(dx < 0 ? 1 : -1);
+        else { track.style.transform = `translateX(${startOffset}px)`; }
       }, { passive: true });
     })();
 
