@@ -4,2278 +4,1731 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI in Cancer Care Symposium</title>
-
-<style>
-/* ==========================
-   VARIABLES
-========================== */
-:root{
-  --bg: #ffffff;
-  --text: #ffffff;             /* used in hero/nav */
-  --nav-solid: #0f0f36;
-  --accent: #eb001e;
-  --cta: #eb001e;
-  --orange: #ffb463;
-
-  /* Glass pill */
-  --pill-bg: rgba(20, 18, 45, 0.22);
-  --pill-border: rgba(219, 92, 8, 0.45);
-}
-
-/* ==========================
-   BASE
-========================== */
-*{ box-sizing: border-box; }
-html, body{ height: 100%; }
-
-body{
-  margin: 0;
-  font-family: "Montserrat", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  letter-spacing: .02em; /* subtle global spacing */
-}
-
-/* Shared container */
-.container{
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-
-/* ==========================
-   NAV (transparent -> solid on scroll)
-========================== */
-.nav{
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  z-index: 1000;
-  padding: 18px 0;
-  background: transparent;
-  transition: background .25s ease, box-shadow .25s ease;
-}
-
-.nav.is-solid{
-  background: var(--nav-solid);
-  box-shadow: 0 8px 30px rgba(0,0,0,.35);
-}
-
-.nav__container{
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-}
-
-/* Brand */
-.nav-brand{
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  line-height: 1.1;
-}
-
-.nav-brand__title{
-  font-weight: 650;
-  font-size: 18px;
-  color: #fff;
-}
-
-.nav-brand__subtitle{
-  font-weight: 500;
-  font-size: 13px;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.72);
-}
-
-/* Right links (desktop) */
-.nav__right{
-  display: flex;
-  align-items: center;
-  gap: 26px;
-  flex-wrap: nowrap;
-}
-
-.nav__right a{
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  color: #fff;
-  font-weight: 600;
-  font-size: 15px;
-  opacity: .95;
-  padding: 6px 2px;
-  transition: color .2s ease, opacity .2s ease;
-}
-
-.nav__right a:not(.nav__btn):hover{
-  color: var(--orange);
-  opacity: 1;
-}
-
-/* CTA */
-.nav__btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 28px;
-  border-radius: 999px;
-  background: #eb001e;
-  color: #fff;
-  font-weight: 600;
-  font-size: 15px;
-  white-space: nowrap;
-  transition: opacity .2s ease;
-}
-
-.nav__btn:hover{
-  background: #fff;
-  color: var(--cta);
-}
-
-/* ==========================
-   MOBILE NAV (Hamburger + overlay)
-========================== */
-.brand-short{ display: none; }
-
-.nav__toggle{
-  display: none;
-  width: 54px;
-  height: 54px;
-  border: 0;
-  background: rgba(255,255,255,.08);
-  cursor: pointer;
-  padding: 12px;
-  border-radius: 999px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  position: relative;
-  z-index: 1101;
-}
-
-.nav__toggle span{
-  position: absolute;
-  left: 50%;
-  width: 26px;
-  height: 2px;
-  border-radius: 2px;
-  transform: translateX(-50%);
-  background: linear-gradient(90deg, #eb001e, #f59d0f);
-  transition: top .2s ease, transform .2s ease, opacity .2s ease;
-}
-
-.nav__toggle span:nth-child(1){ top: 20px; }
-.nav__toggle span:nth-child(2){ top: 27px; }
-.nav__toggle span:nth-child(3){ top: 34px; }
-
-.nav.is-open .nav__toggle span:nth-child(1){
-  top: 27px;
-  transform: translateX(-50%) rotate(45deg);
-}
-.nav.is-open .nav__toggle span:nth-child(2){ opacity: 0; }
-.nav.is-open .nav__toggle span:nth-child(3){
-  top: 27px;
-  transform: translateX(-50%) rotate(-45deg);
-}
-
-/* ==========================
-   HERO
-========================== */
-.hero{
-  position: relative;
-  min-height: 62vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding-top: 90px; /* room for nav */
-}
-
-.hero__frame{
-  width: min(1320px, 92vw);
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
-  padding: 90px 0 70px;
-}
-
-.hero__bg{
-  position: absolute;
-  inset: 0;
-  background-image: url("assets/hero.jpeg");
-  background-size: cover;
-  background-position: center 20%;
-  transform: scale(1.03);
-  filter: saturate(1.05) contrast(1.05);
-}
-
-.hero::before{
-  content:"";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg,
-      rgba(7,10,24,.18) 0%,
-      rgba(7,10,24,.36) 55%,
-      rgba(7,10,24,.56) 100%),
-    linear-gradient(90deg,
-      rgba(7,10,24,.45) 0%,
-      rgba(7,10,24,.22) 55%,
-      rgba(7,10,24,.20) 100%);
-  z-index: 1;
-}
-
-.hero__content{
-  max-width: 760px;
-  padding: 110px 0 70px;
-}
-
-.hero h1{
-  font-weight: 700;
-  font-size: clamp(64px, 6vw, 108px);
-  line-height: 1.06;
-  letter-spacing: -0.02em;
-  margin: 0 0 44px;
-  max-width: 32ch;
-  text-wrap: balance;
-}
-
-/* Pill (glass) */
-.hero__pill{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 26px 40px;
-  border-radius: 999px;
-  width: fit-content;
-  max-width: 100%;
-  background: var(--pill-bg);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1px solid var(--pill-border);
-}
-
-.pill__left{
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  min-width: 0;
-}
-
-.pill__bar{
-  width: 4px;
-  height: 36px;
-  border-radius: 4px;
-  background: linear-gradient(180deg, #eb001e, #f59d0f);
-  flex: 0 0 auto;
-}
-
-.pill__text{
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-}
-
-.pill__text strong,
-.pill__text span{
-  font-size: 13px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--orange);
-}
-
-.pill__text span{ letter-spacing: .16em; }
-
-.pill__btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 28px;
-  border-radius: 999px;
-  background: var(--accent);
-  color: #fff;
-  text-decoration: none;
-  font-weight: 550;
-  font-size: 14px;
-  white-space: nowrap;
-  transition: background .2s ease, color .2s ease;
-}
-
-.pill__btn:hover{
-  background: #fff;
-  color: #101226;
-}
-
-/* ==========================
-   SECTION (About)
-========================== */
-.section{
-  padding: 70px 0;
-  background: #fbf6f2;
-  color: #0b1020;
-}
-
-.section h2{
-  margin: 0 auto 24px;
-  text-align: center;
-  font-size: clamp(34px, 3vw, 54px);
-  line-height: 1.2;
-  font-weight: 800;
-  color: #051321;
-  max-width: 20ch;
-}
-
-.section p{
-  margin: 0;
-  max-width: 70ch;
-  font-size: 18px;
-  line-height: 1.5;
-  color: rgb(10,10,10);
-}
-
-.section-grid{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 44px;
-  align-items: center;
-  margin-top: 34px;
-}
-
-.section-text{ max-width: 60ch; }
-
-.section-images{
-  display: grid;
-  gap: 20px;
-}
-
-.gradient-text{
-  display: inline-block;
-  background: linear-gradient(90deg, #eb001e, #f59d0f);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-}
-
-/* ==========================
-   SPEAKERS
-========================== */
-.speakers-section{
-  background: #ffffff;
-  color: #0b1020;
-  padding: 55px 0 30px;
-}
-
-.speakers-title{
-  margin: 0;
-  text-align: center;
-  font-size: clamp(28px, 2.4vw, 40px);  /* smaller */
-  line-height: 1.2;
-  font-weight: 700;                    /* less heavy */
-  letter-spacing: -0.01em;
-  color: #051321;
-}
-
-.speakers-subtitle{
-  margin: 18px auto 0;
-  text-align: center;
-  max-width: 64ch;
-  font-size: 15px;           /* smaller */
-  line-height: 1.6;
-  color: rgba(11,16,32,.75); /* softer */
-}
-
-/* Carousel wrapper */
-.speakers-carousel{
-  position: relative;
-  margin-top: 30px;
-}
-
-.carousel-viewport{
-  overflow: hidden;
-  border-radius: 18px;
-}
-
-.carousel-track{
-  display: flex;
-  gap: 18px;          /* tightened */
-  transition: transform .35s ease;
-  will-change: transform;
-  padding: 8px 4px;   /* tightened */
-}
-
-/* Speaker card */
-.speaker-card{
-  flex: 0 0 calc((100% - (24px * 3)) / 4);
-  min-width: 0;
-  background: #fbf7f6;
-  border-radius: 16px;
-  padding: 18px;
-  min-height: unset;
-  border: 2px solid transparent;
-  transition: background .25s ease, opacity .2s ease, transform .2s ease;
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-}
-
-.speaker-card:hover{
-  background:
-    linear-gradient(#fbf7f6, #fbf7f6) padding-box,
-    linear-gradient(180deg, #eb001e, #f59d0f) border-box;
-}
-
-.speaker-photo{
-  background: #d2cbc6;
-  border-radius: 12px;
-  overflow: hidden;
-  aspect-ratio: 4 / 3;
-height: 280px; 
-}
-
-.speaker-photo img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 18%;
-  display: block;
-}
-
-.speaker-name{
-  margin: 16px 0 6px;
-  font-size: 18px;
-  font-weight: 600;
-  background: linear-gradient(90deg, #eb001e, #8b0000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-}
-
-.speaker-role{
-  margin: 0 0 10px;
-  font-size: 14px;
-  color: rgba(11,16,32,.78);
-}
-
-.speaker-org{
-  margin: 0;
-  font-size: 14px;
-  font-weight: 700;
-  color: #0b1020;
-}
-
-/* Speakers arrows */
-.speakers-btn{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  width: 54px;
-  height: 54px;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  z-index: 5;
-  opacity: 1;
-}
-
-.speakers-btn svg{ width: 34px; height: 34px; }
-.speakers-btn svg path{ stroke: #eb001e; stroke-width: 2.4; }
-.speakers-btn:hover{ opacity: .75; }
-
-.speakers-btn.prev{ left: -60px; }
-.speakers-btn.next{ right: -60px; }
-
-/* Click-to-expand details behaviour */
-.speakers-carousel.has-active .speaker-card{ opacity: .35; }
-
-.speakers-carousel.has-active .speaker-card.is-active{
-  opacity: 1 !important;
-  transform: translateY(-2px);
-  background:
-    linear-gradient(#fbf7f6, #fbf7f6) padding-box,
-    linear-gradient(180deg, #eb001e, #f59d0f) border-box;
-}
-
-/* Details below carousel (text only) */
-.speaker-details{
-  margin-top: 36px;
-  display: none;
-  max-width: 100%;
-}
-
-.speaker-details.is-open{ display: block; }
-
-.speaker-details__inner{
-  max-width: 100%;
-  padding: 0 6px;
-}
-
-.speaker-details__name{
-  margin: 0 0 8px;
-  font-size: 22px;
-  font-weight: 700;
-  color: #051321;
-}
-
-.speaker-details__meta{
-  margin: 0 0 14px;
-  font-size: 15px;
-  color: rgba(11,16,32,.75);
-}
-
-.speaker-details__bio{
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.6;
-  color: rgba(11,16,32,.85);
-  max-width: 80ch;
-}
-
-/* Generic carousel arrows (used elsewhere) */
-.carousel-btn{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 5;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  width: 64px;
-  height: 64px;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  cursor: pointer;
-}
-
-.carousel-btn.prev{ left: -56px; }
-.carousel-btn.next{ right: -56px; }
-
-.carousel-btn svg{ width: 40px; height: 40px; }
-.carousel-btn:hover{ opacity: .8; }
-
-/* ==========================
-   SPONSORS / PARTNERS
-========================== */
-.sponsors-section{
-  background: #ffffff;
-  color: #0b1020;
-  padding: 55px 0;
-}
-
-.sponsors-title{
-  margin: 0;
-  text-align: center;
-  font-size: clamp(34px, 3vw, 54px);
-  line-height: 1.1;
-  font-weight: 800;
-  color: #051321;
-}
-
-.sponsors-subtitle{
-  margin: 14px auto 0;
-  text-align: center;
-  max-width: 70ch;
-  font-size: 18px;
-  line-height: 1.5;
-  color: rgb(10,10,10);
-}
-
-/* Tabs (text only) */
-.sponsors-tabs{
-  margin-top: 24px;
-  display: flex;
-  justify-content: center;
-  gap: 34px;
-}
-
-.sponsors-tab{
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  padding: 10px 0;
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,.62);
-  position: relative;
-  transition: color .2s ease;
-}
-
-.sponsors-tab:hover{ color: rgba(11,16,32,.85); }
-.sponsors-tab.is-active{ color: #14124b; }
-
-.sponsors-tab.is-active::after{
-  content:"";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -10px;
-  height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #eb001e, #f59d0f);
-}
-
-/* Panels */
-.sponsors-panels{ margin-top: 34px; }
-
-.coming-soon{
-  text-align: center;
-  font-size: 18px;
-  color: rgba(11,16,32,.6);
-  font-weight: 500;
-  margin-top: 40px;
-}
-
-#panel-sponsors{ text-align: center; }
-
-.sponsor-cta{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin: 28px auto 0;
-  padding: 14px 36px;
-  background: #eb001e;
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 16px;
-  text-decoration: none;
-  border-radius: 999px;
-  transition: opacity .2s ease;
-}
-
-
-.sponsor-cta:hover{
-  opacity: .92;      /* optional */
-  transform: none;   /* ✅ no lift */
-  box-shadow: none;  /* ✅ no shadow */
-}
-
-/* Logos (flex-wrap) */
-.logos-grid{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 18px 28px;
-  max-width: 1100px;
-  margin: 32px auto 0;
-}
-
-.logo-link{
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 120px;
-  padding: 10px 16px;
-  text-decoration: none;
-  transition: transform .2s ease, opacity .2s ease;
-}
-
-.logo-link:hover{
-  transform: translateY(-3px);
-  opacity: 1;
-}
-
-.logo-link img{
-  display: block;
-  height: 130px;
-  width: auto;
-  max-width: 260px;
-  object-fit: contain;
-}
-
-/* If you want to hide sponsor logos by default inside sponsor panel */
-#panel-sponsors .logos-grid{ display: none; }
-
-/* ==========================
-   HIGHLIGHTS
-========================== */
-.highlights-section{
-  padding: 60px 0;
-  background: #fbf6f2;
-  color: #0b1020;
-}
-
-.highlights-title{
-  margin: 0;
-  text-align: center;
-  font-size: clamp(34px, 3vw, 54px);
-  line-height: 1.1;
-  font-weight: 800;
-  color: #051321;
-}
-
-.highlights-subtitle{
-  margin: 18px auto 0;
-  text-align: center;
-  max-width: 70ch;
-  color: rgb(10,10,10);
-  font-size: 18px;
-  line-height: 1.55;
-}
-
-.highlights-carousel{
-  margin-top: 30px;
-  position: relative;
-}
-
-.highlights-viewport{
-  overflow: hidden;
-  padding: 10px 0;
-}
-
-.highlights-track{
-  display: flex;
-  gap: 34px;
-  transition: transform .45s ease;
-  will-change: transform;
-  align-items: stretch;
-  padding: 0 6px;
-}
-
-.highlight-card{
-  flex: 0 0 calc((100% - (34px * 2)) / 3);
-  background: #ffffff;
-  border-radius: 16px;
-  overflow: hidden;
-  border: none;
-  box-shadow: none;
-}
-
-.highlight-image{
-  height: 190px;
-  overflow: hidden;
-}
-
-.highlight-image img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.highlight-content{
-  position: relative;
-  margin: -26px 18px 18px;
-  padding: 22px 22px 24px;
-  background: #fff;
-  border-radius: 14px;
-}
-
-.highlight-tag{
-  display: inline-block;
-  font-size: 12px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  font-weight: 800;
-  color: rgba(11,16,32,.55);
-}
-
-.highlight-card h3{
-  margin: 10px 0 10px;
-  font-size: 24px;
-  line-height: 1.15;
-  font-weight: 600;
-  background: linear-gradient(90deg, #eb001e, #8b0000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.highlight-card p{
-  margin: 0;
-  color: rgba(11,16,32,.78);
-  line-height: 1.65;
-  font-size: 16px;
-}
-
-/* Highlights arrows */
-.highlights-btn{
-  position: absolute;
-  top: 52%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  width: 54px;
-  height: 54px;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  z-index: 5;
-  opacity: 1;
-}
-
-.highlights-btn svg{ width: 34px; height: 34px; }
-.highlights-btn svg path{ stroke: #eb001e; stroke-width: 2.4; }
-.highlights-btn.prev{ left: -60px; }
-.highlights-btn.next{ right: -60px; }
-.highlights-btn:hover{ opacity: .75; }
-
-/* Dots */
-.highlights-dots{
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-  margin-top: 34px;
-}
-
-.highlights-dots button{
-  width: 14px;
-  height: 14px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(11,16,32,.18);
-  cursor: pointer;
-  transition: transform .2s ease, background .2s ease;
-}
-
-.highlights-dots button.active{
-  background: #eb001e;
-  transform: scale(1.12);
-}
-
-/* ==========================
-   FOOTER
-========================== */
-.site-footer{
-  background: #051321;
-  color: #ffffff;
-  padding: 80px 0 40px;
-  margin-top: 80px;
-  position: relative;
-}
-
-.site-footer::before{
-  content:"";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, #eb001e, #f59d0f);
-}
-
-.footer-grid{
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 60px;
-}
-
-.footer-col h4{
-  margin: 0 0 16px;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.footer-col h5{
-  margin: 0 0 18px;
-  font-size: 15px;          /* slightly stronger presence */
-  letter-spacing: .02em;    /* much less spacing */
-  text-transform: none;     /* remove ALL CAPS */
-  font-weight: 700;         /* bolder */
-  color: #ffffff;           /* stronger contrast */
-}
-
-.footer-col p{
-  margin: 0;
-  line-height: 1.6;
-  color: rgba(255,255,255,.7);
-}
-
-.footer-col a{
-  display: block;
-  margin-bottom: 12px;
-  text-decoration: none;
-  color: rgba(255,255,255,.75);
-  font-weight: 500;
-  transition: color .2s ease; /* only colour */
-}
-
-.footer-col a:hover{
-  color: #f59d0f;
-  transform: none; /* ✅ no slide */
-}
-
-.footer-highlight{
-  color: var(--accent);
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-/* Force specific links to stay red */
-a.contact-link,
-a.sponsor-link{
-  color: #eb001e !important;
-}
-
-a.contact-link:hover,
-a.sponsor-link:hover{
-  color: #eb001e !important;
-  opacity: .92; /* optional */
-}
-/* Footer red text links (no button look) */
-.footer-action{
-  display: block;
-  margin-top: 14px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #eb001e;
-  text-decoration: none;
-  transition: opacity .2s ease;
-}
-
-.site-footer .footer-action{
-  font-weight: 600;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  text-decoration: none;
-
-  background: linear-gradient(90deg, #eb001e, #f59d0f);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-
-  transition: opacity .2s ease;
-}
-
-.site-footer .footer-action:hover{
-  opacity: .75;
-}
-
-.footer-action:hover{
-  opacity: .75;
-}
-
-
-/* ==========================
-   RESPONSIVE
-========================== */
-@media (min-width: 1100px){
-  .hero__content{ max-width: 980px; }
-  .hero h1{ max-width: 40ch; }
-}
-
-@media (max-width: 1100px){
-  .speaker-card{
-    flex-basis: calc((100% - (24px * 2)) / 3);
-  }
-  .carousel-btn.prev{ left: -18px; }
-  .carousel-btn.next{ right: -18px; }
-
-  .highlight-card{
-    flex: 0 0 calc((100% - 34px) / 2);
-  }
-  .highlights-btn.prev{ left: -24px; }
-  .highlights-btn.next{ right: -24px; }
-}
-
-@media (max-width: 980px){
-  .section-grid{
-    grid-template-columns: 1fr;
-    gap: 40px;
-    margin-top: 22px;
-  }
-  .section h2{ max-width: 26ch; }
-  .section-text{ max-width: 100%; }
-}
-
-/* Mobile nav + spacing */
-@media (max-width: 820px){
-  .nav__container{ padding: 0 24px; }
-  .nav__toggle{ display: block; }
-  .brand-full{ display: none; }
-  .brand-short{ display: inline; }
-  .nav-brand__subtitle{ display: none; }
-
-  body.nav-locked{
-    overflow: hidden;
-    touch-action: none;
-  }
-
-  .nav__right{
-    position: fixed;
-    inset: 0;
-    display: none;
-    flex-direction: column;
-    padding: 110px 24px 28px;
-    gap: 24px;
-    background: var(--nav-solid);
-    z-index: 1100;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .nav.is-open .nav__right{ display: flex; }
-
-  .nav.is-open{
-    background: var(--nav-solid);
-    box-shadow: none;
-  }
-
-  .nav__right a{
-    font-size: 26px;
-    font-weight: 600;
-    padding: 12px 0;
-    opacity: 1;
-  }
-
-  .nav__right a:not(.nav__btn):hover{
-    background: transparent;
-    color: #fff;
-  }
-
-  /* CTA as text item in overlay */
-  .nav__right .nav__btn{
-    width: fit-content;
-    padding: 0;
-    background: transparent;
-    color: #fff;
-    font-size: 26px;
-    font-weight: 600;
-    border-radius: 0;
-  }
-  .nav__right .nav__btn:hover{
-    background: transparent;
-    color: #fff;
-  }
-
-  /* Tighten section paddings */
-  .section{ padding: 44px 0; }
-  .speakers-section{ padding: 40px 0 22px; }
-  .sponsors-section{ padding: 40px 0 44px; }
-  .highlights-section{ padding: 44px 0; }
-
-  .section p{
-    font-size: 17px;
-    line-height: 1.55;
-  }
-
-  .speakers-subtitle,
-  .sponsors-subtitle,
-  .highlights-subtitle{
-    font-size: 17px;
-    line-height: 1.5;
-    max-width: 48ch;
-    margin-top: 10px;
-  }
-
-  /* Speakers: swipe + peek */
-  .speakers-carousel .carousel-viewport{
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x proximity;
-    overscroll-behavior-x: contain;
-    padding-right: 48px
-    scrollbar-width: none;
-  }
-  .speakers-carousel .carousel-viewport::-webkit-scrollbar{ display: none; }
-
-  .speakers-carousel .carousel-track{
-    padding-left: 0;
-    padding-top: 5px;
-  }
-
-  .speakers-carousel .speaker-card{
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    flex: 0 0 72%; 
-    min-height: 380px;
-    padding: 16px;
-  }
-
-  .speakers-btn.prev{ left: -12px; }
-  .speakers-btn.next{ right: -12px; }
-
-  .speaker-photo{ height: 250px; }
-  .speaker-photo img{ object-position: 50% 10%; }
-
-  /* Footer */
-  .footer-grid{
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  .site-footer{ padding: 60px 0 30px; }
-
-  /* Logos */
-  .logos-grid{ gap: 14px 18px; }
-  .logo-link{ height: 100px; }
-  .logo-link img{ height: 72px; max-width: 220px; }
-}
-
-@media (max-width: 640px){
-  .hero{ min-height: 82vh; }
-
-  .hero h1{
-    font-size: 42px;
-    line-height: 1.1;
-    max-width: 18ch;
-  }
-
-  .hero__pill{
-    width: 100%;
-    border-radius: 22px;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px 22px;
-  }
-
-  .pill__btn{
-    width: auto;
-    align-self: center;
-    padding: 16px 38px;
-    font-size: 17px;
-    font-weight: 600;
-  }
-
-  /* Page padding */
-  .container{
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  .nav__container{
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  .hero__frame{
-    width: calc(100vw - 36px);
-  }
-
-  /* Highlights: one card */
-  .highlight-card{ flex: 0 0 100%; }
-  .highlights-btn.prev{ left: -12px; }
-  .highlights-btn.next{ right: -12px; }
-}
-
-@media (max-width: 520px){
-  /* If you WANT carousel arrows visible on very small screens */
-  .carousel-btn{
-    display: grid;
-    width: 44px;
-    height: 44px;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: .95;
-    background: rgba(255,255,255,.72);
-    border-radius: 999px;
-  }
-  .carousel-btn.prev{ left: 2px; }
-  .carousel-btn.next{ right: 2px; }
-
-  .carousel-btn svg{ width: 26px; height: 26px; }
-  .carousel-btn svg path{ stroke: #051321; stroke-width: 2.4; }
-}
-
-/* ==========================
-   NAV: force Register button padding everywhere
-   (paste at VERY END)
-========================== */
-
-.nav .nav__right .nav__btn{
-  padding: 12px 30px !important;
-  border-radius: 999px !important;
-  background: #eb001e !important;
-  color: #fff !important;
-  font-weight: 700 !important;
-  letter-spacing: .02em !important;
-  text-transform: none !important;
-  line-height: 1 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-/* Optional: keep it a touch smaller inside the full-screen mobile menu */
-@media (max-width: 820px){
-  .nav.is-open .nav__right .nav__btn{
-    padding: 14px 34px !important;
-  }
-}
-
-/* ==========================
-    NAV (override)
-   paste at END of CSS
-========================== */
-
-/* more spacing between links */
-.nav__right{
-  gap: 42px !important; /* increase spacing */
-}
-
-/* links: not uppercase, slightly smaller, more letter spacing */
-.nav__right a:not(.nav__btn){
-  font-size: 13px !important;
-  font-weight: 600 !important;
-  letter-spacing: .06em !important;
-  text-transform: none !important;  /* ✅ keep normal case */
-  opacity: .92 !important;
-  padding: 10px 0 !important;
-}
-
-/* CTA in nav: less heavy, slightly bigger */
-.nav .nav__right .nav__btn{
-  font-size: 13px !important;
-  font-weight: 600 !important;      /* less heavy */
-  letter-spacing: .04em !important;
-  text-transform: none !important;  /* keep normal case if you want */
-  padding: 12px 26px !important;
-}
-
-
-/* ==========================
-   HERO: stop wrapping + more left padding
-========================== */
-
-/* Give hero content more inset on the left */
-.hero__content{
-  max-width: 980px !important;
-  padding-left: 96px !important;    
-}
-
-/* Remove the “max-width: 32ch” behaviour that forces wrapping */
-.hero h1{
-  max-width: none !important;       /* ✅ stops early wrap */
-  font-size: clamp(50px, 5.2vw, 96px) !important;
-  line-height: 1.08 !important;
-  letter-spacing: -0.015em !important;
-  margin-bottom: 26px !important;
-}
-
-
-/* ==========================
-   HERO PILL: smaller pill, bigger/lighter button
-========================== */
-
-.hero__pill{
-  padding: 16px 20px !important;    /* smaller than yours */
-  gap: 16px !important;
-}
-
-.pill__text strong,
-.pill__text span{
-  font-size: 12px !important;
-  letter-spacing: .16em !important;
-}
-
-/* Button: bigger but lighter weight  */
-.pill__btn{
-  padding: 14px 26px !important;    /* bigger button */
-  font-size: 14px !important;
-  font-weight: 600 !important;      /* less heavy */
-  letter-spacing: .04em !important;
-}
-
-/* ==========================
-  NAV WIDTH + PLACEMENT (paste at VERY END)
-========================== */
-
-/* Wider container + smaller side padding (this is the big win) */
-.nav__container{
-  max-width: 1560px !important;              /* was 1300 */
-  padding-left: clamp(16px, 2vw, 28px) !important;  /* was 40 */
-  padding-right: clamp(16px, 2vw, 28px) !important;
-}
-
-/* Make sure the right side hugs the right edge */
-.nav__right{
-  margin-left: auto !important;
-  gap: 30px !important;                      /* was 42 */
-  flex-wrap: nowrap !important;
-}
-
-/* Trim link padding so the group takes less horizontal room */
-.nav__right a:not(.nav__btn){
-  padding: 8px 0 !important;                 /* was 10px 0 */
-}
-
-/* Keep CTA tight and ensure it’s the last thing on the right */
-.nav__btn{
-  margin-left: 10px !important;
-  padding: 12px 26px !important;
-}
-
-/* Slightly reduce nav vertical padding
-.nav{
-  padding: 14px 0 !important;                /* was 18 */
-}
-
-/* On very large screens, allow it to breathe even more (optional) */
-@media (min-width: 1600px){
-  .nav__container{
-    max-width: 1680px !important;
-  }
-}
-
-/* Mobile: keep your existing behaviour */
-@media (max-width: 820px){
-  .nav__container{
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-  .nav__right{
-    margin-left: 0 !important;
-    gap: 24px !important;
-  }
-}
-
-/* ==========================
-  NAV SPACING + HEIGHT (paste at VERY END)
-========================== */
-
-/* 1) Bar height*/
-.nav{
-  padding: 18px 0 !important;                 /* was 14/18 depending on your overrides */
-}
-
-
-.nav__container{
-  max-width: 1680px !important;               /* give it more room overall */
-  padding-left: clamp(28px, 3.4vw, 56px) !important;
-  padding-right: clamp(28px, 3.4vw, 56px) !important;
-}
-
-/* 3) More spacing between links + more space before the CTA */
-.nav__right{
-  margin-left: auto !important;
-  gap: 44px !important;                     
-  align-items: center !important;
-}
-
-/* 4) Make links a touch “airier” */
-.nav__right a:not(.nav__btn){
-  padding: 10px 0 !important;
-}
-
-/* 5) Extra separation specifically between last link and the button */
-.nav__right .nav__btn{
-  margin-left: 14px !important;               /* creates a clearer gap before CTA */
-  padding: 12px 28px !important;
-}
-
-/* Keep mobile behaviour unchanged */
-@media (max-width: 820px){
-  .nav__container{
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-  .nav__right{
-    gap: 24px !important;
-  }
-  .nav__right .nav__btn{
-    margin-left: 0 !important;
-  }
-}
-
-/* ==========================
-   NAV: taller bar
-   (paste at VERY END)
-========================== */
-
-/* Taller navbar */
-.nav{
-  padding: 22px 0 !important;   /* increase height */
-}
-
-/* Register button like Ai4 (slightly taller + wider) */
-.nav .nav__right .nav__btn{
-  height: 46px !important;      /* consistent pill height */
-  padding: 0 26px !important;   /* width */
-  font-size: 15px !important;   
-  font-weight: 600 !important;  /* less heavy */
-  border-radius: 999px !important;
-  line-height: 46px !important; /* vertical centering */
-}
-
-/* In case any older rules fight the line-height */
-.nav .nav__right .nav__btn{
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  line-height: 1 !important;    /* let flex center it */
-}
-
-/* HERO refined positioning */
-
-.hero{
-  min-height: 90vh;
-  padding-top: 100px; /* closer to nav */
-}
-
-/* Move hero slightly right but not too much */
-.hero__content{
-  margin-left: clamp(24px, 4vw, 70px);
-  margin-top: 100px; /* higher */
-  max-width: 1000px; /* allow natural width */
-}
-
-/* Headline */
-.hero h1{
-  font-size: clamp(52px, 5vw, 82px); /* smaller */
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: 28px;
-  max-width: none; /* remove forced wrapping */
-}
-
-/* ===== HERO: placement + centering (paste at VERY END) ===== */
-
-/* Let the hero content start higher (not vertically centered) */
-.hero{
-  min-height: 90vh;
-  padding-top: 84px !important;     /* keep room for fixed nav */
-  align-items: flex-start !important;
-}
-
-/* Reduce the huge top padding you currently have */
-.hero__frame{
-  padding: 64px 0 60px !important;  /* was 90px 0 70px */
-  width: min(1560px, 96vw) !important;
-}
-
-/* Center the block so it doesn’t feel “too right” */
-.hero__content{
-  margin: 0 auto !important;
-  max-width: 1120px !important;     /* give the headline room */
-  padding: 36px 0 0 !important;     /* was 110px 0 70px */
-  text-align: left !important;
-}
-
-
-/* Headline sizing + wrap control */
-.hero h1{
-  font-size: clamp(44px, 5.2vw, 86px) !important; /* smaller than now */
-  line-height: 1.06 !important;
-  margin: 0 0 26px !important;
-  max-width: 18.5ch !important;  /* controls where it breaks (nice 2-line look) */
-  text-wrap: balance;
-}
-
-/* Keep "Cancer Care" together */
-.nowrap{ white-space: nowrap; }
-
-</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple:     #7B52F4;
+      --purple-btn: #6B3FE0;
+      --gold:       #C8A96E;
+      --dark:       #0D0C1D;
+      --white:      #FFFFFF;
+      --muted:      rgba(255,255,255,0.65);
+      --off-white:  #FAF9FF;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 68px;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(13, 12, 29, 0.90);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo img {
+      height: 34px;
+      width: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 30px;
+      background: linear-gradient(180deg, transparent, var(--gold), transparent);
+    }
+
+    .brand-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .brand-meta strong {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+    .brand-meta span {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      list-style: none;
+    }
+
+    .nav-links li a {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 7px 18px;
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: color 0.2s;
+      letter-spacing: 0.2px;
+    }
+    .nav-links li a:hover { color: var(--gold); }
+
+    .nav-links li a svg {
+      width: 11px; height: 11px;
+      opacity: 0.55;
+    }
+
+    .btn-register {
+      background: linear-gradient(110deg,#CC0000,#F5820A) !important;
+      margin-left: 24px;
+      color: var(--white) !important;
+      padding: 10px 22px !important;
+      border-radius: 30px !important;
+      font-weight: 600 !important;
+      font-size: 14px !important;
+      box-shadow: 0 4px 16px rgba(204,0,0,0.35) !important;
+      transition: opacity 0.2s, transform 0.15s !important;
+    }
+    .btn-register:hover {
+      opacity: 0.88 !important;
+      transform: translateY(-1px) !important;
+    }
+
+    /* ── HERO ────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* background image */
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?w=1800&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(13, 12, 40, 0.82) 0%,
+        rgba(20, 15, 60, 0.70) 50%,
+        rgba(13, 12, 40, 0.78) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-tint {
+      position: absolute;
+      inset: 0;
+      background: rgba(60, 30, 180, 0.28);
+      mix-blend-mode: multiply;
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      transform: translateY(-52%);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 15%;
+      padding-right: 80px;
+    }
+
+    .hero-title {
+      font-size: clamp(48px, 5.5vw, 82px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      color: var(--white);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.15s forwards;
+    }
+
+    .hero-theme {
+      font-size: 20px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.70);
+      font-style: italic;
+      margin-bottom: 36px;
+      letter-spacing: 0.3px;
+    
+      opacity: 0;
+      animation: fadeUp 0.7s 0.25s forwards;
+    }
+    .hero-cta-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 55px;
+      padding: 15px 15px 15px 36px;
+      background: rgba(10, 8, 30, 0.65);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 80px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      width: fit-content;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.35s forwards;
+    }
+
+    .cta-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .cta-bar {
+      width: 3px;
+      height: 50px;
+      background: linear-gradient(to bottom,#CC0000,#F5820A);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .cta-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .cta-meta strong {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+    .cta-meta span {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .btn-cta {
+      background: linear-gradient(110deg,#CC0000,#F5820A);
+      color: var(--white);
+      border: none;
+      padding: 12px 36px;
+      font-size: 18px;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 4px 20px rgba(204,0,0,0.45);
+    }
+    .btn-cta:hover {
+      opacity: 0.88;
+      transform: scale(1.03);
+    }
+
+    /* ── SPEAKERS SECTION ──────────────────────────────── */
+    .speakers {
+      background: #FFFFFF;
+      padding: 80px 0;
+    }
+
+    .speakers-inner {
+      padding: 0 20px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .speakers-title {
+      font-size: clamp(28px, 3.5vw, 46px);
+      font-weight: 800;
+      color: #1a1a2e;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .speakers-sub {
+      font-size: 16px;
+      line-height: 1.75;
+      color: #3a3a4a;
+      text-align: center;
+      max-width: 980px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 52px;
+    }
+
+    .speakers-carousel-wrap{
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+    }
+
+    .carousel-arrow{
+      background: none;
+      border: none;
+      font-size: 44px;
+      color: #aaa;
+      cursor: pointer;
+      padding: 0 4px;
+      flex-shrink: 0;
+      opacity: 0.85;
+      transition: opacity 0.2s, color 0.2s;
+      line-height: 1;
+      user-select: none;
+
+      /* ensure arrows sit above the moving track and remain clickable */
+      position: relative;
+      z-index: 5;
+      pointer-events: auto;
+    }
+    .carousel-arrow:hover { opacity: 1; color: #CC0000; }
+
+    .speakers-carousel{
+      /* viewport */
+      position: relative;
+      overflow: hidden;
+      flex: 1;
+      z-index: 1;
+      padding: 20px 30px; 
+    }
+
+    .speakers-track{
+      display: flex;
+      gap: 12px;
+      will-change: transform;
+      transform: translateX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .speaker-card {
+      flex: 0 0 calc((100% - (12px * 5)) / 6); /* 6 cards on desktop */
+      min-width: 0;
+
+      /* warmer, less-white card */
+      background: #FFF9F4;
+      border-radius: 16px;
+      padding: 10px 10px 12px;
+      box-sizing: border-box;
+
+      border: 1px solid rgba(245, 157, 15, 0.12);
+      transition: background .18s ease, border-color .18s ease;
+      position: relative;
+    }
+
+    /* Gradient stroke on hover (red → orange) */
+    .speaker-card:hover{border: 1px solid transparent;
+      background:
+        linear-gradient(#FFF9F4, #FFF9F4) padding-box,
+        linear-gradient(180deg, #eb001e, #f59d0f) border-box;
+    }
+
+    .speaker-img {
+      width: 100%;
+      height: 200px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      background: #e7dfd6;
+    }
+
+    .speaker-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 10%;
+      transform-origin: 50% 15%;
+      display: block;
+      transform: scale(1.15);
+    }
+
+    .speaker-name {
+      font-size: 19px;
+      font-weight: 700;
+      background: linear-gradient(110deg, #CC0000, #F5820A);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 5px;
+      line-height: 1.3;
+    }
+
+    .speaker-role {
+      font-size: 14px;
+      color: #5a5a6a;
+      margin-bottom: 10px;
+      line-height: 1.45;
+    }
+
+    .speaker-org {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1a2e;
+    }
+
+    /* ── INTRO SECTION ──────────────────────────────────── */
+    .intro {
+      background: var(--off-white);
+      padding: 80px 0;
+      color: var(--text);
+    }
+
+    .intro-inner {
+      margin: 0 auto;
+      padding: 0 15% 0 15%;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .intro-title {
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 700;
+      line-height: 1.15;
+      text-align: center;
+      color: #1a1a2e;
+      margin-bottom: 60px;
+    }
+
+    .intro-title-gradient {
+      background: linear-gradient(110deg, #CC0000 0%, #F5820A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .intro-body {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .intro-text {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .intro-text p {
+      font-size: 16px;
+      line-height: 1.75;
+      color: #3a3a4a;
+    }
+
+    .intro-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      height: 400px;
+    }
+
+    .intro-img-large {
+      grid-row: 1 / 3;
+    }
+
+    .intro-img {
+      border-radius: 14px;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .intro-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .intro-img:hover img {
+      transform: scale(1.03);
+    }
+
+    .intro-img-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .intro-img-stack .intro-img {
+      flex: 1;
+    }
+
+    /* ── HIGHLIGHTS SECTION ──────────────────────────────── */
+    .highlights {
+      background: var(--off-white);
+      padding: 80px 0 60px;
+    }
+    .highlights-inner {
+      padding: 0 12%;
+      box-sizing: border-box;
+    }
+    .highlights-title {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 800;
+      color: #1a1a2e;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .highlights-sub {
+      font-size: 16px;
+      line-height: 1.75;
+      color: #3a3a4a;
+      text-align: center;
+      max-width: 980px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 48px;
+    }
+    .highlights-carousel-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hl-arrow {
+      background: none;
+      border: none;
+      font-size: 48px;
+      color: #aaa;
+      cursor: pointer;
+      padding: 0 4px;
+      flex-shrink: 0;
+      transition: color 0.2s;
+      user-select: none;
+      line-height: 1;
+    }
+    .hl-arrow:hover { color: #CC0000; }
+    .highlights-viewport {
+      flex: 1;
+      overflow: hidden;
+    }
+    .highlights-track {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.5s ease;
+    }
+    .hl-card {
+      flex: 0 0 calc((100% - 40px) / 3);
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .hl-img {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+    }
+    .hl-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hl-body {
+      padding: 22px 24px 26px;
+    }
+    .hl-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .hl-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #CC0000;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .hl-desc {
+      font-size: 14px;
+      color: #4a4a5a;
+      line-height: 1.65;
+    }
+    .hl-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 32px;
+    }
+    .hl-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .hl-dot.active { background: #CC0000; }
+
+    /* ── PROGRAM SECTION ──────────────────────────────────── */
+    .program {
+      background: linear-gradient(160deg, #0D0C1D 0%, #1a1040 50%, #0D0C1D 100%);
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .program::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 40%, rgba(123,82,244,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(204,0,0,0.10) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .program-inner {
+      padding: 0 15%;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 1;
+    }
+    .program-title {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 800;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .program-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      margin-bottom: 48px;
+      letter-spacing: 0.5px;
+    }
+    .program-scroll {
+      max-height: 420px;
+      overflow-y: auto;
+      padding-right: 12px;
+      scrollbar-width: thin;
+      scrollbar-color: #F5820A rgba(255,255,255,0.05);
+    }
+    .program-scroll::-webkit-scrollbar { width: 4px; }
+    .program-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 4px; }
+    .program-scroll::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #CC0000, #F5820A);
+      border-radius: 4px;
+    }
+    .program-item {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .program-item:last-child { border-bottom: none; }
+    .program-time {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gold);
+      width: 52px;
+      flex-shrink: 0;
+      padding-top: 2px;
+      letter-spacing: 0.5px;
+    }
+    .program-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 5px;
+      line-height: 1.4;
+    }
+    .program-detail {
+      font-size: 13px;
+      color: rgba(255,255,255,0.50);
+    }
+
+    .program-mod {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .program-mod strong { color: rgba(255,255,255,0.85); }
+    .program-item--break .program-name { color: var(--gold); font-weight: 500; }
+    .program-item--break { opacity: 0.8; }
+
+    .btn-download-program {
+      display: inline-flex;
+      align-items: center;
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 36px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-download-program:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    /* ── SPONSORS SECTION ──────────────────────────────────── */
+    .sponsors {
+      background: #fff;
+      padding: 80px 0;
+    }
+    .sponsors-inner {
+      padding: 0 15%;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .sponsors-title {
+      font-size: clamp(24px, 3vw, 40px);
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 32px;
+    }
+    .sponsors-tabs {
+      display: inline-flex;
+      background: #f0f0f0;
+      border-radius: 50px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 44px;
+    }
+    .stab {
+      background: none;
+      border: none;
+      padding: 10px 28px;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .stab.active {
+      background: #fff;
+      color: #1a1a2e;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    }
+    .sponsors-panel { display: none; }
+    .sponsors-panel.active { display: block; }
+    .sponsors-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 40px 60px;
+      margin-bottom: 52px;
+    }
+    .sponsor-logo {
+      opacity: 0.75;
+      transition: opacity 0.2s;
+      cursor: default;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sponsor-logo img {
+      max-height: 48px;
+      max-width: 140px;
+      object-fit: contain;
+      display: block;
+      filter: grayscale(100%);
+      transition: filter 0.2s, opacity 0.2s;
+    }
+    .sponsor-logo:hover { opacity: 1; }
+    .sponsor-logo:hover img { filter: grayscale(0%); }
+    .sponsors-cta { margin-top: 8px; }
+    .btn-sponsor {
+      display: inline-block;
+      background: linear-gradient(110deg, #CC0000, #F5820A);
+      color: #fff;
+      text-decoration: none;
+      padding: 16px 44px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 4px 20px rgba(204,0,0,0.3);
+    }
+    .btn-sponsor:hover { opacity: 0.9; transform: scale(1.02); }
+
+    .sponsors-coming {
+      font-size: 14px;
+      color: #999;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 32px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── SPEAKER BIO MODAL ──────────────────────────────────── */
+    .speaker-card {
+      cursor: pointer;
+    }
+    .speaker-card:hover .speaker-img img {
+      transform: scale(1.04);
+    }
+    .speaker-img img {
+      transition: transform 0.35s ease;
+    }
+    .bio-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,8,28,0.75);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .bio-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .bio-modal {
+      background: #fff;
+      border-radius: 20px;
+      max-width: 820px;
+      width: 90%;
+      max-height: 88vh;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      transform: translateY(24px) scale(0.97);
+      transition: transform 0.3s ease;
+    }
+    .bio-overlay.open .bio-modal {
+      transform: translateY(0) scale(1);
+    }
+    .bio-modal-img {
+      width: 280px;
+      min-height: 320px;
+      border-radius: 20px 0 0 20px;
+      overflow: hidden;
+      background: #e8e8e8;
+      flex-shrink: 0;
+    }
+    .bio-modal-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+    .bio-modal-body {
+      padding: 32px 28px;
+      position: relative;
+    }
+    .bio-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #f0f0f0;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      transition: background 0.2s;
+    }
+    .bio-modal-close:hover { background: #e0e0e0; }
+    .bio-modal-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .bio-modal-name {
+      font-size: 22px;
+      font-weight: 800;
+      background: linear-gradient(110deg, #CC0000, #F5820A);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .bio-modal-role {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    .bio-modal-org {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 20px;
+    }
+    .bio-modal-divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin-bottom: 18px;
+    }
+    .bio-modal-talk-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 6px;
+    }
+    .bio-modal-talk {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a2e;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+    .bio-modal-bio {
+      font-size: 14px;
+      color: #4a4a5a;
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    .footer {
+      background: #faf9f7;
+      padding: 60px 0;
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1.4fr;
+      gap: 40px;
+      padding: 0 15%;
+      box-sizing: border-box;
+      padding-bottom: 48px;
+    }
+    .footer-col { display: flex; flex-direction: column; gap: 12px; }
+    .footer-col-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 4px;
+    }
+    .footer-link {
+      font-size: 14px;
+      color: #5a5a6a;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: #CC0000; }
+    .footer-link-cta {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--purple);
+      text-decoration: none;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-link-cta:hover { color: #CC0000; }
+    .footer-social-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .footer-social {
+      width: 40px;
+      height: 40px;
+      background: #1a1a2e;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .footer-social svg { width: 18px; height: 18px; }
+    .footer-social:hover { background: #CC0000; }
+    .footer-note {
+      font-size: 13px;
+      color: #888;
+      line-height: 1.6;
+    }
+    .footer-bottom {
+      border-top: 1px solid #e8e8e8;
+      padding: 20px 15%;
+      text-align: left;
+      font-size: 13px;
+      color: #999;
+    }
+
+    /* ── COMMUNITY SECTION ──────────────────────────────────── */
+    .community {
+      background: #FFFFFF;
+      padding: 60px 15%;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .community-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 48px;
+    }
+
+    .community-placeholder {
+      min-height: 120px;
+      border: 2px dashed rgba(0,0,0,0.08);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0,0,0,0.2);
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .community-placeholder::after {
+      content: '← Your logos or content goes here →';
+    }
+
+    /* ── ANIMATIONS ──────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+
+    /* Large screens (1440px+) */
+    @media (min-width: 1440px) {
+      .hero-content { padding-left: 15%; }
+      .intro-inner, .program-inner, .sponsors-inner, .footer-inner { padding-left: 15%; padding-right: 15%; }
+      .highlights-inner { padding: 0 12%; }
+      .speakers-inner { padding: 0 30px; }
+    }
+
+    /* Tablets landscape (1024px–1279px) */
+    @media (max-width: 1279px) {
+      .hero-content { padding-left: 15%; }
+      .intro-inner, .program-inner, .sponsors-inner, .footer-inner { padding-left: 12%; padding-right: 12%; }
+      .highlights-inner { padding: 0 10%; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px 48px; }
+      .speaker-card { flex: 0 0 calc((100% - 64px) / 5); }
+    }
+
+    /* Tablets portrait (768px–1023px) */
+    @media (max-width: 1023px) {
+      nav { padding: 0 24px; }
+      .nav-links li:not(:last-child):not(:nth-last-child(2)) { display: none; }
+      .hero-content { padding-left: 6%; padding-right: 6%; }
+      .hero-title { font-size: clamp(38px, 6vw, 60px); }
+      .intro-inner { padding: 0 6%; }
+      .intro-body { grid-template-columns: 1fr; gap: 40px; }
+      .intro-images { grid-template-columns: 1fr 1fr; height: 320px; }
+      .intro-img-large { grid-row: 1; }
+      .program-inner, .sponsors-inner { padding: 0 6%; }
+      .highlights-inner { padding: 0 20px; }
+      .footer-inner { padding: 0 6%; grid-template-columns: 1fr 1fr; gap: 32px; }
+      .speakers-inner { padding: 0 16px; }
+      .speaker-card { flex: 0 0 calc((100% - 48px) / 4); }
+      .hl-card { flex: 0 0 calc((100% - 20px) / 2); }
+      .sponsors-grid { gap: 28px 40px; }
+      .bio-modal { grid-template-columns: 200px 1fr; max-width: 90vw; }
+      .bio-modal-img { width: 200px; }
+    }
+
+    /* Mobile (max 767px) */
+    @media (max-width: 767px) {
+      nav { padding: 0 16px; height: 60px; }
+      .nav-links { display: none; }
+      .brand-meta { display: none; }
+      .brand-divider { display: none; }
+
+      .hero { min-height: 100svh; }
+      .hero-content { padding: 0 20px; bottom: 60px; top: auto; transform: none; position: absolute; }
+      .hero-title { font-size: clamp(32px, 9vw, 48px); }
+      .hero-theme { font-size: 14px; }
+      .hero-cta-group { flex-direction: column; align-items: flex-start; padding: 16px 20px; gap: 14px; border-radius: 16px; }
+      .btn-cta { width: 100%; text-align: center; font-size: 16px; padding: 13px 24px; }
+
+      .intro-inner { padding: 0 20px; }
+      .intro-body { grid-template-columns: 1fr; gap: 32px; }
+      .intro-images { grid-template-columns: 1fr; height: 260px; }
+      .intro-img-stack { display: none; }
+      .intro-title { font-size: clamp(26px, 7vw, 38px); }
+
+      .speakers { padding: 56px 0; }
+      .speakers-inner { padding: 0 10px; }
+      .speaker-card { flex: 0 0 calc((100% - 16px) / 2); }
+      .carousel-arrow { font-size: 32px; padding: 0 4px; }
+
+      .program-inner { padding: 0 20px; }
+      .program-title { font-size: 28px; }
+      .program-scroll { max-height: 340px; }
+      .program-item { gap: 16px; padding: 14px 0; }
+      .program-time { font-size: 13px; width: 44px; }
+      .program-name { font-size: 14px; }
+
+      .sponsors-inner { padding: 0 20px; }
+      .sponsors-title { font-size: 22px; }
+      .sponsors-grid { gap: 24px 32px; }
+      .sponsor-logo img { max-height: 36px; max-width: 110px; }
+
+      .highlights { padding: 56px 0 40px; }
+      .highlights-inner { padding: 0 12px; }
+      .highlights-title { font-size: 24px; }
+      .hl-card { flex: 0 0 calc(100% - 0px); }
+      .hl-arrow { font-size: 36px; padding: 0 2px; }
+
+      .footer-inner { padding: 0 20px; grid-template-columns: 1fr 1fr; gap: 28px 20px; padding-bottom: 40px; }
+      .footer-col-social { grid-column: 1 / -1; }
+
+      .bio-modal { grid-template-columns: 1fr; max-width: 94vw; }
+      .bio-modal-img { width: 100%; height: 220px; border-radius: 20px 20px 0 0; min-height: unset; }
+      .bio-modal-img img { height: 220px; }
+      .bio-modal-body { padding: 20px; }
+      .bio-modal-name { font-size: 18px; }
+    }
+
+    /* Very small phones */
+    @media (max-width: 400px) {
+      .hero-title { font-size: 30px; }
+      .speaker-card { flex: 0 0 100%; }
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-
 <body>
-<header class="nav">
-  <div class="nav__container">
 
-    <!-- LEFT -->
-    <div class="nav__left">
-      <div class="nav-brand">
-        <div class="nav-brand__title">
-          <span class="brand-full">AI in Cancer Care</span>
-          <span class="brand-short">AICCS</span>
-        </div>
-        <div class="nav-brand__subtitle">APRIL 30, 2026 | BERN</div>
+  <!-- ── NAVBAR ── -->
+  <nav id="navbar">
+    <div class="nav-brand">
+      <div class="brand-logo">
+        <img src="/mnt/user-data/uploads/DDM-Logo_Kurz-RGB-email_signature.png" alt="Department Digital Medicine" />
+      </div>
+      <div class="brand-divider"></div>
+      <div class="brand-meta">
+        <strong>30 April 2026</strong>
+        <span>Inselspital, Bern</span>
       </div>
     </div>
 
-    <!-- HAMBURGER (mobile) -->
-    <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#speakers">Speakers</a></li>
+      <li><a href="#agenda">Agenda</a></li>
+      <li><a href="#sponsors">Sponsors</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#" class="btn-register">Register Now</a></li>
+    </ul>
+  </nav>
 
-    <!-- RIGHT -->
-    <nav class="nav__right" id="navMenu">
-      <a href="#about">About</a>
-      <a href="#agenda">Agenda</a>
-      <a href="#speakers">Speakers</a>
-      <a href="#sponsors">Sponsors</a>
-
-      <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=ejgA1C8h6kOsf3eqEteXfgmqy2S5705HuR4je5SoNfZUOUlPMUJBNkNVR0xWTDMxTTNEUkIxMDBSOS4u"
-         class="nav__btn"
-         target="_blank"
-         rel="noopener">
-        Register Now
-      </a>
-    </nav>
-
-  </div>
-</header>
-
-
+  <!-- ── HERO ── -->
   <section class="hero">
-    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero-bg-img"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-tint"></div>
 
-    <div class="hero__frame">
-      <div class="hero__content">
-        <h1>AI in <span class="nowrap">Cancer Care</span> Symposium</h1>
+    <div class="hero-content">
+      <h1 class="hero-title">AI in Cancer Care<br/>Symposium</h1>
+      <p class="hero-theme">How will AI Transform Cancer Care by 2030?</p>
 
-        <div class="hero__pill">
- <div class="pill__left">
-  <div class="pill__bar"></div>
-  <div class="pill__text">
+      <div class="hero-cta-group">
+        <div class="cta-left">
+          <div class="cta-bar"></div>
+          <div class="cta-meta">
+            <strong>30 April 2026</strong>
+            <span>Inselspital, Bern</span>
+          </div>
+        </div>
+        <button class="btn-cta">Register Now</button>
+      </div>
+    </div>
+  </section>
 
-              <strong>30 April 2026 • 14H30-18H45</strong>
-              <span>Inselspital • Bern</span>
+  <!-- ── COMMUNITY SECTION ── -->
+  <section class="community">
+    <p class="community-label">Our Community</p>
+    <div class="community-placeholder">
+      <!-- Add your logos or content here -->
+    </div>
+  </section>
+
+  <!-- ── INTRO SECTION ── -->
+  <section class="intro" id="about">
+    <div class="intro-inner">
+      <h2 class="intro-title">
+        The Leading Event for<br/>
+        <span class="intro-title-gradient">AI in Cancer Care</span>
+      </h2>
+      <div class="intro-body">
+        <div class="intro-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Established in 2024, this symposium is now the epicenter of the AI in oncology community — the industry's leading event where clinicians, researchers, and technology leaders unite to shape the future of cancer care.</p>
+          <p>At the AI in Cancer Care Symposium 2026, join hundreds of experts to explore real-world applications, breakthrough advancements, and proven best practices driving AI forward across every oncology discipline. From diagnostic AI to treatment planning and beyond — you'll discover it all.</p>
+          <p>Together, we're building the future of responsible human-machine collaboration in medicine.</p>
+        </div>
+        <div class="intro-images">
+          <div class="intro-img intro-img-large">
+            <img src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=600&q=80" alt="Medical conference" />
+          </div>
+          <div class="intro-img-stack">
+            <div class="intro-img">
+              <img src="https://images.unsplash.com/photo-1576671081837-49000212a370?w=600&q=80" alt="AI research" />
+            </div>
+            <div class="intro-img">
+              <img src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?w=600&q=80" alt="Medical team" />
             </div>
           </div>
-
-          <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=ejgA1C8h6kOsf3eqEteXfgmqy2S5705HuR4je5SoNfZUOUlPMUJBNkNVR0xWTDMxTTNEUkIxMDBSOS4u"
-   class="pill__btn"
-   target="_blank"
-   rel="noopener">
-   Register Now
-</a>
         </div>
       </div>
     </div>
   </section>
 
-<section class="section">
-  <div class="container">
+  <!-- ── SPEAKERS SECTION ── -->
+  <section class="speakers" id="speakers">
+    <div class="speakers-inner">
+      <h2 class="speakers-title">Meet Our Speakers</h2>
+      <p class="speakers-sub">Leading experts in oncology, artificial intelligence and digital medicine exploring how AI is transforming cancer diagnosis, treatment and patient care.</p>
 
-<h2>
-  How Will AI Transform<br>
-  <span class="gradient-text">Cancer Care by 2030?</span>
-</h2>
-
-
-    <div class="section-grid">
-<div class="section-text">
-  <p>Artificial Intelligence (AI) is rapidly transforming both our daily lives and professional practices and is expected to profoundly reshape how cancer care is delivered in the coming years.</p>
-&nbsp;
-  <p>Organised by the Department of Digital Medicine at the University of Bern, this half-day symposium will bring together clinicians, researchers, and technology experts to explore how AI is being integrated into oncology today, and what the next decade may hold.</p>
-&nbsp;
-  <p>Join us as we reflect on how innovation and clinical expertise can shape the future of patient care.</p>
-</div>
-
-      <div class="section-images">
-        <!-- your images -->
+      <div class="speakers-carousel-wrap">
+        <button class="carousel-arrow carousel-prev" onclick="slideCarousel(-1)">&#8249;</button>
+        <div class="speakers-carousel" id="speakersCarousel">
+          <div class="speakers-track" id="speakersTrack">
+          <div class="speaker-card" onclick="openBio('truhn')">
+            <div class="speaker-img"><img src="assets/speakers/danieltruhn.jpg" alt="Speaker"/></div>
+            <div class="speaker-name">Prof. Daniel Truhn</div>
+            <div class="speaker-role">Senior Physician, Laboratory for Artificial Intelligence</div>
+            <div class="speaker-org">RWTH Aachen, Germany</div>
+          </div>
+          <div class="speaker-card" onclick="openBio('poellinger')">
+            <div class="speaker-img"><img src="assets/speakers/poellinger_alexander.jpg" alt="Speaker"/></div>
+            <div class="speaker-name">Prof. Alexander Pöllinger</div>
+            <div class="speaker-role">Senior Physician, Diagnostic, Interventional and Pediatric Radiology</div>
+            <div class="speaker-org">Inselspital, Bern</div>
+          </div>
+          <div class="speaker-card" onclick="openBio('dislich')">
+            <div class="speaker-img"><img src="assets/speakers/dislichBastian2.jpg" alt="Speaker"/></div>
+            <div class="speaker-name">PD Dr. Dr. med. Bastian Dislich</div>
+            <div class="speaker-role">Senior Physician, Clinical Pathology, IGMP</div>
+            <div class="speaker-org">University of Bern</div>
+          </div>
+          <div class="speaker-card" onclick="openBio('sarah')">
+            <div class="speaker-img"><img src="assets/speakers/sarahbrueningk2.jpg" alt="Speaker"/></div>
+            <div class="speaker-name">Prof. Sarah Brüningk</div>
+            <div class="speaker-role">Head of Research, Center for AI-Based Radiation Therapy</div>
+            <div class="speaker-org">Inselspital / University of Bern</div>
+          </div>
+          <div class="speaker-card" onclick="openBio('beldi')">
+            <div class="speaker-img"><img src="assets/speakers/BeldiGuido.jpg" alt="Speaker"/></div>
+            <div class="speaker-name">Prof. Guido Beldi</div>
+            <div class="speaker-role">Chief Physician, Visceral Surgery and Medicine</div>
+            <div class="speaker-org">Inselspital, Bern</div>
+          </div>
+          <div class="speaker-card" onclick="openBio('shi')">
+            <div class="speaker-img"><img src="assets/speakers/shikuangyu.jpg" alt="Speaker"/></div>
+            <div class="speaker-name">Prof. Shi Kuangyu</div>
+            <div class="speaker-role">Head of Research, Center for AI-Based Radiation Therapy</div>
+            <div class="speaker-org">Inselspital / University of Bern</div>
+          </div>
+          <div class="speaker-card" onclick="openBio('wicki')">
+            <div class="speaker-img"><img src="assets/speakers/andreaswicki.jpg" alt="Speaker"/></div>
+            <div class="speaker-name">Prof. Andreas Wicki</div>
+            <div class="speaker-role">Senior Physician, Medical Oncology and Hematology</div>
+            <div class="speaker-org">USZ Zurich</div>
+          </div>
+          <div class="speaker-card" onclick="openBio('britt')">
+            <div class="speaker-img"><img src="assets/speakers/chantalbrittheadshotv2.jpg" alt="Speaker"/></div>
+            <div class="speaker-name">Chantal Britt</div>
+            <div class="speaker-role">Patient Expert</div>
+            <div class="speaker-org">Bern University of Applied Sciences, SPO, Swiss PPIE Network</div>
+          </div>
+          <div class="speaker-card" onclick="openBio('stavroula')">
+            <div class="speaker-img"><img src="assets/speakers/stavroula.jpg" alt="Speaker"/></div>
+            <div class="speaker-name">Prof. Stavroula Mougiakakou</div>
+            <div class="speaker-role">Group Head</div>
+            <div class="speaker-org">ARTORG, University of Bern</div>
+          </div>
+          <div class="speaker-card" onclick="openBio('reyes')">
+            <div class="speaker-img"><img src="assets/speakers/mreyesportraitv2.jpg" alt="Speaker"/></div>
+            <div class="speaker-name">Prof. Mauricio Reyes</div>
+            <div class="speaker-role">Group Head</div>
+            <div class="speaker-org">ARTORG, University of Bern</div>
+          </div>
+          <div class="speaker-card" onclick="openBio('stickel')">
+            <div class="speaker-img"><img src="assets/speakers/michaelstickel2.jpg" alt="Speaker"/></div>
+            <div class="speaker-name">Dr. Michael Stickel</div>
+            <div class="speaker-role">Chief Medical Information Officer</div>
+            <div class="speaker-org">Inselspital, Bern</div>
+          </div>
+          </div>
+        </div>
+        <button class="carousel-arrow carousel-next" onclick="slideCarousel(1)">&#8250;</button>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
-
-
-<section class="speakers-section" id="speakers">
-  <div class="container">
-    <h2 class="speakers-title">Meet Our Speakers</h2>
-    <p class="speakers-subtitle">
-      Leading experts in oncology, artificial intelligence and digital medicine exploring how AI is transforming cancer diagnosis, treatment and patient care.
-    </p>
-
-    <div class="speakers-carousel" aria-label="Speakers carousel">
-
-      <!-- LEFT ARROW -->
-      <button class="speakers-btn prev" aria-label="Previous speaker" type="button">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M15 18L9 12L15 6"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-        </svg>
-      </button>
-
-      <div class="carousel-viewport">
-        <div class="carousel-track">
-          <!-- speaker cards -->
-          <article class="speaker-card" data-speaker="daniel">
-            <div class="speaker-photo">
-              <img src="assets/speakers/danieltruhn.jpg" alt="Speaker 1">
-            </div>
-            <h3 class="speaker-name">Prof. Daniel Truhn</h3>
-            <p class="speaker-role">Senior Physician, Laboratory for Artificial Intelligence, Diagnostic and Interventional Radiology</p>
-            <p class="speaker-org">RWTH Aachen, Germany</p>
-          </article>
-
-          <article class="speaker-card" data-speaker="sarah">
-            <div class="speaker-photo">
-              <img src="assets/speakers/sarahbrueningk2.jpg" alt="Prof. Sarah Brünningk">
-            </div>
-            <h3 class="speaker-name">Prof. Sarah Brüningk</h3>
-            <p class="speaker-role">Head of Research, Center for AI-Based Radiation Therapy</p>
-            <p class="speaker-org">Inselspital | University of Bern</p>
-          </article>
-
-          <article class="speaker-card" data-speaker="mauricio">
-            <div class="speaker-photo">
-              <img src="assets/speakers/mreyesportraitv2.jpg" alt="Speaker 3">
-            </div>
-            <h3 class="speaker-name">Prof. Mauricio Reyes</h3>
-            <p class="speaker-role">Group Head, ARTORG Center for Biomedical Engineering Research</p>
-            <p class="speaker-org">University of Bern</p>
-          </article>
-
-          <article class="speaker-card" data-speaker="chantal">
-            <div class="speaker-photo">
-              <img src="assets/speakers/chantalbrittheadshotv2.jpg" alt="Speaker 4">
-            </div>
-            <h3 class="speaker-name">Chantal Britt</h3>
-            <p class="speaker-role">Patient Expert</p>
-            <p class="speaker-org">Bern University of Applied Sciences, SPO, Swiss PPIE Network</p>
-          </article>
-
-          <article class="speaker-card" data-speaker="kuangyu">
-            <div class="speaker-photo">
-              <img src="assets/speakers/shikuangyu.jpg" alt="Speaker 5">
-            </div>
-            <h3 class="speaker-name">Prof. Kuangyu Shi</h3>
-            <p class="speaker-role">Chief Medical Physicist, Artificial Intelligence and Translational Theranostics</p>
-            <p class="speaker-org">Inselspital | University of Bern</p>
-          </article>
-
-          <article class="speaker-card" data-speaker="bastian">
-            <div class="speaker-photo">
-              <img src="assets/speakers/dislichBastian2.jpg" alt="Speaker 6">
-            </div>
-            <h3 class="speaker-name">PD Dr. Dr. med. Bastian Dislich</h3>
-            <p class="speaker-role">Senior Physician, Clinical Pathology, IGMP</p>
-            <p class="speaker-org">University of Bern</p>
-          </article>
-
-            <article class="speaker-card" data-speaker="michael">
-            <div class="speaker-photo">
-              <img src="assets/speakers/michaelstickel2.jpg" alt="Speaker 7">
-            </div>
-            <h3 class="speaker-name">Michael Stickel</h3>
-            <p class="speaker-role">Chief Medical Information Officer</p>
-            <p class="speaker-org">Inselspital</p>
-          </article>
-
-<article class="speaker-card">
-            <div class="speaker-photo">
-              <img src="assets/speakers/stavroula.jpg" alt="Speaker 8">
-            </div>
-            <h3 class="speaker-name">Prof. Stavroula Mougiakakou</h3>
-            <p class="speaker-role">Group Head, ARTORG Center for Biomedical Engineering Research</p>
-            <p class="speaker-org">University of Bern</p>
-          </article>
-
-
-          <article class="speaker-card">
-            <div class="speaker-photo">
-              <img src="assets/speakers/poellinger_alexander.jpg" alt="Speaker 9">
-            </div>
-            <h3 class="speaker-name">Prof. Alexander Pöllinger</h3>
-            <p class="speaker-role">Senior Physician, Diagnostic, Interventional and Pediatric Radiology</p>
-            <p class="speaker-org">Inselspital, Bern</p>
-          </article>
-
-
-                    <article class="speaker-card">
-            <div class="speaker-photo">
-              <img src="assets/speakers/BeldiGuido.jpg" alt="Speaker 10">
-            </div>
-            <h3 class="speaker-name">Prof. Guido Beldi</h3>
-            <p class="speaker-role">Chief Physician, Visceral Surgery and Medicine</p>
-            <p class="speaker-org">Inselspital | University of Bern</p>
-          </article>
-          
-
-          <article class="speaker-card">
-            <div class="speaker-photo">
-              <img src="assets/speakers/andreaswicki.jpg" alt="Speaker 11">
-            </div>
-            <h3 class="speaker-name">Prof. Andreas Wicki</h3>
-            <p class="speaker-role">Senior Physician, Medical Oncology and Hematology</p>
-            <p class="speaker-org">USZ Zurich</p>
-          </article>
+  <!-- ── PROGRAM SECTION ── -->
+  <section class="program" id="agenda">
+    <div class="program-inner">
+      <h2 class="program-title">Program</h2>
+      <p class="program-sub">30 April 2026 — Inselspital, Bern</p>
+      <canvas id="nodesCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.5;"></canvas>
+      <div class="program-scroll">
+        <div class="program-item">
+          <div class="program-time">14:30</div>
+          <div class="program-content">
+            <div class="program-name">Welcome</div>
+          </div>
+        </div>
+        <div class="program-item">
+          <div class="program-time">14:35</div>
+          <div class="program-content">
+            <div class="program-name">Keynote: "Agentic AI"</div>
+          </div>
+        </div>
+        <div class="program-item">
+          <div class="program-time">15:05</div>
+          <div class="program-content">
+            <div class="program-name">Together on our Patient's Journey: AI-Enhanced Diagnostics</div>
+          </div>
+        </div>
+        <div class="program-item program-item--break">
+          <div class="program-time">15:50</div>
+          <div class="program-content">
+            <div class="program-name">Coffee Break &amp; Networking</div>
+          </div>
+        </div>
+        <div class="program-item">
+          <div class="program-time">16:20</div>
+          <div class="program-content">
+            <div class="program-name">Together on our Patient's Journey: AI in Cancer Therapy</div>
+          </div>
+        </div>
+        <div class="program-item program-item--break">
+          <div class="program-time">17:05</div>
+          <div class="program-content">
+            <div class="program-name">Coffee Break &amp; Networking</div>
+          </div>
+        </div>
+        <div class="program-item">
+          <div class="program-time">17:35</div>
+          <div class="program-content">
+            <div class="program-name">Reality Check</div>
+          </div>
+        </div>
+        <div class="program-item program-item--break">
+          <div class="program-time">18:35</div>
+          <div class="program-content">
+            <div class="program-name">Apéro &amp; Networking</div>
+          </div>
         </div>
       </div>
-
-      <!-- RIGHT ARROW -->
-      <button class="speakers-btn next" aria-label="Next speaker" type="button">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M9 6L15 12L9 18"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-        </svg>
-      </button>
-
-    </div><!-- /.speakers-carousel -->
-
-    <!-- Details stays INSIDE container (and below carousel) -->
-    <div class="speaker-details" id="speakerDetails">
-      <div class="speaker-details__inner">
-        <h3 class="speaker-details__name" id="detailsName"></h3>
-        <p class="speaker-details__meta" id="detailsMeta"></p>
-        <p class="speaker-details__bio" id="detailsBio"></p>
+      <div style="text-align:center;margin-top:36px;position:relative;z-index:2;">
+        <a href="assets/program.pdf" download class="btn-download-program">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Full Program
+        </a>
       </div>
     </div>
-
-  </div><!-- /.container -->
-</section>
-
-<section class="sponsors-section" id="sponsors">
-  <div class="container">
-    <h2 class="sponsors-title">Sponsors & Partners</h2>
-    <div class="sponsors-tabs" role="tablist" aria-label="Sponsors and Partners tabs">
-      <button class="sponsors-tab is-active" type="button" role="tab" aria-selected="true" data-target="sponsors">
-        Sponsors
-      </button>
-      <button class="sponsors-tab" type="button" role="tab" aria-selected="false" data-target="partners">
-        Partners
-      </button>
-    </div>
-
-    <div class="sponsors-panels">
-  <div class="sponsors-panel is-active" id="panel-sponsors" role="tabpanel">
-  <p class="coming-soon">Sponsors to be announced soon.</p>
-<a href="assets/files/AI-in-Cancer-Care-Sponsorship-Package_2026_FINAL.pdf"
-   class="sponsor-cta"
-   target="_blank"
-   rel="noopener">
-  Become a Sponsor
-</a>
-</div>
-
-
-
-      <div class="sponsors-panel" id="panel-partners" role="tabpanel" hidden>
-        <div class="logos-grid">
-              <a class="logo-link" href="https://www.artorg.unibe.ch/index_eng.html" target="_blank" rel="noopener">
-            <img src="assets/partners/artorg_Logo_english_2019_rgb.png" alt="ARTORG">
-          </a>
-          <a class="logo-link" href="https://inselgruppe.ch/de/" target="_blank" rel="noopener">
-            <img src="assets/partners/Inselspital_Logo_Pantone.svg" alt="Inselspital">
-          </a>
-         <a class="logo-link" href="https://www.igmp.unibe.ch/index_eng.html" target="_blank" rel="noopener">
-            <img src="assets/partners/UNI_IGMP_Zusatz_Schwarz_CMYK_gross.jpg" alt="IGMP">
-          </a>
-          <!-- add more... -->
+  </section>
+  <section class="sponsors">
+    <div class="sponsors-inner">
+      <h2 class="sponsors-title">Check Out Our 2026 Sponsors &amp; Partners</h2>
+      <div class="sponsors-tabs">
+        <button class="stab active" onclick="switchTab('sponsors')">Sponsors</button>
+        <button class="stab" onclick="switchTab('partners')">Partners</button>
+      </div>
+      <div class="sponsors-panel active" id="tab-sponsors">
+        <p class="sponsors-coming">Sponsors to be announced soon</p>
+        <div class="sponsors-grid">
+          <div class="sponsor-logo"><img src="assets/sponsors/sponsor1.svg" alt="Sponsor 1"/></div>
+          <div class="sponsor-logo"><img src="assets/sponsors/sponsor2.svg" alt="Sponsor 2"/></div>
+          <div class="sponsor-logo"><img src="assets/sponsors/sponsor3.svg" alt="Sponsor 3"/></div>
+          <div class="sponsor-logo"><img src="assets/sponsors/sponsor4.svg" alt="Sponsor 4"/></div>
+          <div class="sponsor-logo"><img src="assets/sponsors/sponsor5.svg" alt="Sponsor 5"/></div>
+          <div class="sponsor-logo"><img src="assets/sponsors/sponsor6.svg" alt="Sponsor 6"/></div>
+          <div class="sponsor-logo"><img src="assets/sponsors/sponsor7.svg" alt="Sponsor 7"/></div>
+          <div class="sponsor-logo"><img src="assets/sponsors/sponsor8.svg" alt="Sponsor 8"/></div>
+          <div class="sponsor-logo"><img src="assets/sponsors/sponsor9.svg" alt="Sponsor 9"/></div>
+          <div class="sponsor-logo"><img src="assets/sponsors/sponsor10.svg" alt="Sponsor 10"/></div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="highlights-section" id="highlights">
-  <div class="container">
-
-    <h2 class="highlights-title">Event Highlights</h2>
-    <p class="highlights-subtitle">
-      AI in Cancer Care 2026 is packed with insightful sessions and special moments.
-    </p>
-
-    <div class="highlights-carousel">
-
-      <!-- LEFT ARROW -->
-      <button class="highlights-btn prev" aria-label="Previous highlight">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M15 18L9 12L15 6"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-        </svg>
-      </button>
-
-      <div class="highlights-viewport">
-        <div class="highlights-track">
-
-          <!-- CARD 1 -->
-          <article class="highlight-card">
-            <div class="highlight-image">
-              <img src="assets/highlights/highlight-1.jpg" alt="AI Research Summit">
-            </div>
-
-            <div class="highlight-content">
-              <span class="highlight-tag">SPOTLIGHT</span>
-              <h3>AI Research Summit</h3>
-              <p>
-                Bringing together leading AI and oncology researchers to discuss
-                cutting-edge applications and translational impact.
-              </p>
-            </div>
-          </article>
-
-          <!-- CARD 2 -->
-          <article class="highlight-card">
-            <div class="highlight-image">
-              <img src="assets/highlights/highlight-2.jpg" alt="Expert Panel Discussion">
-            </div>
-
-            <div class="highlight-content">
-              <span class="highlight-tag">PANEL</span>
-              <h3>Expert Panel Discussion</h3>
-              <p>
-                Clinicians, data scientists and innovators debate the real-world
-                implementation of AI in cancer care.
-              </p>
-            </div>
-          </article>
-
-          <!-- CARD 3 -->
-          <article class="highlight-card">
-            <div class="highlight-image">
-              <img src="assets/highlights/highlight-3.jpg" alt="Networking Reception">
-            </div>
-
-            <div class="highlight-content">
-              <span class="highlight-tag">NETWORKING</span>
-              <h3>Networking Reception</h3>
-              <p>
-                An opportunity to connect across disciplines and build new
-                collaborations in digital medicine.
-              </p>
-            </div>
-          </article>
-
-          <!-- CARD 4 -->
-          <article class="highlight-card">
-            <div class="highlight-image">
-              <img src="assets/highlights/highlight-4.jpg" alt="Trade Display">
-            </div>
-
-            <div class="highlight-content">
-              <span class="highlight-tag">TRADE DISPLAY</span>
-              <h3>Trade Display & Innovation Showcase</h3>
-              <p>
-                Explore curated demos and research showcases highlighting AI tools,
-                clinical use cases and emerging innovations shaping cancer care.
-              </p>
-            </div>
-          </article>
-
+      <div class="sponsors-panel" id="tab-partners" data-hide-cta="true">
+        <div class="sponsors-grid">
+          <div class="sponsor-logo"><img src="assets/partners/partner1.svg" alt="Partner 1"/></div>
+          <div class="sponsor-logo"><img src="assets/partners/partner2.svg" alt="Partner 2"/></div>
+          <div class="sponsor-logo"><img src="assets/partners/partner3.svg" alt="Partner 3"/></div>
+          <div class="sponsor-logo"><img src="assets/partners/partner4.svg" alt="Partner 4"/></div>
+          <div class="sponsor-logo"><img src="assets/partners/partner5.svg" alt="Partner 5"/></div>
+          <div class="sponsor-logo"><img src="assets/partners/partner6.svg" alt="Partner 6"/></div>
+          <div class="sponsor-logo"><img src="assets/partners/partner7.svg" alt="Partner 7"/></div>
+          <div class="sponsor-logo"><img src="assets/partners/partner8.svg" alt="Partner 8"/></div>
+          <div class="sponsor-logo"><img src="assets/partners/partner9.svg" alt="Partner 9"/></div>
+          <div class="sponsor-logo"><img src="assets/partners/partner10.svg" alt="Partner 10"/></div>
         </div>
       </div>
-
-      <!-- RIGHT ARROW -->
-      <button class="highlights-btn next" aria-label="Next highlight">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M9 6L15 12L9 18"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-        </svg>
-      </button>
-
+      <div class="sponsors-cta">
+        <a href="#" class="btn-sponsor">Become a Sponsor</a>
+      </div>
     </div>
+  </section>
 
-    <!-- DOTS -->
-    <div class="highlights-dots"></div>
+  <!-- ── HIGHLIGHTS SECTION ── -->
+  <section class="highlights" id="highlights">
+    <div class="highlights-inner">
+      <h2 class="highlights-title">Highlights &amp; Key Moments</h2>
+      <p class="highlights-sub">The AI in Cancer Care Symposium 2026 is packed with inspiring talks, workshops and surprises around every corner.</p>
+      <div class="highlights-carousel-wrap">
+        <button class="hl-arrow hl-prev" onclick="slideHighlights(-1)">&#8249;</button>
+        <div class="highlights-viewport">
+          <div class="highlights-track" id="highlightsTrack">
+            <div class="hl-card">
+              <div class="hl-img"><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" alt="Keynote"/></div>
+              <div class="hl-body">
+                <div class="hl-label">Spotlight</div>
+                <div class="hl-name">Opening Keynote</div>
+                <p class="hl-desc">A visionary opening session exploring how agentic AI systems are transforming oncology — setting the stage for the future of autonomous AI in cancer diagnosis and treatment.</p>
+              </div>
+            </div>
+            <div class="hl-card">
+              <div class="hl-img"><img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&q=80" alt="Patient"/></div>
+              <div class="hl-body">
+                <div class="hl-label">Spotlight</div>
+                <div class="hl-name">Patient Perspectives: Reality Check</div>
+                <p class="hl-desc">A grounding and powerful session sharing the views and priorities of patients and their next of kin — exploring what AI-driven care truly means for those living with cancer.</p>
+              </div>
+            </div>
+            <div class="hl-card">
+              <div class="hl-img"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80" alt="Networking"/></div>
+              <div class="hl-body">
+                <div class="hl-label">Spotlight</div>
+                <div class="hl-name">Apéro &amp; Innovation Fair</div>
+                <p class="hl-desc">Close the day by connecting with researchers, clinicians, and industry leaders over drinks. Explore live demos from the most exciting organisations in oncology AI.</p>
+              </div>
+            </div>
+            <div class="hl-card">
+              <div class="hl-img"><img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=80" alt="Ethics"/></div>
+              <div class="hl-body">
+                <div class="hl-label">Spotlight</div>
+                <div class="hl-name">Ethics &amp; AI Governance</div>
+                <p class="hl-desc">A critical examination of bias, accountability and the responsible deployment of AI in clinical oncology — designing cancer AI solutions with robustness in mind.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="hl-arrow hl-next" onclick="slideHighlights(1)">&#8250;</button>
+      </div>
+      <div class="hl-dots" id="hlDots">
+        <span class="hl-dot active" onclick="goHighlight(0)"></span>
+        <span class="hl-dot" onclick="goHighlight(1)"></span>
+        <span class="hl-dot" onclick="goHighlight(2)"></span>
+        <span class="hl-dot" onclick="goHighlight(3)"></span>
+      </div>
+    </div>
+  </section>
 
+  <!-- ── SPEAKER BIO MODAL ── -->
+  <div class="bio-overlay" id="bioOverlay" onclick="closeBioIfBg(event)">
+    <div class="bio-modal" id="bioModal">
+      <div class="bio-modal-img"><img id="bioImg" src="" alt=""/></div>
+      <div class="bio-modal-body">
+        <button class="bio-modal-close" onclick="closeBio()">✕</button>
+        <div class="bio-modal-label">Speaker</div>
+        <div class="bio-modal-name" id="bioName"></div>
+        <div class="bio-modal-role" id="bioRole"></div>
+        <div class="bio-modal-org" id="bioOrg"></div>
+        <div class="bio-modal-divider"></div>
+        <div class="bio-modal-talk-label">Talk</div>
+        <div class="bio-modal-talk" id="bioTalk"></div>
+        <div class="bio-modal-bio" id="bioBio"></div>
+      </div>
+    </div>
   </div>
-</section>
 
-<footer class="site-footer">
-  <div class="container footer-grid">
-
-    <div class="footer-col">
-      <h4>AI in Cancer Care</h4>
-      <p>
-        Organised by the Department of Digital Medicine<br>
-        University of Bern • Inselspital
-      </p>
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <div class="footer-col-title">Get Involved</div>
+        <a href="#sponsors" class="footer-link-cta">Become a Sponsor</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Symposium 2026</div>
+        <a href="#agenda" class="footer-link">Agenda</a>
+        <a href="#speakers" class="footer-link">Speakers</a>
+        <a href="#sponsors" class="footer-link">Sponsors</a>
+        <a href="#highlights" class="footer-link">Highlights</a>
+        <a href="#contact" class="footer-link">Contact</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Support</div>
+        <a href="#" class="footer-link">Contact Us</a>
+      </div>
+      <div class="footer-col footer-col-social">
+        <div class="footer-social-row">
+          <a href="#" class="footer-social" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.27c-.97 0-1.75-.79-1.75-1.76s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.76-1.75 1.76zm13.5 11.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.88v1.36h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.59v5.61z"/></svg>
+          </a>
+        </div>
+        <p class="footer-note">Organised by the Department of Digital Medicine, University of Bern.</p>
+      </div>
     </div>
+  </footer>
 
-    <div class="footer-col">
-      <h5>Navigate</h5>
-      <a href="#about">About</a>
-      <a href="#agenda">Agenda</a>
-      <a href="#speakers">Speakers</a>
-      <a href="#sponsors">Sponsors</a>
-      <a href="#register">Register</a>
-    </div>
-
-    <div class="footer-col">
-      <h5>Get Involved</h5>
-<a href="assets/files/AI-in-Cancer-Care-Sponsorship-Package_2026_FINAL.pdf"
-   class="footer-action"
-   target="_blank"
-   rel="noopener">
-   Become a Sponsor
-</a><a class="footer-action" href="mailto:info.ddm@unibe.ch">CONTACT US</a>
-    </div>
-
-  </div>
-
-</footer>
-
-<script>
-/* =========================
-   NAV: solid on scroll + mobile hamburger open/close
-========================= */
-(function(){
-  const nav = document.querySelector('.nav');
-  const toggle = document.querySelector('.nav__toggle');
-  const menu = document.getElementById('navMenu');
-
-  if(!nav) return;
-
-  // --- Solid on scroll (but keep solid while menu is open) ---
-  function updateNav(){
-    if (nav.classList.contains('is-open')) {
-      nav.classList.add('is-solid');
-      return;
-    }
-    if (window.scrollY > 60) nav.classList.add('is-solid');
-    else nav.classList.remove('is-solid');
-  }
-
-  updateNav();
-  window.addEventListener('scroll', updateNav, { passive: true });
-
-  // If you don't have the mobile toggle elements, stop here
-  if(!toggle || !menu) return;
-
-  function openMenu(){
-    nav.classList.add('is-open');
-    toggle.setAttribute('aria-expanded', 'true');
-    updateNav();
-  }
-
-  function closeMenu(){
-    nav.classList.remove('is-open');
-    toggle.setAttribute('aria-expanded', 'false');
-    updateNav();
-  }
-
-  function toggleMenu(){
-    nav.classList.contains('is-open') ? closeMenu() : openMenu();
-  }
-
-  // Toggle click
-  toggle.addEventListener('click', (e)=>{
-    e.preventDefault();
-    e.stopPropagation();
-    toggleMenu();
-  });
-
-  // Close when clicking a nav link (mobile UX)
-  menu.querySelectorAll('a').forEach(a=>{
-    a.addEventListener('click', ()=> closeMenu());
-  });
-
-  // Close when clicking outside the menu (optional)
-  document.addEventListener('click', (e)=>{
-    if(!nav.classList.contains('is-open')) return;
-    const clickedToggle = e.target.closest('.nav__toggle');
-    const clickedMenu = e.target.closest('#navMenu');
-    if(!clickedToggle && !clickedMenu) closeMenu();
-  });
-
-  // Close on ESC
-  document.addEventListener('keydown', (e)=>{
-    if(e.key === 'Escape') closeMenu();
-  });
-
-  // If resizing back to desktop, ensure menu is closed
-  window.addEventListener('resize', ()=>{
-    if(window.innerWidth > 820) closeMenu();
-  }, { passive: true });
-
-})();
-</script>
-
-<script>
-/* =========================
-   SPONSORS / PARTNERS TABS
-========================= */
-(function(){
-  const tabs = Array.from(document.querySelectorAll('.sponsors-tab'));
-  const sponsorsPanel = document.getElementById('panel-sponsors');
-  const partnersPanel = document.getElementById('panel-partners');
-
-  if (!tabs.length || !sponsorsPanel || !partnersPanel) return;
-
-  function setActive(target){
-    const isSponsors = target === 'sponsors';
-
-    tabs.forEach(t => {
-      const active = t.dataset.target === target;
-      t.classList.toggle('is-active', active);
-      t.setAttribute('aria-selected', active ? 'true' : 'false');
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
     });
 
-    sponsorsPanel.hidden = !isSponsors;
-    partnersPanel.hidden = isSponsors;
-  }
-
-  tabs.forEach(tab => tab.addEventListener('click', () => setActive(tab.dataset.target)));
-  setActive('sponsors');
-})();
-</script>
-
-<script>
-/* =========================
-   HIGHLIGHTS CAROUSEL + DOTS + AUTOPLAY
-========================= */
-(function(){
-  const track = document.querySelector('.highlights-track');
-  const cards = document.querySelectorAll('.highlight-card');
-  const prev = document.querySelector('.highlights-btn.prev');
-  const next = document.querySelector('.highlights-btn.next');
-  const dotsContainer = document.querySelector('.highlights-dots');
-  const carousel = document.querySelector('.highlights-carousel');
-
-  if(!track || !cards.length || !dotsContainer || !prev || !next || !carousel) return;
-
-  let index = 0;
-  const total = cards.length;
-
-  function gapPx(){
-    const styles = getComputedStyle(track);
-    return parseFloat(styles.gap || '0') || 0;
-  }
-
-  function step(){
-    return cards[0].getBoundingClientRect().width + gapPx();
-  }
-
-  function update(){
-    track.style.transform = `translateX(${-index * step()}px)`;
-
-    dotsContainer.querySelectorAll('button').forEach((dot,i)=>{
-      dot.classList.toggle('active', i === index);
-    });
-  }
-
-  function createDots(){
-    dotsContainer.innerHTML = '';
-    for(let i=0;i<total;i++){
-      const dot = document.createElement('button');
-      dot.type = "button";
-      dot.addEventListener('click', ()=>{
-        index = i;
-        update();
-        restartAuto();
-      });
-      dotsContainer.appendChild(dot);
+    // Sponsors tab switching
+    function switchTab(tab) {
+      document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.sponsors-panel').forEach(p => p.classList.remove('active'));
+      document.querySelector(`.stab[onclick="switchTab('${tab}')"]`).classList.add('active');
+      document.getElementById('tab-' + tab).classList.add('active');
+      const cta = document.querySelector('.sponsors-cta');
+      if (cta) cta.style.display = tab === 'partners' ? 'none' : 'block';
     }
-  }
 
-  function goNext(){
-    index = (index + 1) % total;
-    update();
-  }
 
-  function goPrev(){
-    index = (index - 1 + total) % total;
-    update();
-  }
-
-  prev.addEventListener('click', ()=>{ goPrev(); restartAuto(); });
-  next.addEventListener('click', ()=>{ goNext(); restartAuto(); });
-
-  window.addEventListener('resize', update, { passive: true });
-
-  // Autoplay
-  const AUTO_MS = 4000;
-  let timer = null;
-
-  function startAuto(){
-    stopAuto();
-    timer = setInterval(goNext, AUTO_MS);
-  }
-  function stopAuto(){
-    if(timer) clearInterval(timer);
-    timer = null;
-  }
-  function restartAuto(){
-    startAuto();
-  }
-
-  carousel.addEventListener('mouseenter', stopAuto);
-  carousel.addEventListener('mouseleave', startAuto);
-
-  createDots();
-  update();
-  startAuto();
-})();
-</script>
-
-<script>
-/* =========================
-   SPEAKERS: CLICK TO OPEN DETAILS
-========================= */
-(function(){
-  const cards = document.querySelectorAll('.speaker-card');
-  const carousel = document.querySelector('.speakers-carousel');
-
-  const details = document.getElementById('speakerDetails');
-  const detailsName = document.getElementById('detailsName');
-  const detailsMeta = document.getElementById('detailsMeta');
-  const detailsBio = document.getElementById('detailsBio');
-
-  if (!cards.length || !carousel || !details || !detailsName || !detailsMeta || !detailsBio) return;
-
-  let activeCard = null;
-
-  const speakerData = {
-    daniel: {
-      name: "Prof. Daniel Truhn",
-      meta: "Senior Physician, Laboratory for Artificial Intelligence, Diagnostic and Interventional Radiology — RWTH Aachen, Germany",
-      bio: "Daniel is a Professor of Medicine at University Hospital Aachen, where he leads the Laboratory for Artificial Intelligence in Medicine. His work focuses on translating AI methods into clinical routine, with a particular emphasis on accelerating the deployment of AI models in oncology. With a background in both physics and medicine, his research bridges methodological innovation and real-world clinical application. In his talk, he will discuss agentic AI systems and their potential to transform diagnostic and therapeutic decision-making in clinical medicine."
-    },
-    sarah: {
-      name: "Prof. Sarah Brünningk",
-      meta: "Head of Research, Center for AI-Based Radiation Therapy — Inselspital | University of Bern",
-      bio: "Prof. Sarah Brüningk is leading the Center for AI in Radiation Oncology at the University Hospital Bern and the University of Bern, Switzerland. She is a physicist by training (TU Munich, Germany) and completed a PhD at the intersection of practical wet lab and computational biology at the Institute of Cancer Research (UK) before moving to ETH Zurich as a postdoctoral researcher focusing on AI for biomedical applications. Her research harnesses combinations of mathematical modelling and advanced machine learning to process multimodal data spanning from omics to imaging for applications in oncology and pediatric digital health."
-    },
-    mauricio: {
-      name: "Prof. Mauricio Reyes",
-      meta: "Group Head, ARTORG Center for Biomedical Engineering Research — University of Bern",
-      bio: "Professor Mauricio Reyes began his academic journey in 2003 when he was awarded a French-Chilean scholarship to conduct his PhD studies at INRIA, France. His research focused on AI technologies to improve cancer workflows and led to novel image reconstruction techniques for respiratory motion compensation in PET imaging. Through EU-funded projects, he developed AI solutions for neuro-oncology, with a focus on automated brain tumor assessment. He received the MICCAI Young Scientist Publication award in 2016 and has pioneered robust and explainable AI in medical image analysis."
-    },
-    chantal: {
-      name: "Chantal Britt",
-      meta: "Patient Expert, Bern University of Applied Sciences, SPO, Swiss PPIE Network",
-      bio: "Chantal Britt holds an MA in Translation from the University of Geneva. She worked 13 years as a financial and science journalist at Bloomberg News and Swissinfo.ch, then a decade in science communication and public affairs for non-profits across health and research. After developing long Covid in 2020, she co-founded Long Covid Switzerland and chairs Long COVID Europe. She contributes to patient involvement, citizen science, and participatory research, and serves on several patient advisory and network boards in Switzerland."
-    },
-    kuangyu: {
-      name: "Prof. Kuangyu Shi",
-      meta: "Chief Medical Physicist, Artificial Intelligence and Translational Theranostics — Inselspital | University of Bern",
-      bio: "Prof. Kuangyu Shi is the Chief Medical Physicist and Head of the Lab for Artificial Intelligence and Translational Theranostics at the Department of Nuclear Medicine, University of Bern. He is also a senior lecturer at TU Munich. His research advances AI and computational modeling for nuclear medicine imaging, dosimetry and therapy, linking outcomes with underlying pathophysiology, and developing in vivo and ex vivo experimental methods for microscopic nuclear imaging. He is involved with EANM AI initiatives and ICRP task groups and serves on editorial boards in the field."
-    },
-    bastian: {
-      name: "PD Dr. Dr. med. Bastian Dislich",
-      meta: "Senior Physician, Clinical Pathology, IGMP — University of Bern",
-      bio: "After completing his double degree in human medicine and Medical Life Sciences at the Technical University of Munich, Bastian Dislich completed his pathology training at the Institute of Pathology at the University of Bern. There he works as a senior physician in the departments of gastrointestinal pathology, soft tissue pathology, hematopathology and molecular pathology. His research focus is on carcinomas of the gastroesophageal junction and the stomach."
-    },
-    michael: {
-      name: "Dr. Michael Stickel",
-      meta: "Chief Medical Information Officer, Inselspital, Bern",
-      bio: "Dr. Michael Stickel is Chief Medical Information Officer (CMIO) at the Insel Gruppe in Bern, where he leads the strategic integration of clinical practice and digital health systems. With a background in surgery and emergency medicine, he brings extensive frontline clinical experience to the development and implementation of hospital information systems. Dr. Stickel studied medicine at Ludwig-Maximilians-Universität München and previously served in senior roles in trauma surgery and emergency care in Germany and Switzerland, including at Kantonsspital Luzern. He has been closely involved in large-scale electronic health record implementations, including EPIC-based systems, and holds advanced certifications in health informatics, clinical documentation, and SNOMED CT. His work focuses on aligning digital innovation with clinical workflows to improve patient care, data quality, and healthcare system performance."
-    },
-  };
-
-  function closeDetails(){
-    details.classList.remove('is-open');
-    carousel.classList.remove('has-active');
-    cards.forEach(c => c.classList.remove('is-active'));
-    activeCard = null;
-  }
-
-  cards.forEach(card => {
-    card.addEventListener('click', (e) => {
-      e.stopPropagation();
-
-      const id = card.dataset.speaker;
-      const speaker = speakerData[id];
-      if (!speaker) return;
-
-      if (activeCard === card) {
-        closeDetails();
-        return;
+    // Speaker bio data
+    const bioData = {
+      truhn: {
+        img: 'assets/speakers/danieltruhn.jpg',
+        name: 'Prof. Daniel Truhn',
+        role: 'Senior Physician, Laboratory for Artificial Intelligence, Diagnostic and Interventional Radiology',
+        org: 'RWTH Aachen, Germany',
+        talk: '"Agentic AI"',
+        bio: 'Daniel is a Professor of Medicine at University Hospital Aachen, where he leads the Laboratory for Artificial Intelligence in Medicine. His work focuses on translating AI methods into clinical routine, with a particular emphasis on accelerating the deployment of AI models in oncology. With a background in both physics and medicine, his research bridges methodological innovation and real-world clinical application. In his talk, he will discuss agentic AI systems and their potential to transform diagnostic and therapeutic decision-making in clinical medicine.'
+      },
+      poellinger: {
+        img: 'assets/speakers/poellinger_alexander.jpg',
+        name: 'Prof. Alexander Pöllinger',
+        role: 'Senior Physician, Diagnostic, Interventional and Pediatric Radiology',
+        org: 'Inselspital, Bern',
+        talk: '"Title TBC"',
+        bio: 'Prof. Alexander Pöllinger is a senior radiologist at Inselspital Bern, with expertise spanning diagnostic, interventional and paediatric radiology. His clinical and research interests include AI-assisted image interpretation and the integration of computational tools into everyday radiology practice.'
+      },
+      dislich: {
+        img: 'assets/speakers/dislichBastian2.jpg',
+        name: 'PD Dr. Dr. med. Bastian Dislich',
+        role: 'Senior Physician, Clinical Pathology, IGMP',
+        org: 'University of Bern',
+        talk: '"The Augmented Pathologist"',
+        bio: 'After completing his double degree in human medicine and Medical Life Sciences at the Technical University of Munich, Bastian Dislich completed his pathology training at the Institute of Pathology at the University of Bern. There he works as a senior physician in the departments of gastrointestinal pathology, soft tissue pathology, hematopathology and molecular pathology. His research focus is on carcinomas of the gastroesophageal junction and the stomach.'
+      },
+      sarah: {
+        img: 'assets/speakers/sarahbrueningk2.jpg',
+        name: 'Prof. Sarah Brüningk',
+        role: 'Head of Research, Center for AI-Based Radiation Therapy',
+        org: 'Inselspital / University of Bern',
+        talk: '"AI in Radiation Oncology – from data to applications"',
+        bio: 'Prof. Sarah Brüningk is leading the Center for AI in Radiation Oncology at the University Hospital Bern and the University of Bern, Switzerland. She is a physicist by training (TU Munich, Germany) and completed a PhD at the intersection of practical wet lab and computational biology at the Institute of Cancer Research (UK) before moving to ETH Zurich as a postdoctoral researcher focusing on AI for biomedical applications. Her research harnesses combinations of mathematical modelling and advanced machine learning to process multimodal data spanning from omics to imaging for applications in oncology and pediatric digital health.'
+      },
+      beldi: {
+        img: 'assets/speakers/BeldiGuido.jpg',
+        name: 'Prof. Guido Beldi',
+        role: 'Chief Physician, Visceral Surgery and Medicine',
+        org: 'Inselspital, Bern',
+        talk: '"Title TBC"',
+        bio: 'Prof. Guido Beldi is the chief physician of Visceral Surgery and Medicine at Inselspital Bern. He is a leading surgeon whose research interests include AI-assisted surgical decision support, peri-operative risk modelling and the use of real-world data to improve outcomes in abdominal oncology.'
+      },
+      shi: {
+        img: 'assets/speakers/shikuangyu.jpg',
+        name: 'Prof. Shi Kuangyu',
+        role: 'Chief Medical Physicist, Artificial Intelligence and Translational Theranostics',
+        org: 'Inselspital / University of Bern',
+        talk: '"Potential of AI in Nuclear Medicine Imaging & Therapy"',
+        bio: 'Prof. Kuangyu Shi is the Chief Medical Physicist and Head of the Lab for Artificial Intelligence and Translational Theranostics at the Department of Nuclear Medicine, University of Bern. He is also a senior lecturer at TU Munich. His research advances AI and computational modeling for nuclear medicine imaging, dosimetry and therapy, linking outcomes with underlying pathophysiology, and developing in vivo and ex vivo experimental methods for microscopic nuclear imaging. He is involved with EANM AI initiatives and ICRP task groups and serves on editorial boards in the field.'
+      },
+      wicki: {
+        img: 'assets/speakers/andreaswicki.jpg',
+        name: 'Prof. Andreas Wicki',
+        role: 'Senior Physician, Medical Oncology and Hematology',
+        org: 'USZ Zurich',
+        talk: '"Title TBC"',
+        bio: 'Prof. Andreas Wicki is a senior oncologist and haematologist at University Hospital Zurich, with a focus on targeted therapies and AI-driven approaches to treatment stratification. His translational research investigates biomarkers and computational tools to guide personalised cancer therapy.'
+      },
+      britt: {
+        img: 'assets/speakers/chantalbrittheadshotv2.jpg',
+        name: 'Chantal Britt',
+        role: 'Patient Expert',
+        org: 'Bern University of Applied Sciences, SPO, Swiss PPIE Network',
+        talk: '"Views and priorities of a patient and next of kin"',
+        bio: 'Chantal Britt holds an MA in Translation from the University of Geneva. She worked 13 years as a financial and science journalist at Bloomberg News and Swissinfo.ch, then a decade in science communication and public affairs for non-profits across health and research. After developing long Covid in 2020, she co-founded Long Covid Switzerland and chairs Long COVID Europe. She contributes to patient involvement, citizen science, and participatory research, and serves on several patient advisory and network boards in Switzerland.'
+      },
+      stavroula: {
+        img: 'assets/speakers/stavroula.jpg',
+        name: 'Prof. Stavroula Mougiakakou',
+        role: 'Group Head, ARTORG Center for Biomedical Engineering Research',
+        org: 'University of Bern',
+        talk: '"Title TBC"',
+        bio: 'Stavroula G. Mougiakakou is an Associate Professor and holds a Ph.D. degree in computer engineering from the National Technical University of Athens. Since 2008 she is affiliated with the Faculty of Medicine, University of Bern and Head of the AI in Health and Nutrition Laboratory (former Diabetes Technology Research Group) at the ARTORG Center for Biomedical Engineering Research Bern, Switzerland. Her current research interests include artificial intelligence, machine learning, computer vision and advanced data analysis to improve health by providing solutions for better diagnosis, personalized treatment and dietary assessment.'
+      },
+      reyes: {
+        img: 'assets/speakers/mreyesportraitv2.jpg',
+        name: 'Prof. Mauricio Reyes',
+        role: 'Group Head, ARTORG Center for Biomedical Engineering Research',
+        org: 'University of Bern',
+        talk: '"Designing AI Cancer Solutions with Robustness in Mind"',
+        bio: 'Professor Mauricio Reyes began his academic journey in 2003 when he was awarded a French-Chilean scholarship to conduct his PhD studies at INRIA, France. His research focused on AI technologies to improve cancer workflows and led to novel image reconstruction techniques for respiratory motion compensation in PET imaging. Through EU-funded projects, he developed AI solutions for neuro-oncology, with a focus on automated brain tumor assessment. He received the MICCAI Young Scientist Publication award in 2016 and has pioneered robust and explainable AI in medical image analysis.'
+      },
+      stickel: {
+        img: 'assets/speakers/michaelstickel2.jpg',
+        name: 'Dr. Michael Stickel',
+        role: 'Chief Medical Information Officer',
+        org: 'Inselspital, Bern',
+        talk: '"AI in Epic: What\'s Real, What\'s Next?"',
+        bio: 'Dr. Michael Stickel is Chief Medical Information Officer (CMIO) at the Insel Gruppe in Bern, where he leads the strategic integration of clinical practice and digital health systems. With a background in surgery and emergency medicine, he brings extensive frontline clinical experience to the development and implementation of hospital information systems. He has been closely involved in large-scale electronic health record implementations, including EPIC-based systems, and holds advanced certifications in health informatics, clinical documentation, and SNOMED CT. His work focuses on aligning digital innovation with clinical work.'
       }
+      };
 
-      cards.forEach(c => c.classList.remove('is-active'));
-      card.classList.add('is-active');
-
-      carousel.classList.add('has-active');
-
-      detailsName.textContent = speaker.name;
-      detailsMeta.textContent = speaker.meta;
-      detailsBio.textContent = speaker.bio;
-
-      details.classList.add('is-open');
-      activeCard = card;
-    });
-  });
-
-  document.addEventListener('click', (e) => {
-    const insideCard = e.target.closest('.speaker-card');
-    const insideDetails = e.target.closest('#speakerDetails');
-    if (!insideCard && !insideDetails) closeDetails();
-  });
-})();
-</script>
-
-<script>
-/* =========================
-   SPEAKERS: ARROWS
-   Desktop = translateX
-   Mobile = native scrollBy (swipe still works)
-========================= */
-(function(){
-  const section = document.querySelector('.speakers-carousel');
-  if (!section) return;
-
-  const viewport = section.querySelector('.carousel-viewport');
-  const track = section.querySelector('.carousel-track');
-  const cards = Array.from(section.querySelectorAll('.speaker-card'));
-  const prev = section.querySelector('.speakers-btn.prev');
-  const next = section.querySelector('.speakers-btn.next');
-
-  if (!viewport || !track || !cards.length || !prev || !next) return;
-
-  let index = 0;
-
-  function gapPx(){
-    const styles = getComputedStyle(track);
-    return parseFloat(styles.gap || '0') || 0;
-  }
-
-  function cardWidth(){
-    return cards[0].getBoundingClientRect().width || 0;
-  }
-
-  function cardsPerView(){
-    const w = window.innerWidth;
-    if (w <= 520) return 1;
-    if (w <= 820) return 2;
-    if (w <= 1100) return 3;
-    return 4;
-  }
-
-  function maxIndex(){
-    return Math.max(0, cards.length - cardsPerView());
-  }
-
-  function updateDesktop(){
-    index = Math.min(Math.max(index, 0), maxIndex());
-    const x = index * (cardWidth() + gapPx());
-    track.style.transform = `translateX(${-x}px)`;
-  }
-
-  function isMobile(){
-    return window.innerWidth <= 820;
-  }
-
-  prev.addEventListener('click', () => {
-    if (isMobile()){
-      viewport.scrollBy({ left: -(cardWidth() + gapPx()), behavior: 'smooth' });
-    } else {
-      index -= 1;
-      updateDesktop();
+    function openBio(key) {
+      const d = bioData[key];
+      if (!d) return;
+      document.getElementById('bioImg').src = d.img;
+      document.getElementById('bioName').textContent = d.name;
+      document.getElementById('bioRole').textContent = d.role;
+      document.getElementById('bioOrg').textContent = d.org;
+      document.getElementById('bioTalk').textContent = d.talk;
+      document.getElementById('bioBio').textContent = d.bio;
+      document.getElementById('bioOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
-  });
-
-  next.addEventListener('click', () => {
-    if (isMobile()){
-      viewport.scrollBy({ left: (cardWidth() + gapPx()), behavior: 'smooth' });
-    } else {
-      index += 1;
-      updateDesktop();
+    function closeBio() {
+      document.getElementById('bioOverlay').classList.remove('open');
+      document.body.style.overflow = '';
     }
-  });
-
-  window.addEventListener('resize', () => {
-    // reset desktop transform when switching to mobile
-    if (isMobile()){
-      track.style.transform = '';
-      index = 0;
-    } else {
-      updateDesktop();
+    function closeBioIfBg(e) {
+      if (e.target === document.getElementById('bioOverlay')) closeBio();
     }
-  }, { passive: true });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBio(); });
 
-  if (!isMobile()) updateDesktop();
-})();
-</script>
+    // Speakers carousel
+    let carouselIndex = 0;
+    function slideCarousel(dir) {
+      const track = document.getElementById('speakersTrack');
+      const cards = track.querySelectorAll('.speaker-card');
+      const viewport = document.getElementById('speakersCarousel');
+      const cardWidth = cards[0].offsetWidth + 16;
+      const visible = Math.max(1, Math.round(viewport.clientWidth / cardWidth));
+      const max = Math.max(0, cards.length - visible);
+      carouselIndex = Math.max(0, Math.min(carouselIndex + dir, max));
+      track.style.transform = `translateX(-${carouselIndex * cardWidth}px)`;
+    }
+    window.addEventListener('resize', () => slideCarousel(0));
+
+    // Highlights carousel with auto-advance
+    let hlIndex = 0;
+    const hlTotal = 4;
+    const hlMax = hlTotal - 3;
+
+    function updateHighlights() {
+      const track = document.getElementById('highlightsTrack');
+      const cards = track.querySelectorAll('.hl-card');
+      if (!cards.length) return;
+      const cardWidth = cards[0].offsetWidth + 20;
+      track.style.transform = `translateX(-${hlIndex * cardWidth}px)`;
+      document.querySelectorAll('.hl-dot').forEach((d, i) => d.classList.toggle('active', i === hlIndex));
+    }
+    function slideHighlights(dir) {
+      hlIndex = (hlIndex + dir + hlTotal) % hlTotal;
+      if (hlIndex > hlMax) hlIndex = 0;
+      updateHighlights();
+    }
+    function goHighlight(i) {
+      hlIndex = Math.min(i, hlMax);
+      updateHighlights();
+    }
+    // AI nodes animation
+    (function() {
+      const canvas = document.getElementById('nodesCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let nodes = [];
+      const NUM = 40;
+      function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+      resize();
+      window.addEventListener('resize', resize);
+      for (let i = 0; i < NUM; i++) {
+        nodes.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx:(Math.random()-0.5)*0.4, vy:(Math.random()-0.5)*0.4, r:Math.random()*2.5+1.5 });
+      }
+      function draw() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        for (let i=0;i<nodes.length;i++) for (let j=i+1;j<nodes.length;j++) {
+          const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y, dist=Math.sqrt(dx*dx+dy*dy);
+          if (dist<140) { ctx.beginPath(); ctx.strokeStyle=`rgba(200,169,110,${0.18*(1-dist/140)})`; ctx.lineWidth=0.8; ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y); ctx.stroke(); }
+        }
+        nodes.forEach(n => {
+          ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2); ctx.fillStyle='rgba(200,169,110,0.55)'; ctx.fill();
+          n.x+=n.vx; n.y+=n.vy;
+          if(n.x<0||n.x>canvas.width) n.vx*=-1;
+          if(n.y<0||n.y>canvas.height) n.vy*=-1;
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    setInterval(() => slideHighlights(1), 4000);
+    window.addEventListener('resize', updateHighlights);
+  </script>
+
 </body>
 </html>
