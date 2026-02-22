@@ -18,7 +18,7 @@
       --dark:       #0D0C1D;
       --white:      #FFFFFF;
       --muted:      rgba(255,255,255,0.65);
-      --off-white:  #FAF9FF;
+      --off-white:  #FAF6F0;
     }
 
     html, body {
@@ -114,7 +114,7 @@
       transition: color 0.2s;
       letter-spacing: 0.2px;
     }
-    .nav-links li a:hover { color: var(--gold); }
+    .nav-links li a:hover { color: #D4600A; }
 
     .nav-links li a svg {
       width: 11px; height: 11px;
@@ -215,10 +215,10 @@
     .hero-cta-group {
       display: inline-flex;
       align-items: center;
-      gap: 55px;
-      padding: 6px 6px 6px 36px;
+      gap: 48px;
+      padding: 14px 14px 14px 36px;
       background: rgba(10, 8, 30, 0.65);
-      border: 1px solid rgba(255,255,255,0.10);
+      border: 1.5px solid rgba(255,255,255,0.18);
       border-radius: 80px;
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
@@ -234,11 +234,7 @@
     }
 
     .cta-bar {
-      width: 3px;
-      height: 50px;
-      background: linear-gradient(to bottom,#CC0000,#F5820A);
-      border-radius: 2px;
-      flex-shrink: 0;
+      display: none;
     }
 
     .cta-meta {
@@ -249,7 +245,7 @@
     .cta-meta strong {
       font-size: 16px;
       font-weight: 700;
-      color: var(--gold);
+      color: #D4600A;
       letter-spacing: 1.2px;
       text-transform: uppercase;
     }
@@ -265,11 +261,11 @@
       background: linear-gradient(110deg,#CC0000,#F5820A);
       color: var(--white);
       border: none;
-      padding: 10px 36px;
-      font-size: 18px;
+      padding: 10px 28px;
+      font-size: 15px;
       border-radius: 50px;
       font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
       transition: opacity 0.2s, transform 0.15s;
@@ -323,22 +319,21 @@
     .carousel-arrow{
       background: none;
       border: none;
-      font-size: 50px;
-      font-weight: 200;
+      font-size: 36px;
+      font-weight: 100;
       color: #CC0000;
       cursor: pointer;
       padding: 0 4px;
       flex-shrink: 0;
-      opacity: 0.85;
-      transition: opacity 0.2s, color 0.2s;
+      opacity: 0.55;
+      transition: opacity 0.2s;
       line-height: 1;
       user-select: none;
-
-      /* ensure arrows sit above the moving track and remain clickable */
       position: relative;
       z-index: 5;
       pointer-events: auto;
     }
+    .carousel-arrow:hover { opacity: 1; }
 
     .speakers-carousel{
       /* viewport */
@@ -367,13 +362,15 @@
       padding: 12px 12px 18px;
       box-sizing: border-box;
 
-      border: none;
+      /* Always reserve 2px border to prevent layout shift on hover */
+      border: 2px solid transparent;
       transition: background .18s ease, border-color .18s ease; /* no zoom */
       position: relative;
     }
 
     /* Gradient stroke on hover (red → orange) */
-    .speaker-card:hover{border: 1px solid transparent;
+    .speaker-card:hover {
+      border: 2px solid transparent;
       background:
         linear-gradient(#FFF9F4, #FFF9F4) padding-box,
         linear-gradient(180deg, #eb001e, #f59d0f) border-box;
@@ -422,6 +419,53 @@
       font-size: 14px;
       font-weight: 700;
       color: #1a1a2e;
+    }
+
+    /* ── VIEW ALL SPEAKERS BUTTON ────────────────────────── */
+    .speakers-view-all-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 36px;
+    }
+    .btn-view-all-speakers {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 2px solid transparent;
+      background-image:
+        linear-gradient(#fff, #fff),
+        linear-gradient(110deg, #CC0000, #F5820A);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      color: #CC0000;
+      padding: 13px 36px;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-image 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px rgba(204,0,0,0.15);
+    }
+    .btn-view-all-speakers:hover {
+      background-image:
+        linear-gradient(110deg, #CC0000, #F5820A),
+        linear-gradient(110deg, #CC0000, #F5820A);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(204,0,0,0.28);
+    }
+    .btn-view-all-speakers svg {
+      width: 16px; height: 16px;
+      transition: transform 0.2s;
+    }
+    .btn-view-all-speakers:hover svg { transform: translateX(3px); }
+
+    @media (max-width: 767px) {
+      .speakers-view-all-wrap { margin-top: 24px; padding: 0 16px; }
+      .btn-view-all-speakers { font-size: 15px; padding: 12px 32px; width: 100%; justify-content: center; max-width: 340px; }
     }
 
     /* ── INTRO SECTION ──────────────────────────────────── */
@@ -563,18 +607,26 @@
     .highlights-track {
       display: flex;
       gap: 20px;
-      transition: transform 0.5s ease;
+      transition: transform 0.9s ease;
     }
     .hl-card {
       flex: 0 0 calc((100% - 40px) / 3);
       background: #fff;
       border-radius: 16px;
-      overflow: hidden;
+      border: 2px solid transparent;
+      transition: background 0.18s ease;
+      cursor: default;
+    }
+    .hl-card:hover {
+      background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(180deg, #eb001e, #f59d0f) border-box;
     }
     .hl-img {
-      width: 100%;
-      height: 220px;
+      border-radius: 14px 14px 0 0;
       overflow: hidden;
+      width: 100%;
+      height: 160px;
     }
     .hl-img img {
       width: 100%;
@@ -622,29 +674,29 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-    .hl-dot.active { background: #CC0000; }
+    .hl-dot.active { background: #E6002E; }
 
     /* ── PROGRAM SECTION ──────────────────────────────────── */
     .program {
-      background: linear-gradient(160deg, #0D0C1D 0%, #1a1040 50%, #1d130c 100%);
+      background: #E6002E;
       padding: 80px 0;
       position: relative;
       overflow: hidden;
-    }
-    .program::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(circle at 20% 40%, rgba(123,82,244,0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 60%, rgba(204,0,0,0.10) 0%, transparent 50%);
-      pointer-events: none;
     }
     .program-inner {
       padding: 0 15%;
       box-sizing: border-box;
       position: relative;
       z-index: 1;
+    }
+    /* Subtle dark panel behind content — aids legibility without blurring bg */
+    .program-panel {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+      border: none;
+      border-radius: 24px;
+      padding: 48px 52px;
     }
     .program-title {
       font-size: clamp(28px, 3.5vw, 44px);
@@ -655,7 +707,7 @@
     }
     .program-sub {
       font-size: 15px;
-      color: rgba(255,255,255,0.55);
+      color: rgba(255,255,255,0.85);
       text-align: center;
       margin-bottom: 48px;
       letter-spacing: 0.5px;
@@ -684,7 +736,7 @@
     .program-time {
       font-size: 15px;
       font-weight: 700;
-      color: var(--gold);
+      color: rgba(255,255,255,0.70);
       width: 52px;
       flex-shrink: 0;
       padding-top: 2px;
@@ -709,14 +761,14 @@
       line-height: 1.7;
     }
     .program-mod strong { color: rgba(255,255,255,0.85); }
-    .program-item--break .program-name { color: var(--gold); font-weight: 500; }
+    .program-item--break .program-name { color: rgba(255,255,255,0.65); font-weight: 500; }
     .program-item--break { opacity: 0.8; }
 
     .btn-download-program {
       display: inline-flex;
       align-items: center;
       background: transparent;
-      border: 1.5px solid rgba(255,255,255,0.3);
+      border: 1.5px solid rgba(255,255,255,0.5);
       color: #fff;
       text-decoration: none;
       padding: 14px 36px;
@@ -726,8 +778,8 @@
       transition: background 0.2s, border-color 0.2s;
     }
     .btn-download-program:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.85);
     }
 
     /* ── SPONSORS SECTION ──────────────────────────────────── */
@@ -748,28 +800,38 @@
     }
     .sponsors-tabs {
       display: inline-flex;
-      background: #f0f0f0;
-      border-radius: 50px;
-      padding: 4px;
-      gap: 4px;
+      gap: 36px;
       margin-bottom: 44px;
+      position: relative;
     }
     .stab {
       background: none;
       border: none;
-      padding: 10px 28px;
-      border-radius: 50px;
+      padding: 0 0 14px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
+      font-size: 17px;
       font-weight: 600;
-      color: #666;
+      color: #bbb;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      transition: color 0.2s;
+      position: relative;
+      letter-spacing: 0.2px;
+    }
+    .stab::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #CC0000, #F5820A);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
     }
     .stab.active {
-      background: #fff;
       color: #1a1a2e;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    }
+    .stab.active::after {
+      transform: scaleX(1);
     }
     .sponsors-panel { display: none; }
     .sponsors-panel.active { display: block; }
@@ -801,18 +863,35 @@
     .sponsor-logo:hover img { filter: grayscale(0%); }
     .sponsors-cta { margin-top: 8px; }
     .btn-sponsor {
-      display: inline-block;
-      background: linear-gradient(110deg, #CC0000, #F5820A);
-      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 2px solid transparent;
+      background-image:
+        linear-gradient(#fff, #fff),
+        linear-gradient(110deg, #CC0000, #F5820A);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      color: #CC0000;
       text-decoration: none;
-      padding: 16px 44px;
+      padding: 13px 36px;
       border-radius: 50px;
-      font-size: 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
       font-weight: 600;
-      transition: opacity 0.2s, transform 0.15s;
-      box-shadow: 0 4px 20px rgba(204,0,0,0.3);
+      cursor: pointer;
+      transition: background-image 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px rgba(204,0,0,0.15);
     }
-    .btn-sponsor:hover { opacity: 0.9; transform: scale(1.02); }
+    .btn-sponsor:hover {
+      background-image:
+        linear-gradient(110deg, #CC0000, #F5820A),
+        linear-gradient(110deg, #CC0000, #F5820A);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(204,0,0,0.28);
+    }
 
     .sponsors-coming {
       font-size: 14px;
@@ -976,17 +1055,17 @@
       text-decoration: none;
       transition: color 0.2s;
     }
-    .footer-link:hover { color: #CC0000; }
+    .footer-link:hover { color: #D4600A; }
     .footer-link-cta {
       font-size: 13px;
       font-weight: 700;
-      color: var(--purple);
+      color: #CC0000;
       text-decoration: none;
       letter-spacing: 0.8px;
       text-transform: uppercase;
       transition: color 0.2s;
     }
-    .footer-link-cta:hover { color: #CC0000; }
+    .footer-link-cta:hover { color: #D4600A; }
     .footer-social-row {
       display: flex;
       gap: 16px;
@@ -1005,7 +1084,7 @@
       transition: background 0.2s;
     }
     .footer-social svg { width: 18px; height: 18px; }
-    .footer-social:hover { background: #CC0000; }
+    .footer-social:hover { background: #E6002E; }
     .footer-note {
       font-size: 13px;
       color: #888;
@@ -1082,7 +1161,7 @@
       transform-origin: center;
       transition: transform 0.35s ease, opacity 0.25s ease, background 0.3s ease;
     }
-    .hamburger span:nth-child(1) { background: #CC0000; }
+    .hamburger span:nth-child(1) { background: #E6002E; }
     .hamburger span:nth-child(2) { background: #D94000; }
     .hamburger span:nth-child(3) { background: #F5820A; }
     /* X state */
@@ -1117,7 +1196,7 @@
     .mobile-menu-top {
       display: flex; align-items: center;
       justify-content: flex-start;
-      height: 74px; flex-shrink: 0;
+      height: 86px; flex-shrink: 0;
     }
     .mobile-menu-logo img { height: 28px; filter: brightness(0) invert(1); }
     /* Close button hidden — nav hamburger handles close */
@@ -1194,7 +1273,7 @@
     }
     @media (max-width: 767px) {
       /* Nav */
-      nav { padding: 0 16px; height: 74px; }
+      nav { padding: 0 16px; height: 86px; }
       .nav-links { display: none; }
       .brand-meta { display: none; }
       .brand-divider { display: none; }
@@ -1272,15 +1351,16 @@
 
       /* One card visible + peek of next */
       .speaker-card{
-        flex: 0 0 79vw;
-        max-width: 220px;
+        flex: 0 0 82vw;
+        max-width: 240px;
         min-height: auto;
-        padding: 8px 8px 14px;
+        padding: 10px 10px 16px;
         border-radius: 14px;
         scroll-snap-align: start;
+        border: 2px solid transparent;
       }
 
-      .speaker-img{ height: 185px; margin-bottom: 12px; border-radius: 12px; }
+      .speaker-img{ height: 200px; margin-bottom: 12px; border-radius: 12px; }
       .speaker-img img{ transform: scale(1.25) !important; transition: none !important; }
 
       .speaker-name{ font-size: 18px; margin-bottom: 6px; line-height: 1.3; }
@@ -1300,7 +1380,7 @@
       /* Program */
       .program { padding: 44px 0 60px; }
       .program-inner { padding: 0 20px; }
-      .program-sub { margin-bottom: 40px; }
+      .program-panel { padding: 28px 20px; border-radius: 16px; }      .program-sub { margin-bottom: 40px; }
       .program-scroll { max-height: 380px; }
       .program-item { gap: 16px; padding: 16px 0; }
       .program-time { font-size: 17px; width: 52px; }
@@ -1440,14 +1520,6 @@
     </div>
   </section>
 
-  <!-- ── COMMUNITY SECTION ── -->
-  <section class="community">
-    <p class="community-label">Our Community</p>
-    <div class="community-placeholder">
-      <!-- Add your logos or content here -->
-    </div>
-  </section>
-
   <!-- ── INTRO SECTION ── -->
   <section class="intro" id="about">
     <div class="intro-inner">
@@ -1558,13 +1630,18 @@
         </div>
         <button class="carousel-arrow carousel-next" onclick="slideCarousel(1)">&#8250;</button>
       </div>
+
+      <div class="speakers-view-all-wrap">
+        <a href="#speakers" class="btn-view-all-speakers">
+          View All Speakers
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
     </div>
   </section>
-
-  <!-- ── PROGRAM SECTION ── -->
   <section class="program" id="agenda">
-    <canvas id="nodesCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.55;"></canvas>
     <div class="program-inner">
+      <div class="program-panel">
       <h2 class="program-title">Program</h2>
       <p class="program-sub">30 April 2026 | 14H35 - 16H30 | Inselspital, Bern</p>
       <div class="program-scroll">
@@ -1623,6 +1700,7 @@
           Download Full Program
         </a>
       </div>
+      </div>
     </div>
   </section>
   <section class="sponsors" id="sponsors">
@@ -1634,7 +1712,7 @@
       </div>
       <div class="sponsors-panel active" id="tab-sponsors">
         <p class="sponsors-coming">Sponsors to be announced soon</p>
-        <div class="sponsors-grid">
+        <div class="sponsors-grid" style="display:none;">
           <div class="sponsor-logo"><img src="assets/sponsors/sponsor1.svg" alt="Sponsor 1"/></div>
           <div class="sponsor-logo"><img src="assets/sponsors/sponsor2.svg" alt="Sponsor 2"/></div>
           <div class="sponsor-logo"><img src="assets/sponsors/sponsor3.svg" alt="Sponsor 3"/></div>
@@ -1648,7 +1726,7 @@
         </div>
       </div>
       <div class="sponsors-panel" id="tab-partners" data-hide-cta="true">
-        <div class="sponsors-grid">
+        <div class="sponsors-grid" style="display:none;">
           <div class="sponsor-logo"><img src="assets/partners/partner1.svg" alt="Partner 1"/></div>
           <div class="sponsor-logo"><img src="assets/partners/partner2.svg" alt="Partner 2"/></div>
           <div class="sponsor-logo"><img src="assets/partners/partner3.svg" alt="Partner 3"/></div>
@@ -1662,7 +1740,10 @@
         </div>
       </div>
       <div class="sponsors-cta">
-        <a href="#" class="btn-sponsor">Become a Sponsor</a>
+        <a href="#" class="btn-sponsor">
+          Become a Sponsor
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;transition:transform 0.2s;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </div>
     </div>
   </section>
@@ -1693,11 +1774,11 @@
               </div>
             </div>
             <div class="hl-card">
-              <div class="hl-img"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80" alt="Networking"/></div>
+              <div class="hl-img"><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" alt="Trade Display"/></div>
               <div class="hl-body">
-                <div class="hl-label">Spotlight</div>
-                <div class="hl-name">Apéro &amp; Innovation Fair</div>
-                <p class="hl-desc">Close the day by connecting with researchers, clinicians, and industry leaders over drinks. Explore live demos from the most exciting organisations in oncology AI.</p>
+                <div class="hl-label">All Afternoon</div>
+                <div class="hl-name">Trade Display</div>
+                <p class="hl-desc">Running throughout the entire afternoon, the Trade Display showcases live demos and exhibits from the leading organisations driving AI forward in oncology. Come explore, ask questions, and discover what's next.</p>
               </div>
             </div>
             <div class="hl-card">
@@ -1706,6 +1787,14 @@
                 <div class="hl-label">Spotlight</div>
                 <div class="hl-name">Ethics &amp; AI Governance</div>
                 <p class="hl-desc">A critical examination of bias, accountability and the responsible deployment of AI in clinical oncology, designing cancer AI solutions with robustness in mind.</p>
+              </div>
+            </div>
+            <div class="hl-card">
+              <div class="hl-img"><img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80" alt="Networking Apero"/></div>
+              <div class="hl-body">
+                <div class="hl-label">Social</div>
+                <div class="hl-name">Networking Apéro</div>
+                <p class="hl-desc">Close the day by connecting with researchers, clinicians and industry leaders over drinks. An informal setting to spark new collaborations and conversations.</p>
               </div>
             </div>
           </div>
@@ -1717,6 +1806,7 @@
         <span class="hl-dot" onclick="goHighlight(1)"></span>
         <span class="hl-dot" onclick="goHighlight(2)"></span>
         <span class="hl-dot" onclick="goHighlight(3)"></span>
+        <span class="hl-dot" onclick="goHighlight(4)"></span>
       </div>
     </div>
   </section>
@@ -1958,7 +2048,7 @@
 
     // Highlights carousel with auto-advance
     let hlIndex = 0;
-    const hlTotal = 4;
+    const hlTotal = 5;
 
     function getHlVisible() {
       const track = document.getElementById('highlightsTrack');
@@ -1993,37 +2083,7 @@
       hlIndex = Math.min(i, getHlMax());
       updateHighlights();
     }
-    // AI nodes animation
-    (function() {
-      const canvas = document.getElementById('nodesCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      let nodes = [];
-      const NUM = 40;
-      function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
-      resize();
-      window.addEventListener('resize', resize);
-      for (let i = 0; i < NUM; i++) {
-        nodes.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx:(Math.random()-0.5)*0.4, vy:(Math.random()-0.5)*0.4, r:Math.random()*2.5+1.5 });
-      }
-      function draw() {
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        for (let i=0;i<nodes.length;i++) for (let j=i+1;j<nodes.length;j++) {
-          const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y, dist=Math.sqrt(dx*dx+dy*dy);
-          if (dist<140) { ctx.beginPath(); ctx.strokeStyle=`rgba(200,169,110,${0.18*(1-dist/140)})`; ctx.lineWidth=0.8; ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y); ctx.stroke(); }
-        }
-        nodes.forEach(n => {
-          ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2); ctx.fillStyle='rgba(200,169,110,0.55)'; ctx.fill();
-          n.x+=n.vx; n.y+=n.vy;
-          if(n.x<0||n.x>canvas.width) n.vx*=-1;
-          if(n.y<0||n.y>canvas.height) n.vy*=-1;
-        });
-        requestAnimationFrame(draw);
-      }
-      draw();
-    })();
-
-    setInterval(() => slideHighlights(1), 4000);
+        setInterval(() => slideHighlights(1), 7000);
     window.addEventListener('resize', updateHighlights);
 
     // Touch swipe — Speakers (smooth live drag, desktop only — mobile uses native scroll)
