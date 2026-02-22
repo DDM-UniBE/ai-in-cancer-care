@@ -1078,6 +1078,11 @@
       transform-origin: center;
       transition: transform 0.35s ease, opacity 0.25s ease, background 0.3s ease;
     }
+
+    .hamburger span { background: rgba(255,255,255,0.95); }
+    .hamburger.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2){ opacity: 0; transform: scaleX(0.6); }
+    .hamburger.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
     .hamburger span:nth-child(1) { background: #CC0000; }
     .hamburger span:nth-child(2) { background: #D94000; }
     .hamburger span:nth-child(3) { background: #F5820A; }
@@ -1192,10 +1197,11 @@
     }
     @media (max-width: 767px) {
       /* Nav */
-      nav { padding: 0 16px; height: 60px; }
+      nav { padding: 0 16px; height: 74px; }
       .nav-links { display: none; }
       .brand-meta { display: none; }
       .brand-divider { display: none; }
+      .brand-logo img { height: 36px; }
       .hamburger { display: flex; }
 
       /* Hero — centred */
@@ -1216,14 +1222,17 @@
       .cta-bar { display: none; }
       .cta-left { align-items: center; }
       .cta-meta { text-align: center; }
-      .btn-cta { width: 100%; text-align: center; font-size: 17px; padding: 16px 32px; border-radius: 50px; }
+      .btn-cta { width: fit-content; max-width: 100%; text-align: center; font-size: 17px; padding: 16px 30px; border-radius: 50px; }
 
       /* Intro */
       .intro-inner { padding: 0 20px; }
       .intro-body { grid-template-columns: 1fr; gap: 32px; }
-      .intro-images { grid-template-columns: 1fr; height: 260px; }
-      .intro-img-stack { display: none; }
-      .intro-title { font-size: clamp(28px,7vw,40px); }
+      .intro-images { grid-template-columns: 1fr; height: auto; gap: 12px; }
+      .intro-img-large { display: none; }
+      .intro-img-stack { display: flex; flex-direction: column; gap: 12px; }
+      .intro-img-stack .intro-img { height: 190px; }
+      .intro-img { height: auto; }
+      .intro-title { font-size: clamp(28px,7vw,40px); margin-bottom: 24px; }
 
       /* Speakers — swipe-only on mobile */
       .speakers-inner { padding: 0; }
@@ -1247,9 +1256,10 @@
         padding-right: 20px; /* breathing room at the end */
       }
       .speaker-card{
-        flex: 0 0 72%;
+        flex: 0 0 calc((100% - 12px) / 2);
         scroll-snap-align: start;
       }
+      .speaker-img{ height: 170px; margin-bottom: 12px; }
 
 /* Program */
       .program-inner { padding: 0 20px; }
@@ -1260,6 +1270,7 @@
       .program-name { font-size: 16px; }
 
       /* Sponsors */
+      .sponsors { padding: 48px 0; }
       .sponsors-inner { padding: 0 20px; }
       .sponsors-title { font-size: 26px; }
       .sponsors-grid { gap: 20px 28px; }
@@ -1517,7 +1528,7 @@
     <canvas id="nodesCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.55;"></canvas>
     <div class="program-inner">
       <h2 class="program-title">Program</h2>
-      <p class="program-sub">30 April 2026 | 14H35 - 18H30 | Inselspital, Bern</p>
+      <p class="program-sub">30 April 2026 — Inselspital, Bern</p>
       <div class="program-scroll">
         <div class="program-item">
           <div class="program-time">14:30</div>
@@ -1622,7 +1633,7 @@
   <section class="highlights" id="highlights">
     <div class="highlights-inner">
       <h2 class="highlights-title">Highlights &amp; Key Moments</h2>
-      <p class="highlights-sub">The AI in Cancer Care Symposium 2026 is packed with keynote talks, expert panels, and real-world insights shaping the future of AI in oncology.</p>
+      <p class="highlights-sub">The AI in Cancer Care Symposium 2026 is packed with inspiring talks, workshops and surprises around every corner.</p>
       <div class="highlights-carousel-wrap">
         <button class="hl-arrow hl-prev" onclick="slideHighlights(-1)">&#8249;</button>
         <div class="highlights-viewport">
@@ -1632,7 +1643,7 @@
               <div class="hl-body">
                 <div class="hl-label">Spotlight</div>
                 <div class="hl-name">Opening Keynote</div>
-                <p class="hl-desc">A visionary opening session exploring how agentic AI systems are transforming oncology, setting the stage for the future of autonomous AI in cancer diagnosis and treatment.</p>
+                <p class="hl-desc">A visionary opening session exploring how agentic AI systems are transforming oncology — setting the stage for the future of autonomous AI in cancer diagnosis and treatment.</p>
               </div>
             </div>
             <div class="hl-card">
@@ -1640,7 +1651,7 @@
               <div class="hl-body">
                 <div class="hl-label">Spotlight</div>
                 <div class="hl-name">Patient Perspectives: Reality Check</div>
-                <p class="hl-desc">A grounding and powerful session sharing the views and priorities of patients and their next of kin, exploring what AI-driven care truly means for those living with cancer.</p>
+                <p class="hl-desc">A grounding and powerful session sharing the views and priorities of patients and their next of kin — exploring what AI-driven care truly means for those living with cancer.</p>
               </div>
             </div>
             <div class="hl-card">
@@ -1656,7 +1667,7 @@
               <div class="hl-body">
                 <div class="hl-label">Spotlight</div>
                 <div class="hl-name">Ethics &amp; AI Governance</div>
-                <p class="hl-desc">A critical examination of bias, accountability and the responsible deployment of AI in clinical oncology, designing cancer AI solutions with robustness in mind.</p>
+                <p class="hl-desc">A critical examination of bias, accountability and the responsible deployment of AI in clinical oncology — designing cancer AI solutions with robustness in mind.</p>
               </div>
             </div>
           </div>
