@@ -287,7 +287,7 @@
     }
 
     .speakers-inner {
-      padding: 0 20px;
+      padding: 0 4px;
       width: 100%;
       box-sizing: border-box;
     }
@@ -298,6 +298,7 @@
       color: #1a1a2e;
       text-align: center;
       margin-bottom: 12px;
+      padding: 0 40px;
     }
 
     .speakers-sub {
@@ -308,7 +309,8 @@
       max-width: 980px;
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 52px;
+      margin-bottom: 48px;
+      padding: 0 40px;
     }
 
     .speakers-carousel-wrap{
@@ -344,7 +346,7 @@
       overflow: hidden;
       flex: 1;
       z-index: 1;
-      padding: 20px 30px; 
+      padding: 20px 8px; 
     }
 
     .speakers-track{
@@ -356,7 +358,7 @@
     }
 
     .speaker-card {
-      flex: 0 0 calc((100% - (12px * 5)) / 6.5); /* narrower cards */
+      flex: 0 0 calc((100% - (12px * 5)) / 6); /* exactly 6 cards */
       min-width: 0;
 
       /* warmer, less-white card */
@@ -379,7 +381,7 @@
 
     .speaker-img {
       width: 100%;
-      height: 240px;
+      height: 190px;
       border-radius: 12px;
       overflow: hidden;
       margin-bottom: 16px;
@@ -393,7 +395,7 @@
       object-position: 50% 10%;
       transform-origin: 50% 15%;
       display: block;
-      transform: scale(1);
+      transform: scale(1.32);
       transition: none;
     }
 
@@ -1169,7 +1171,7 @@
       .intro-inner, .program-inner, .sponsors-inner, .footer-inner { padding-left: 12%; padding-right: 12%; }
       .highlights-inner { padding: 0 10%; }
       .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px 48px; }
-      .speaker-card { flex: 0 0 calc((100% - 64px) / 4.5); }
+      .speaker-card { flex: 0 0 calc((100% - 64px) / 5); }
     }
     @media (max-width: 1023px) {
       nav { padding: 0 24px; }
@@ -1183,7 +1185,7 @@
       .highlights-inner { padding: 0 20px; }
       .footer-inner { padding: 0 6%; grid-template-columns: 1fr 1fr; gap: 32px; }
       .speakers-inner { padding: 0 16px; }
-      .speaker-card { flex: 0 0 calc((100% - 48px) / 3.5); }
+      .speaker-card { flex: 0 0 calc((100% - 48px) / 4); }
       .hl-card { flex: 0 0 calc((100% - 20px) / 2); }
       .sponsors-grid { gap: 28px 40px; }
       .bio-modal { grid-template-columns: 200px 1fr; max-width: 90vw; }
@@ -1277,7 +1279,7 @@
       }
 
       .speaker-img{ height: 185px; margin-bottom: 12px; border-radius: 12px; }
-      .speaker-img img{ transform: scale(1.15) !important; transition: none !important; }
+      .speaker-img img{ transform: scale(1.25) !important; transition: none !important; }
 
       .speaker-name{ font-size: 20px; margin-bottom: 6px; line-height: 1.3; }
       .speaker-role{
