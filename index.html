@@ -82,7 +82,7 @@
     .brand-meta strong {
       font-size: 11px;
       font-weight: 600;
-      color: var(--gold);
+      color: #E6002E;
       letter-spacing: 1.2px;
       text-transform: uppercase;
     }
@@ -141,32 +141,16 @@
       transform: translateY(-1px) !important;
     }
 
-    
-    .btn-swap{
-      display: inline-block;
-      position: relative;
-      overflow: hidden;
-      height: 1.15em;            /* clips the swap */
-      line-height: 1.15em;
-    }
-    .btn-swap-top,
-    .btn-swap-bottom{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      white-space: nowrap;
-      transition: transform 0.22s ease;
-    }
-    .btn-swap-top{ transform: translateY(0); }
-    .btn-swap-bottom{ transform: translateY(110%); }
-
-    /* On hover, move top down and bottom up */
+    /* btn-swap styles defined at bottom */
     .btn-register:hover .btn-swap-top,
-    .hero-register-btn:hover .btn-swap-top{ transform: translateY(-110%); }
+    .hero-register-btn:hover .btn-swap-top,
+    .btn-sponsor:hover .btn-swap-top,
+    .btn-download-program:hover .btn-swap-top{ transform: translateY(-110%); }
 
     .btn-register:hover .btn-swap-bottom,
-    .hero-register-btn:hover .btn-swap-bottom{ transform: translateY(-110%); }
+    .hero-register-btn:hover .btn-swap-bottom,
+    .btn-sponsor:hover .btn-swap-bottom,
+    .btn-download-program:hover .btn-swap-bottom{ transform: translateY(-110%); }
 
     .btn-arrow{
       font-size: 18px;
@@ -228,11 +212,13 @@
     }
 
     .hero-title{
-  font-size:64px;
-  font-weight:700;
-  margin-bottom:20px;
+  font-size: clamp(52px, 6vw, 82px);
+  font-weight: 700;
+  margin-bottom: 20px;
+  opacity: 0;
   animation: fadeUp 0.7s 0.15s forwards;
   letter-spacing: 0.04em;
+  color: #ffffff;
 }
 
     .hero-theme {
@@ -409,7 +395,7 @@
 
     .speakers-title {
       font-size: clamp(28px, 3.5vw, 44px);
-      font-weight: 600;
+      font-weight: 700;
       line-height: 1.08;
       letter-spacing: 0.04em;
       text-align: center;
@@ -432,9 +418,43 @@
 
     .speakers-carousel-wrap{
       display: flex;
-      align-items: center;
-      gap: 4px;
+      flex-direction: column;
       position: relative;
+    }
+
+    /* Square arrow navigation buttons centered below carousel */
+    .speakers-arrows-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .sq-arrow {
+      width: 56px;
+      height: 56px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+      flex-shrink: 0;
+      padding: 0;
+    }
+    .sq-arrow-prev {
+      background: #C8C8C8;
+    }
+    .sq-arrow-next {
+      background: #A0A0A0;
+    }
+    .sq-arrow:hover {
+      background: #E6002E !important;
+    }
+    .sq-arrow svg {
+      width: 56px;
+      height: 56px;
+      display: block;
     }
 
     .carousel-arrow{
@@ -477,8 +497,8 @@
       flex: 0 0 calc((100% - (12px * 5)) / 6); /* exactly 6 cards */
       min-width: 0;
 
-      /* warmer, less-white card */
-      background: white;
+      /* light warm background */
+      background: #FAF6F0;
       border-radius: none;
       padding: 12px 12px 18px;
       box-sizing: border-box;
@@ -605,7 +625,7 @@
 
     .intro-title {
       font-size: clamp(36px, 4.5vw, 62px);
-      font-weight: 600;
+      font-weight: 700;
       line-height: 1.08;
       letter-spacing: 0.04em;
       text-align: center;
@@ -681,7 +701,7 @@
 
     /* ── HIGHLIGHTS SECTION ──────────────────────────────── */
     .highlights {
-      background: #f5f5f5;
+      background: #f0ede8;
       padding: 80px 0 60px;
     }
     .highlights-inner {
@@ -690,7 +710,7 @@
     }
     .highlights-title {
      font-size: clamp(28px, 3.5vw, 44px);
-      font-weight: 600;
+      font-weight: 700;
       line-height: 1.08;
       letter-spacing: 0.04em;
       text-align: center;
@@ -737,7 +757,7 @@
     }
     .hl-card {
       flex: 0 0 calc((100% - 40px) / 3);
-      background: #fff;
+      background: #FAF6F0;
       border-radius: none;
       border: 2px solid transparent;
       transition: background 0.18s ease;
@@ -745,7 +765,7 @@
     }
     .hl-card:hover {
       background:
-        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(#FFF9F4, #FFF9F4) padding-box,
         linear-gradient(180deg, #eb001e, #f59d0f) border-box;
     }
     .hl-img {
@@ -811,13 +831,32 @@
       position: relative;
       overflow: hidden;
     }
+
+    /* Static SVG background for program section */
+    .program-bg-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .program-bg-svg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.28;
+      mix-blend-mode: screen;
+    }
     .program-inner {
       padding: 0 15%;
       box-sizing: border-box;
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
-    /* Subtle dark panel behind content — aids legibility without blurring bg */
+    /* Panel — transparent, no background */
     .program-panel {
       position: relative;
       z-index: 1;
@@ -830,13 +869,13 @@
 
 
 .program-title{
-     font-size: clamp(28px, 3.5vw, 44px);
-      font-weight: 600;
-      line-height: 1.08;
-      letter-spacing: 0.04em;
-      text-align: center;
-      color: #ffffff;
-      padding-bottom: 30px;
+  font-size: clamp(36px, 4.5vw, 62px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: #ffffff;
+  padding-bottom: 30px;
 }
 
 
@@ -850,26 +889,9 @@
       letter-spacing: 0.5px;
     }
     .program-scroll {
-      max-height: 420px;
-      overflow-y: auto;
-      padding-right: 12px;
-      scrollbar-width: thin;
-      scrollbar-color: #F5820A rgba(255,255,255,0.05);
+      scrollbar-width: none;
     }
-    .program-scroll::-webkit-scrollbar { width: 4px; }
-    .program-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 4px; }
-    .program-scroll::-webkit-scrollbar-thumb {
-      background: linear-gradient(to bottom, #CC0000, #F5820A);
-      border-radius: none;
-    }
-    .program-item {
-      display: flex;
-      gap: 28px;
-      align-items: flex-start;
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .program-item:last-child { border-bottom: none; }
+    .program-scroll::-webkit-scrollbar { display: none; }
     
 
 
@@ -910,19 +932,27 @@
     .btn-download-program {
       display: inline-flex;
       align-items: center;
-      background: transparent;
-      border: 1.5px solid rgba(255,255,255,0.5);
-      color: #fff;
+      gap: 10px;
+      background: #ffffff;
+      border: none;
+      color: #E6002E;
       text-decoration: none;
-      padding: 14px 36px;
+      padding: 14px 32px;
       border-radius: none;
+      font-family: 'DM Sans', sans-serif;
       font-size: 15px;
-      font-weight: 600;
-      transition: background 0.2s, border-color 0.2s;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+      overflow: hidden;
+      position: relative;
     }
     .btn-download-program:hover {
-      background: rgba(255,255,255,0.15);
-      border-color: rgba(255,255,255,0.85);
+      background: #E6002E;
+      color: #ffffff;
+      transform: translateY(-1px);
     }
 
     /* ── SPONSORS SECTION ──────────────────────────────────── */
@@ -937,7 +967,7 @@
     }
     .sponsors-title {
      font-size: clamp(28px, 3.5vw, 44px);
-      font-weight: 600;
+      font-weight: 700;
       line-height: 1.08;
       letter-spacing: 0.04em;
       text-align: center;
@@ -1012,32 +1042,33 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: transparent;
-      border: 2px solid transparent;
-      background-image:
-        linear-gradient(#fff, #fff),
-        linear-gradient(110deg, #CC0000, #F5820A);
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
-      color: #CC0000;
+      background: #E6002E;
+      border: none;
+      color: #fff;
       text-decoration: none;
-      padding: 13px 36px;
+      padding: 14px 32px;
       border-radius: none;
       font-family: 'DM Sans', sans-serif;
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
       cursor: pointer;
-      transition: background-image 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 2px 12px rgba(204,0,0,0.15);
+      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+      overflow: hidden;
+      position: relative;
     }
     .btn-sponsor:hover {
-      background-image:
-        linear-gradient(110deg, #CC0000, #F5820A),
-        linear-gradient(110deg, #CC0000, #F5820A);
-      color: #fff;
+      background: #ffffff;
+      color: #E6002E;
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(204,0,0,0.28);
     }
+    .btn-sponsor .btn-swap-top svg,
+    .btn-sponsor .btn-swap-bottom svg {
+      transition: transform 0.2s;
+    }
+    .btn-sponsor:hover .btn-swap-top svg { transform: translateX(3px); }
+    .btn-sponsor:hover .btn-swap-bottom svg { transform: translateX(3px); }
 
     .sponsors-coming {
       font-size: 14px;
@@ -1104,22 +1135,25 @@
     }
     .bio-modal-close {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      background: #f0f0f0;
+      top: 0;
+      right: 0;
+      background: #E6002E;
       border: none;
-      width: 32px;
-      height: 32px;
+      width: 44px;
+      height: 44px;
       border-radius: none;
-      font-size: 18px;
+      font-size: 22px;
+      font-weight: 300;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #555;
+      color: #ffffff;
       transition: background 0.2s;
+      line-height: 1;
+      z-index: 10;
     }
-    .bio-modal-close:hover { background: #e0e0e0; }
+    .bio-modal-close:hover { background: #CC0000; }
     .bio-modal-label {
       font-size: 10px;
       font-weight: 700;
@@ -1205,16 +1239,15 @@
     }
     .footer-link:hover { color: #D4600A; }
     .footer-link-cta {
-      font-size: 15px;
+      font-size: 17px;
       font-weight: 700;
-      color: #CC0000;
+      color: #E6002E;
       text-decoration: none;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       transition: color 0.2s;
-      letter-spacing: 0.04em;
     }
-    .footer-link-cta:hover { color: #D4600A; }
+    .footer-link-cta:hover { color: #ff3355; }
     .footer-social-row {
       display: flex;
       gap: 16px;
@@ -1223,17 +1256,17 @@
     .footer-social {
       width: 40px;
       height: 40px;
-      background: #ffffff;
+      background: #E6002E;
       border-radius: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #262626;
+      color: #ffffff;
       text-decoration: none;
       transition: background 0.2s;
     }
     .footer-social svg { width: 18px; height: 18px; }
-    .footer-social:hover { background: #E6002E; }
+    .footer-social:hover { background: #CC0000; }
     .footer-note {
       font-size: 13px;
       color: #888;
@@ -1363,25 +1396,26 @@
     .mobile-nav-links li a .arr { display: none; }
     .mobile-nav-register {
       display: inline-block; margin: 4px 0 28px;
-      background: linear-gradient(110deg,#CC0000,#F5820A);
+      background: #E6002E;
       color: #fff; text-decoration: none;
       padding: 12px 28px; border-radius: none;
       font-size: 18px; font-weight: 600; text-align: center;
       width: fit-content;
+      letter-spacing: 0.5px;
     }
 
     /* ── FOOTER DROPDOWN (mobile) ─────────────────────────── */
     .footer-col-btn {
       display: none; width: 100%; background: none; border: none;
       font-family: 'DM Sans', sans-serif; font-size: 15px;
-      font-weight: 700; color: #1a1a2e;
+      font-weight: 700; color: #ffffff;
       padding: 16px 0; cursor: pointer;
       align-items: center; justify-content: space-between;
-      border-bottom: 1px dashed rgba(204,0,0,0.2);
+      border-bottom: 1px dashed rgba(255,255,255,0.15);
     }
     .footer-col-btn .chev {
       width: 10px; height: 10px;
-      border-right: 2px solid #CC0000; border-bottom: 2px solid #CC0000;
+      border-right: 2px solid #ffffff; border-bottom: 2px solid #ffffff;
       transform: rotate(45deg); transition: transform 0.3s;
       flex-shrink: 0;
     }
@@ -1436,56 +1470,116 @@
       .brand-logo img { height: 36px; }
       .hamburger { display: flex; }
 
-      /* Hero — centred */
+      /* Hero — full height */
       .hero { min-height: 100svh; }
+
+      /* Title area: full overlay, centres title between nav and info bar */
       .hero-content {
-        position: absolute; left: 0; right: 0;
-        top: 50%; transform: translateY(-50%);
-        padding: 0 24px; text-align: center;
-        display: flex; flex-direction: column; align-items: center;
-      }
-      .hero-title {
-      font-size: clamp(52px, 6vw, 82px);
-      font-weight: 800;
-      line-height: 1.02;
-      letter-spacing: -1.5px;
-      color: #ffffff;
-      margin-bottom: 28px;
- font-size: clamp(38px,10vw,58px); text-align: center; }
-      .hero-theme { font-size: clamp(18px, 5vw, 24px); text-align: center; font-weight: 600; }
-      .hero-cta-group {
-        flex-direction: column; align-items: center;
-        padding: 16px 20px; gap: 14px;
-        border-radius: none; width: 100%; max-width: 400px;
-      }
-      .cta-bar { display: none; }
-      .cta-left { align-items: center; }
-      .cta-meta { text-align: center; }
-      .btn-cta { width: fit-content; max-width: 100%; text-align: center; font-size: 17px; padding: 10px 28px; border-radius: 50px; }
-      
-      /* Hero info bar (mobile) */
-      .hero-info-bar{
+        position: absolute;
+        left: 0; right: 0;
+        top: 86px;
+        bottom: 196px; /* height of 2×2 info bar (~196px) */
+        padding: 0 24px;
+        display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transform: none;
+      }
+
+      .hero-title {
+        font-size: clamp(34px, 9vw, 52px);
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -1px;
+        color: #ffffff;
+        margin-bottom: 14px;
+        margin-top: 0;
+        text-align: center;
+        padding: 0;
+        opacity: 0;
+        animation: fadeUp 0.7s 0.15s forwards;
+      }
+      .hero-theme {
+        font-size: clamp(14px, 4vw, 18px);
+        text-align: center;
+        font-weight: 500;
+        padding: 0;
+        color: rgba(255,255,255,0.88);
+        margin-bottom: 0;
+        opacity: 0;
+        animation: fadeUp 0.7s 0.3s forwards;
+      }
+
+      /* Info bar: pinned to bottom of the hero section */
+      .hero-info-bar {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
         width: 100%;
-        max-width: 440px;
-        margin-top: 14px;
+        max-width: 100%;
+        margin-top: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        background: rgba(0,0,0,0.45);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        opacity: 0;
+        animation: fadeUp 0.7s 0.45s forwards;
       }
-      .hero-info-cell{
-        padding: 16px 16px;
+      .hero-info-cell {
+        padding: 18px 16px;
+        border-left: none;
+        border-top: none;
       }
-      .hero-info-cell--divider{
-        border-left: 0;
-        border-top: 1px solid rgba(255,255,255,0.18);
+      .hero-info-cell:nth-child(2) {
+        border-left: 1px solid rgba(255,255,255,0.2);
       }
-      .hero-info-value{ font-size: 24px; }
-      .hero-info-sub{ font-size: 15px; }
-      .hero-register-btn{
-        flex: 0 0 auto;
-        min-height: 66px;
+      .hero-info-cell:nth-child(3),
+      .hero-register-btn {
+        border-top: 1px solid rgba(255,255,255,0.2);
+      }
+      .hero-info-cell--divider { border-left: none; border-top: none; }
+      .hero-info-value { font-size: 18px; white-space: normal; }
+      .hero-info-sub { font-size: 13px; }
+      .hero-info-label { font-size: 9px; letter-spacing: 1px; margin-bottom: 5px; }
+
+      /* Register Now cell — red, sits next to Venue */
+      .hero-register-btn {
+        grid-column: auto;
+        flex: unset;
+        min-height: unset;
         width: 100%;
-        border-left: 0;
-        border-top: 1px solid rgba(255,255,255,0.18);
-        font-size: 15px;
+        border-left: 1px solid rgba(255,255,255,0.2);
+        border-top: 1px solid rgba(255,255,255,0.2);
+        font-size: 13px;
+        letter-spacing: 1px;
+        padding: 18px 16px;
+        text-align: left;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        background: #E6002E;
+      }
+      .hero-register-btn .btn-swap {
+        overflow: visible; height: auto; line-height: normal; flex: 1;
+      }
+      .hero-register-btn .btn-swap-bottom { display: none; }
+      .hero-register-btn .btn-swap-top {
+        transform: none !important;
+        flex-direction: column; align-items: flex-start;
+        gap: 2px; font-size: 13px; white-space: normal; line-height: 1.3;
+      }
+      .hero-register-btn .btn-swap-top .btn-arrow { display: none; }
+      .hero-register-btn::after {
+        content: '';
+        display: block;
+        width: 20px; height: 20px;
+        flex-shrink: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='2' y1='14' x2='14' y2='2' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Cpolyline points='6,2 14,2 14,10' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: contain;
       }
 
 
@@ -1570,7 +1664,7 @@
       .program { padding: 44px 0 60px; }
       .program-inner { padding: 0 20px; }
       .program-panel { padding: 28px 20px; border-radius: none; }      .program-sub { margin-bottom: 40px; }
-      .program-scroll { max-height: 380px; }
+      .program-scroll { max-height: 440px; padding-right: 8px; }
       .program-item { gap: 16px; padding: 16px 0; }
       
 
@@ -1599,25 +1693,22 @@
       .speakers-sub, .highlights-sub, .program-sub { margin-bottom: 24px; line-height: 1.45; }
       .intro-title { line-height: 1.1; font-size: 34px; text-align: left; margin-bottom: 24px; }
       .intro-inner p { line-height: 1.5; }
-      .speakers { padding: 40px 0 36px; }
-      .highlights { padding: 40px 0 32px; }
-
-      /* Highlights */
-      .highlights { padding: 40px 0 32px; }
+      .speakers { padding: 40px 0 24px; }
+      .highlights { padding: 40px 0 24px; }
       .highlights-inner { padding: 0 16px; }
       .highlights-title { font-size: 34px; text-align: center; line-height: 1.15; }
 
-      /* Unified section titles on mobile */
+      /* Unified section titles on mobile — same size as each other */
+      .speakers-title, .highlights-title, .program-title, .sponsors-title {
+        font-size: 34px;
+        line-height: 1.12;
+        margin-bottom: 20px;
+        padding-bottom: 0;
+      }
       .speakers-title { font-size: 34px; line-height: 1.15; }
       .sponsors-title { font-size: 34px; line-height: 1.15; }
       
 
-
-.program-title{
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
 
       .highlights-sub { text-align: center; font-size: 15px; }
       .hl-card { flex: 0 0 84%; }
@@ -1637,8 +1728,8 @@
       .footer-col.open .footer-col-links { display: flex; }
       /* Get Involved — always visible, no dropdown */
       .footer-col:first-child .footer-col-btn { display: none; }
-      .footer-col:first-child .footer-col-title { display: block; padding: 16px 0 12px; border-bottom: 1px dashed rgba(204,0,0,0.2); }
-      .footer-col:first-child .footer-col-links { display: flex; padding-bottom: 24px; border-bottom: 1px dashed rgba(204,0,0,0.2); margin-bottom: 8px; }
+      .footer-col:first-child .footer-col-title { display: block; padding: 16px 0 12px; border-bottom: none; }
+      .footer-col:first-child .footer-col-links { display: flex; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.18); margin-bottom: 8px; }
       /* Social col */
       .footer-col-social { padding-top: 24px; }
       .footer-col-social .footer-col-btn { display: none; }
@@ -1665,82 +1756,132 @@
   
 /* Fix arrow clipping in swap animation */
 .btn-swap{
-  height: 1.3em;
-  line-height: 1.3em;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  height: 1.5em;
+  line-height: 1.5em;
 }
 
 .btn-swap-top,
 .btn-swap-bottom{
-  padding-right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  white-space: nowrap;
+  transition: transform 0.22s ease;
+  padding: 0 2px;
 }
+.btn-swap-top{ transform: translateY(0); }
+.btn-swap-bottom{ transform: translateY(100%); }
 
 .btn-arrow{
   display: inline-block;
-  transform: translateY(-1px);
+  font-size: 18px;
+  line-height: 1;
 }
 
 
-    /* ── PROGRAM TIMELINE (Ai4-style) ─────────────────────── */
+    /* ── PROGRAM TIMELINE ─────────────────────── */
     .program-scroll{
       counter-reset: progstep;
+      position: relative;
+      max-height: 520px;
+      overflow-y: auto;
+      padding-right: 16px;
+      /* Custom scrollbar */
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.5) rgba(255,255,255,0.1);
     }
+    .program-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .program-scroll::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+    }
+    .program-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.5);
+      border-radius: 2px;
+    }
+    .program-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(255,255,255,0.8);
+    }
+
     .program-item{
       counter-increment: progstep;
-      display: grid;
-      grid-template-columns: 56px 1fr;
-      column-gap: 34px;
-      align-items: start;
-      padding: 34px 0;
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+      align-items: stretch;
+      padding: 0;
       border-bottom: none;
+      position: relative;
     }
+
+    /* Left column: number box + connecting line */
     .program-step{
-      width: 56px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      flex-shrink: 0;
+      width: 42px;
+      margin-right: 28px;
     }
+
     .program-step-box{
       width: 42px;
       height: 42px;
-      background: #ffffff;         /* square white */
+      background: #ffffff;
       color: #E6002E;
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: 700;
       font-size: 18px;
       line-height: 1;
-      border-radius: 0;
-      flex: 0 0 auto;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
     }
     .program-step-box::before{
       content: counter(progstep);
     }
+
+    /* Solid full-white line connecting boxes */
     .program-step-line{
       flex: 1 1 auto;
-      width: 1px;
-      margin-top: 12px;
-      border-left: 1px dashed rgba(255,255,255,0.55);
+      width: 2px;
+      background: #ffffff;
+      display: block;
+      min-height: 16px;
     }
     .program-item:last-child .program-step-line{
       display: none;
     }
 
+    /* Right column: content */
     .program-right{
-      padding-top: 2px;
+      flex: 1;
+      padding: 4px 0 36px 0;
+    }
+    .program-item:last-child .program-right {
+      padding-bottom: 8px;
     }
 
     
 
 
 .program-time{
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 
     .program-name{
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.03em;
@@ -1767,66 +1908,40 @@
 
 
 /* ── Program timeline: force uniform sizes across all items ───────────── */
-.program-item .program-title,
-.program-item h3{
-  font-size: 15px !important;
+.program-item .program-name{
+  font-size: 16px !important;
   font-weight: 600 !important;
+  color: rgba(255,255,255,0.95) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
   margin: 0 0 6px 0 !important;
-  line-height: 1.2 !important;
+  line-height: 1.3 !important;
 }
 
+.program-item .program-detail,
 .program-item .program-desc,
 .program-item p{
-  font-size: 15px !important;
+  font-size: 14px !important;
   line-height: 1.55 !important;
-  opacity: 0.9 !important;
+  color: rgba(255,255,255,0.65) !important;
   margin: 0 !important;
 }
 
 .program-item .program-time{
-  font-size: 32px !important;
+  font-size: 28px !important;
   font-weight: 600 !important;
+  color: #fff !important;
   margin: 0 0 6px 0 !important;
   line-height: 1.1 !important;
 }
 
-
-/* Number square */
-.program-number{
-  width: 64px !important;
-  height: 64px !important;
-  background: #ffffff !important;
-  color: #E6002E !important;  /* red number */
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-weight: 700 !important;
-  position: relative !important;
-  z-index: 2 !important;
+/* Break items same size but slightly muted */
+.program-item--break .program-name{
+  color: rgba(255,255,255,0.70) !important;
+  font-weight: 500 !important;
 }
 
 
-/* Vertical connector (dashed) */
-.program-timeline{
-  position: relative !important;
-}
-
-
-/* Solid white vertical connector */
-.program-timeline{
-  position: relative;
-}
-
-.program-timeline::before{
-  content: "";
-  position: absolute;
-  left: 32px;          /* center of 64px square */
-  top: 32px;           /* start from middle of first square */
-  bottom: 32px;        /* end at middle of last square */
-  width: 2px;
-  background: #ffffff; /* full white */
-  z-index: 1;
-}
 
 </style>
 </head>
@@ -1851,7 +1966,7 @@
       <li><a href="#agenda">Agenda</a></li>
       <li><a href="#sponsors">Sponsors</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="#" class="btn-register"><span class="btn-swap"><span class="btn-swap-top">REGISTER NOW <span class="btn-arrow">↗</span></span><span class="btn-swap-bottom">REGISTER NOW <span class="btn-arrow">↗</span></span></span></a></li>
+      <li><a href="#" class="btn-register"><span class="btn-swap"><span class="btn-swap-top">REGISTER NOW <span class="btn-arrow"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"><line x1="2" y1="14" x2="14" y2="2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="6,2 14,2 14,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></span><span class="btn-swap-bottom">REGISTER NOW <span class="btn-arrow"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"><line x1="2" y1="14" x2="14" y2="2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="6,2 14,2 14,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></span></span></a></li>
     </ul>
     <button class="hamburger" onclick="document.querySelector('.hamburger').classList.contains('open') ? closeMobileMenu() : openMobileMenu()" aria-label="Toggle menu">
       <span></span><span></span><span></span>
@@ -1905,7 +2020,7 @@
           <div class="hero-info-sub">Inselspital Bern, Switzerland</div>
         </div>
 
-        <a class="hero-register-btn" href="#" aria-label="Register now"><span class="btn-swap"><span class="btn-swap-top">REGISTER NOW <span class="btn-arrow">↗</span></span><span class="btn-swap-bottom">REGISTER NOW <span class="btn-arrow">↗</span></span></span></a>
+        <a class="hero-register-btn" href="#" aria-label="Register now"><span class="btn-swap"><span class="btn-swap-top">REGISTER NOW <span class="btn-arrow"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"><line x1="2" y1="14" x2="14" y2="2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="6,2 14,2 14,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></span><span class="btn-swap-bottom">REGISTER NOW <span class="btn-arrow"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"><line x1="2" y1="14" x2="14" y2="2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="6,2 14,2 14,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></span></span></a>
       </div>
     </div>
   </section>
@@ -1919,7 +2034,6 @@
       </h2>
       <div class="intro-body">
         <div class="intro-text">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Established in 2024, this symposium is now the epicenter of the AI in oncology community — the industry's leading event where clinicians, researchers, and technology leaders unite to shape the future of cancer care.</p>
           <p>At the AI in Cancer Care Symposium 2026, join hundreds of experts to explore real-world applications, breakthrough advancements, and proven best practices driving AI forward across every oncology discipline. From diagnostic AI to treatment planning and beyond — you'll discover it all.</p>
           <p>Together, we're building the future of responsible human-machine collaboration in medicine.</p>
         </div>
@@ -1947,7 +2061,6 @@
       <p class="speakers-sub">Leading experts in oncology, artificial intelligence and digital medicine exploring how AI is transforming cancer diagnosis, treatment and patient care.</p>
 
       <div class="speakers-carousel-wrap">
-        <button class="carousel-arrow carousel-prev" onclick="slideCarousel(-1)">&#8249;</button>
         <div class="speakers-carousel" id="speakersCarousel">
           <div class="speakers-track" id="speakersTrack">
           <div class="speaker-card" onclick="openBio('truhn')">
@@ -2018,18 +2131,28 @@
           </div>
           </div>
         </div>
-        <button class="carousel-arrow carousel-next" onclick="slideCarousel(1)">&#8250;</button>
       </div>
 
-      <div class="speakers-view-all-wrap">
-        <a href="#speakers" class="btn-view-all-speakers">
-          View All Speakers
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
+      <!-- Square arrow controls centered below carousel -->
+      <div class="speakers-arrows-row">
+        <button class="sq-arrow sq-arrow-prev" onclick="slideCarousel(-1)" aria-label="Previous">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="33,18 23,28 33,38" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="sq-arrow sq-arrow-next" onclick="slideCarousel(1)" aria-label="Next">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="23,18 33,28 23,38" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
       </div>
     </div>
   </section>
   <section class="program" id="agenda">
+    <!-- Animated network background -->
+    <div class="program-bg-svg">
+      <img src="assets/AdobeStock_520179658.svg" alt="" aria-hidden="true"/>
+    </div>
     <div class="program-inner">
       <div class="program-panel">
       <h2 class="program-title">Program</h2>
@@ -2110,8 +2233,16 @@
       </div>
       <div style="text-align:center;margin-top:36px;position:relative;z-index:2;">
         <a href="assets/program.pdf" download class="btn-download-program">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download Full Program
+          <span class="btn-swap">
+            <span class="btn-swap-top">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              DOWNLOAD FULL PROGRAM
+            </span>
+            <span class="btn-swap-bottom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              DOWNLOAD FULL PROGRAM
+            </span>
+          </span>
         </a>
       </div>
       </div>
@@ -2155,8 +2286,10 @@
       </div>
       <div class="sponsors-cta">
         <a href="#" class="btn-sponsor">
-          Become a Sponsor
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;transition:transform 0.2s;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          <span class="btn-swap">
+            <span class="btn-swap-top">BECOME A SPONSOR <span class="btn-arrow"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"><line x1="2" y1="14" x2="14" y2="2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="6,2 14,2 14,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></span>
+            <span class="btn-swap-bottom">BECOME A SPONSOR <span class="btn-arrow"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"><line x1="2" y1="14" x2="14" y2="2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="6,2 14,2 14,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></span>
+          </span>
         </a>
       </div>
     </div>
